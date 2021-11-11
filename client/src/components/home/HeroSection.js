@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Video from './../assets/videos/video-3.mp4';
+import Video from './../../assets/videos/video-3.mp4';
 import { MdArrowForward, MdKeyboardArrowRight } from 'react-icons/md';
 import { Link as LinkScroll } from 'react-scroll';
 

@@ -13,9 +13,10 @@ html {
 
 body {
   box-sizing: border-box;
-  background: #f7f7f7;
+  background: #dadada;
 }
 
 @import './menu';
-@import './heroSection';
+@import './hero-section';
 @import './buttons';
+@import './home-section';

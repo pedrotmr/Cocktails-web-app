@@ -1,0 +1,26 @@
+// HOME SECTIONS
+.section {
+  height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    font-size: 4.3em;
+    font-weight: 700;
+    display: block;
+    padding: 4rem 0;
+    text-align: center;
+
+    @media screen and (max-width: 768px) {
+      font-size: 4.2rem;
+    }
+
+    @media screen and (max-width: 375px) {
+      font-size: 3.8rem;
+    }
+  }
+
+  &--spirits {
+    background: #0d1616;
+  }
+}
