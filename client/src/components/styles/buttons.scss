@@ -1,0 +1,55 @@
+// BUTTONS
+.btn-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__link {
+    border-radius: 10rem;
+    background: hsl(14, 100%, 55%);
+    color: #010606;
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    transition: all 0.2s ease-out;
+
+    &:hover {
+      background: #fff;
+      color: #010606;
+      transform: scale(1.05);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+
+    &--nav {
+      padding: 1rem 2.2rem;
+    }
+
+    &--side {
+      font-size: 1.8rem;
+      padding: 1.6rem 6.4rem;
+    }
+
+    &--hero {
+      font-size: 2rem;
+      padding: 1.4rem 4.8rem;
+      margin-top: 3.2rem;
+    }
+  }
+
+  &--nav {
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
+  }
+}
+
+.btn__icon {
+  height: 1.3rem;
+  margin-left: 0.8rem;
+  margin-right: -0.8rem;
+}

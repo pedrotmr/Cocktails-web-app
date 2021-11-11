@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import './App.css';
+import './styles/App.css';
 import { BrowserRouter } from 'react-router-dom';
-import Navbar from '../menu/Navbar';
-import Sidebar from '../menu/Sidebar';
-import HeroSection from '../hero-section/HeroSection';
+import Navbar from './Navbar';
+import Sidebar from './Sidebar';
+import HeroSection from './HeroSection';
 
 const App = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);

@@ -13,7 +13,9 @@ html {
 
 body {
   box-sizing: border-box;
+  background: #f7f7f7;
 }
 
-// @import 'components/navbar/navbar';
-// @import 'components/sidebar/sidebar';
+@import './menu';
+@import './heroSection';
+@import './buttons';
