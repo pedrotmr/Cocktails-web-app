@@ -46,7 +46,7 @@ body {
     text-decoration: none; }
   .navbar__mobile-icon {
     display: none; }
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 830px) {
       .navbar__mobile-icon {
         display: inline-block;
         position: absolute;
@@ -208,7 +208,7 @@ body {
       font-size: 2rem;
       padding: 1.4rem 4.8rem;
       margin-top: 3.2rem; }
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 830px) {
     .btn-wrap--nav {
       display: none; } }
 
@@ -219,19 +219,54 @@ body {
 
 .section {
   height: calc(100vh - 80px);
-  display: flex;
-  flex-direction: column; }
+  padding: 0 5rem 5rem 5rem; }
   .section__header {
-    font-size: 4.3em;
+    font-size: 4em;
     font-weight: 700;
     display: block;
-    padding: 4rem 0;
+    padding: 5rem 0 3rem 0;
     text-align: center; }
+    .section__header--popular {
+      padding-top: 4rem; }
     @media screen and (max-width: 768px) {
       .section__header {
-        font-size: 4.2rem; } }
+        font-size: 3.8rem; } }
+    @media screen and (max-width: 414px) {
+      .section__header {
+        font-size: 3.2rem; } }
     @media screen and (max-width: 375px) {
       .section__header {
-        font-size: 3.8rem; } }
+        font-size: 3rem; } }
+  .section__drinks-list {
+    max-height: calc((100vh - 80px) / 2);
+    max-width: 1100px;
+    margin: 0 auto; }
   .section--spirits {
     background: #0d1616; }
+  .section__drinks-slider__container {
+    display: flex;
+    padding: 1rem 5.5rem; }
+    .section__drinks-slider__container__item {
+      width: 100px;
+      padding: 1rem 5.5rem;
+      flex: 0 0 19.7%;
+      text-align: center;
+      margin: 0 2px;
+      transition: transform 300ms ease 100ms;
+      margin-right: 5rem; }
+      .section__drinks-slider__container__item img {
+        width: 250px;
+        border-radius: 5px; }
+
+img {
+  max-height: calc(((100vh - 80px) / 3.5));
+  border-radius: 5px; }
+
+.card__container--inner--card {
+  padding-left: 2.5rem; }
+  @media screen and (max-width: 715px) {
+    .card__container--inner--card {
+      padding-left: 1.5rem; } }
+  @media screen and (max-width: 510px) {
+    .card__container--inner--card {
+      padding-left: 8rem; } }

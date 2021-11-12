@@ -5,7 +5,7 @@ import { FaTimes } from 'react-icons/fa';
 import Fade from 'react-reveal/Fade';
 
 const Sidebar = ({ toggleSideBar }) => {
-  const navLinks = ['Cocktails', 'Spirits', 'Sign Up'];
+  const navLinks = ['Cocktails', 'Spirits', 'Search'];
   return (
     <Fade top duration={300}>
       <div className='sidebar' onClick={toggleSideBar}>

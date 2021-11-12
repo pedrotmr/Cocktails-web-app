@@ -4,7 +4,10 @@
   "description": "Cocktail recipes web app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "server": "cd server && npx nodemon",
+    "client": "cd client && npm start && npm run compile:sass"
   },
   "repository": {
     "type": "git",
@@ -16,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/pedrotmr/Juicy-Web-App/issues"
   },
-  "homepage": "https://github.com/pedrotmr/Juicy-Web-App#readme"
+  "homepage": "https://github.com/pedrotmr/Juicy-Web-App#readme",
+  "dependencies": {
+    "concurrently": "^6.3.0"
+  }
 }

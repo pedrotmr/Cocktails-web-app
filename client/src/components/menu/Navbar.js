@@ -4,7 +4,7 @@ import { Link as LinkScroll } from 'react-scroll';
 import { FaBars } from 'react-icons/fa';
 
 const Navbar = ({ toggleSideBar }) => {
-  const navLinks = ['Cocktails', 'Spirits', 'Sign Up'];
+  const navLinks = ['Cocktails', 'Spirits', 'Search'];
 
   return (
     <div className='navbar'>

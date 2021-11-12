@@ -13,6 +13,7 @@ exports.getAllCocktails = async (req, res) => {
 exports.createCocktail = async (req, res) => {
   try {
     const {
+      idDrink,
       strDrink,
       strAlcoholic,
       strInstructions,
@@ -24,6 +25,7 @@ exports.createCocktail = async (req, res) => {
       strMeasure3,
     } = req.body;
     if (
+      !idDrink ||
       !strDrink ||
       !strAlcoholic ||
       !strInstructions ||

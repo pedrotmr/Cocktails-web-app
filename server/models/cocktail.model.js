@@ -4,6 +4,11 @@ const Schema = mongoose.Schema;
 
 const cocktailSchema = new Schema({
   // name
+  idDrink: {
+    type: String,
+    required: true,
+  },
+  // name
   strDrink: {
     type: String,
     required: true,
