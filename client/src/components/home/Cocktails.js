@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { Link } from 'react-router-dom';
 
 const Cocktails = ({ popular, latest }) => {
   const sliderSettings = {
-    // className: 'center',
-    // centerMode: true,
     infinite: true,
     slidesToShow: 4,
     slidesToScroll: 2,
@@ -62,60 +61,43 @@ const Cocktails = ({ popular, latest }) => {
       },
     ],
   };
+
   return (
-    <div className='section section--cocktails'>
-      <div className='section__drinks-list section__drinks-list'>
-        <h1 className='section__header section__header--popular'>Popular Drinks</h1>
-        <Slider {...sliderSettings} className='section__drinks-slider'>
-          {popular.map(drink => {
-            return (
-              <div className='card__container--inner--card' key={drink.idDrink}>
-                <img src={drink.strDrinkThumb} alt='hero_img' />
-                <h2>{drink.strDrink}</h2>
-              </div>
-            );
-          })}
-        </Slider>
+    <>
+      <div className='section section--cocktails'>
+        <div className='section__drinks-list section__drinks-list'>
+          <h1 className='section__header section__header--popular'>Popular Drinks</h1>
+          <Slider {...sliderSettings}>
+            {popular.map(drink => {
+              return (
+                <Link to={drink.idDrink} id={drink.idDrink} className='link'>
+                  <div className='section__drinks-list__card' key={drink.idDrink}>
+                    <img src={drink.strDrinkThumb} alt='hero_img' />
+                    <h2>{drink.strDrink}</h2>
+                  </div>
+                </Link>
+              );
+            })}
+          </Slider>
+        </div>
+        <div className='section__drinks-list'>
+          <h1 className='section__header'>Latest Drinks</h1>
+          <Slider {...sliderSettings}>
+            {latest.map(drink => {
+              return (
+                <Link to={drink.idDrink} id={drink.idDrink} className='link'>
+                  <div className='section__drinks-list__card' key={drink.idDrink}>
+                    <img src={drink.strDrinkThumb} alt='hero_img' />
+                    <h2>{drink.strDrink}</h2>
+                  </div>
+                </Link>
+              );
+            })}
+          </Slider>
+        </div>
       </div>
-      <div className='section__drinks-list'>
-        <h1 className='section__header'>Latest Drinks</h1>
-        <Slider {...sliderSettings} className='section__drinks-slider'>
-          {latest.map(drink => {
-            return (
-              <div className='card__container--inner--card' key={drink.idDrink}>
-                <img src={drink.strDrinkThumb} alt='hero_img' />
-                <h2>{drink.strDrink}</h2>
-              </div>
-            );
-          })}
-        </Slider>
-      </div>
-    </div>
+    </>
   );
 };
 
 export default Cocktails;
-
-// return (
-//   <div className='section section--cocktails'>
-//     <h1 className='section__header'>Popular Drinks</h1>
-//     <div className='section__drinks-slider'>
-//       {popular.map(drink => {
-//         return (
-//           <div className='section__drinks-slider__container'>
-//             {/* <ul> */}
-//             {/* <li> */}
-//             <a
-//               router='/{{movie.id}}'
-//               className='section__drinks-slider__container__item'
-//             >
-//               <img src={drink.strDrinkThumb} />
-//             </a>
-//             {/* </li> */}
-//             {/* </ul> */}
-//           </div>
-//         );
-//       })}
-//     </div>
-//   </div>
-// );

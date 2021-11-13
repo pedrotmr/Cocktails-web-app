@@ -30,7 +30,10 @@ const HeroSection = () => {
         <div className='btn-wrap'>
           <LinkScroll
             className='btn-wrap__link btn-wrap__link--hero'
-            to='signup'
+            to='Sign Up'
+            smooth={true}
+            duration={900}
+            spy={true}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >

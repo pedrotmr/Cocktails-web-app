@@ -1,52 +1,51 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 import './styles/App.css';
-import { BrowserRouter } from 'react-router-dom';
+import axios from 'axios';
 import Navbar from './menu/Navbar';
 import Sidebar from './menu/Sidebar';
-import HeroSection from './home/HeroSection';
-import Cocktails from './home/Cocktails';
-import Spirits from './home/Spirits';
-import axios from 'axios';
+import Home from './home/Home';
+import SignIn from './forms/SignIn';
 
 const App = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
   const [popular, setPopular] = useState([]);
   const [latest, setLatest] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [vodka, setVodka] = useState([]);
+  const [gin, setGin] = useState([]);
+  // const [rum, setRum] = useState([]);
+  // const [tequila, setLatest] = useState([]);
+  // const [whiskey, setLatest] = useState([]);
 
   useEffect(() => {
-    getPopular();
-    getLatest();
+    fetchDrinks('popular.php', setPopular);
+    fetchDrinks('latest.php', setLatest);
+    fetchDrinks('filter.php?i=vodka', setVodka);
+    fetchDrinks('filter.php?i=gin', setGin);
   }, []);
 
   const toggleSideBar = () => setSideBarOpen(!sideBarOpen);
 
-  const getPopular = async () => {
-    setLoading(true);
-    const res = await axios.get(
-      'https://www.thecocktaildb.com/api/json/v2/9973533/popular.php'
-    );
-    setLoading(false);
-    setPopular(res.data.drinks);
-  };
-
-  const getLatest = async () => {
-    setLoading(true);
-    const res = await axios.get(
-      'https://www.thecocktaildb.com/api/json/v2/9973533/latest.php'
-    );
-    setLoading(false);
-    setLatest(res.data.drinks);
+  const fetchDrinks = (input, setState) => {
+    axios
+      .get(`https://www.thecocktaildb.com/api/json/v2/9973533/${input}`)
+      .then(res => setState(res.data.drinks))
+      .catch(err => console.log(err));
   };
 
   return (
-    <BrowserRouter>
-      {sideBarOpen && <Sidebar toggleSideBar={toggleSideBar} />}
-      <Navbar toggleSideBar={toggleSideBar} />
-      <HeroSection />
-      {!loading && <Cocktails popular={popular} latest={latest} />}
-      <Spirits />
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        {sideBarOpen && <Sidebar toggleSideBar={toggleSideBar} />}
+        <Navbar toggleSideBar={toggleSideBar} />
+        <Routes>
+          <Route path='/' element={<Home popular={popular} latest={latest} />} />
+          <Route path='/signin' element={<SignIn />} />
+          <Route path='/mybar' element={<SignIn />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 };
 

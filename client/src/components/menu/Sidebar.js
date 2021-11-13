@@ -5,7 +5,7 @@ import { FaTimes } from 'react-icons/fa';
 import Fade from 'react-reveal/Fade';
 
 const Sidebar = ({ toggleSideBar }) => {
-  const navLinks = ['Cocktails', 'Spirits', 'Search'];
+  const navLinks = ['Cocktails', 'Spirits', 'Search', 'Sign Up'];
   return (
     <Fade top duration={300}>
       <div className='sidebar' onClick={toggleSideBar}>
@@ -20,16 +20,20 @@ const Sidebar = ({ toggleSideBar }) => {
                 to={link}
                 key={link}
                 onClick={toggleSideBar}
+                smooth={true}
+                duration={500}
+                spy={true}
+                offset={-80}
               >
                 {link}
               </LinkScroll>
             ))}
-            <LinkRouter className='menu-links menu-links--side' to='/mybar'>
+            {/* <LinkRouter className='menu-links menu-links--side' to='/mybar'>
               My Bar
             </LinkRouter>
             <LinkRouter className='menu-links menu-links--side' to='/postdrink'>
               Post a Drink
-            </LinkRouter>
+            </LinkRouter> */}
           </ul>
           <nav className='btn-wrap'>
             <LinkRouter className='btn-wrap__link btn-wrap__link--side' to='/signin'>
