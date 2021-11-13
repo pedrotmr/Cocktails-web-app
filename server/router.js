@@ -1,11 +1,20 @@
 const router = require('express').Router();
-const controller = require('./controller/cocktails.controller');
+const drinksController = require('./controllers/cocktails.controller');
+const userController = require('./controllers/user.controller');
+const authMiddleware = require('./middlewares/auth');
 
-router.get('/', controller.getAllCocktails);
-// router.get('/:strDrink', controller.getCocktailByName);
-// router.get('/:idDrink', controller.getCocktailById);
-// router.get('/:ingridient', controller.getCocktailsByIngridient);
-// router.delete('/:id', controller.deleteCocktail);
-router.post('/', controller.createCocktail);
+// Drinks
+router.get('/', authMiddleware, drinksController.getMyCocktails);
+router.post('/postdrink', authMiddleware, drinksController.createCocktail);
+
+// User
+router.post('/register', userController.create);
+router.post('/login', userController.login);
+// router.post('/logout', authMiddleware, userController.logout);
+
+//Error
+router.get('*', (req, res) => {
+  res.status(404).send('Sorry, not found 😞');
+});
 
 module.exports = router;
