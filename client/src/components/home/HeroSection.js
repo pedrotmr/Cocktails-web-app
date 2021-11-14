@@ -10,7 +10,7 @@ const HeroSection = () => {
   const handleMouseLeave = () => setHover(false);
 
   return (
-    <div className='hero' id='home'>
+    <div className='hero'>
       <div className='hero__bg'>
         <video
           className='hero__bg__video'
@@ -34,6 +34,7 @@ const HeroSection = () => {
             smooth={true}
             duration={900}
             spy={true}
+            offset={-80}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >

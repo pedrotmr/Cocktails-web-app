@@ -340,3 +340,103 @@ body {
 .link {
   text-decoration: none;
   color: black; }
+
+.spirits__hero {
+  height: 99vh;
+  background: #0c0c0c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 3rem;
+  position: relative;
+  margin-top: -8rem;
+  z-index: 1;
+  background-size: cover;
+  background-position: top;
+  position: relative;
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%); }
+
+.spirits__header {
+  text-align: center;
+  z-index: 10;
+  color: white;
+  font-size: 6rem;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%) translateY(-60%); }
+  .spirits__header__arrow {
+    animation: arrow 0.8s infinite alternate ease-in-out; }
+
+.spirits__grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-column-gap: 6rem;
+  grid-row-gap: 6rem;
+  padding: 5rem 0 5rem 0; }
+  .spirits__grid__cards {
+    transition: all 0.2s ease; }
+    .spirits__grid__cards:hover {
+      transform: translateY(-3px) scale(1.09); }
+    .spirits__grid__cards img {
+      max-height: calc(((100vh - 80px) / 3.5));
+      border-radius: 5px; }
+
+.Vodka {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.8), rgba(75, 22, 3, 0.8)), url(../../assets/pictures/vodka-2.jpg); }
+
+.Gin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.8), rgba(75, 22, 3, 0.8)), url(../../assets/pictures/gin-2.jpg); }
+
+.Tequila {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.8), rgba(75, 22, 3, 0.8)), url(../../assets/pictures/tequila-2.jpg); }
+
+.Rum {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.8), rgba(75, 22, 3, 0.8)), url(../../assets/pictures/rum-2.jpg); }
+
+.Whiskey {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.8), rgba(75, 22, 3, 0.8)), url(../../assets/pictures/whiskey-2.jpg); }
+
+.Brandy {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.8), rgba(75, 22, 3, 0.8)), url(../../assets/pictures/brandy-2.jpg); }
+
+@keyframes arrow {
+  0% {
+    opacity: 0.5;
+    transform: translateY(80%); }
+  100% {
+    opacity: 1;
+    transform: translateY(120%); } }

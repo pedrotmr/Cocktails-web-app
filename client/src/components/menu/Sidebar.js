@@ -4,8 +4,7 @@ import { Link as LinkScroll } from 'react-scroll';
 import { FaTimes } from 'react-icons/fa';
 import Fade from 'react-reveal/Fade';
 
-const Sidebar = ({ toggleSideBar }) => {
-  const navLinks = ['Cocktails', 'Spirits', 'Search', 'Sign Up'];
+const Sidebar = ({ toggleSideBar, navLinks }) => {
   return (
     <Fade top duration={300}>
       <div className='sidebar' onClick={toggleSideBar}>
@@ -28,12 +27,6 @@ const Sidebar = ({ toggleSideBar }) => {
                 {link}
               </LinkScroll>
             ))}
-            {/* <LinkRouter className='menu-links menu-links--side' to='/mybar'>
-              My Bar
-            </LinkRouter>
-            <LinkRouter className='menu-links menu-links--side' to='/postdrink'>
-              Post a Drink
-            </LinkRouter> */}
           </ul>
           <nav className='btn-wrap'>
             <LinkRouter className='btn-wrap__link btn-wrap__link--side' to='/signin'>
