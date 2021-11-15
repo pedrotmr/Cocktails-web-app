@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('./../models/user.model');
 const config = require('config');
 
-const authMiddleware = async (req, res, next) => {
+exports.authMiddleware = async (req, res, next) => {
   const authHeaders = req.headers['authorization'];
   if (!authHeaders) return res.sendStatus(403);
   const token = authHeaders.split(' ')[1];
@@ -14,8 +14,7 @@ const authMiddleware = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    res.sendStatus(401);
+    console.log(error);
+    res.status(401).send('Unauthorized access');
   }
 };
-
-module.exports = authMiddleware;

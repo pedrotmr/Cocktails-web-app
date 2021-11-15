@@ -80,7 +80,7 @@ body {
   .sidebar__icon {
     position: absolute;
     top: 2.4rem;
-    right: 2.4rem;
+    right: 4rem;
     background: transparent;
     cursor: pointer;
     font-size: 3.2rem;
@@ -359,7 +359,7 @@ body {
 
 .spirits__header {
   text-align: center;
-  z-index: 10;
+  z-index: 2;
   color: white;
   font-size: 6rem;
   top: 50%;
@@ -376,14 +376,32 @@ body {
   grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 6rem;
   grid-row-gap: 6rem;
-  padding: 5rem 0 5rem 0; }
+  padding: 5rem 0 5rem 0;
+  justify-items: center;
+  transform: translateX(-1.5rem); }
+  @media screen and (max-width: 1150px) {
+    .spirits__grid {
+      grid-template-columns: repeat(3, 1fr);
+      margin: 0 6rem 0 6rem; } }
+  @media screen and (max-width: 840px) {
+    .spirits__grid {
+      grid-template-columns: repeat(2, 1fr);
+      margin: 0 6rem 0 6rem; } }
+  @media screen and (max-width: 600px) {
+    .spirits__grid {
+      grid-template-columns: repeat(1, 1fr);
+      transform: translateX(-4.5rem); } }
   .spirits__grid__cards {
-    transition: all 0.2s ease; }
+    transition: all 0.2s ease;
+    max-width: 200px; }
     .spirits__grid__cards:hover {
       transform: translateY(-3px) scale(1.09); }
     .spirits__grid__cards img {
       max-height: calc(((100vh - 80px) / 3.5));
       border-radius: 5px; }
+      @media screen and (max-width: 600px) {
+        .spirits__grid__cards img {
+          max-height: 30rem; } }
 
 .Vodka {
   position: absolute;

@@ -1,11 +1,17 @@
 const router = require('express').Router();
 const drinksController = require('./controllers/cocktails.controller');
 const userController = require('./controllers/user.controller');
-const authMiddleware = require('./middlewares/auth');
+const { authMiddleware } = require('./middlewares/auth');
 
 // Drinks
-router.get('/', authMiddleware, drinksController.getMyCocktails);
-router.post('/postdrink', authMiddleware, drinksController.createCocktail);
+router.get('/', drinksController.getUsersCocktails);
+router.post('/', drinksController.createCocktail);
+router.put('/:id', drinksController.updateCocktail);
+router.delete('/:id', drinksController.deleteCocktail);
+// router.get('/', authMiddleware, drinksController.getUsersCocktails);
+// router.post('/', authMiddleware, drinksController.createCocktail);
+// router.put('/:id', authMiddleware, drinksController.updateCocktail);
+// router.delete('/:id', authMiddleware, drinksController.deleteCocktail);
 
 // User
 router.post('/register', userController.create);

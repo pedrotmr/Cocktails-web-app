@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
 import './styles/App.css';
 import axios from 'axios';
-import Navbar from './menu/Navbar';
-import Sidebar from './menu/Sidebar';
 import Home from './home/Home';
 import SpiritList from './spirits/SpiritList';
 import SignIn from './forms/SignIn';
 
 const App = () => {
-  const [sideBarOpen, setSideBarOpen] = useState(false);
   const navLinks = ['Cocktails', 'Spirits', 'Search', 'Sign Up'];
-  // const navSpirits = ['Vodka', 'Gin', 'Rum', 'Whiskey', 'Tequila', 'Breandy'];
   const [popular, setPopular] = useState([]);
   const [latest, setLatest] = useState([]);
   const [vodka, setVodka] = useState([]);
@@ -33,8 +28,6 @@ const App = () => {
     fetchAllDrinks(['brandy', 'cognac'], setBrandy);
   }, []);
 
-  const toggleSideBar = () => setSideBarOpen(!sideBarOpen);
-
   const fetchDrinks = (input, setState) => {
     axios
       .get(`https://www.thecocktaildb.com/api/json/v2/9973533/${input}`)
@@ -54,20 +47,10 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
-        {sideBarOpen && <Sidebar toggleSideBar={toggleSideBar} navLinks={navLinks} />}
-        <Navbar toggleSideBar={toggleSideBar} navLinks={navLinks} />
         <Routes>
           <Route
             path='/'
-            element={
-              <Home
-                popular={popular}
-                latest={latest}
-                toggleSideBar={toggleSideBar}
-                sideBarOpen={sideBarOpen}
-                navLinks={navLinks}
-              />
-            }
+            element={<Home popular={popular} latest={latest} navLinks={navLinks} />}
           />
           <Route path='/signin' element={<SignIn />} />
           <Route path='/mybar' element={<SignIn />} />

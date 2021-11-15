@@ -3,17 +3,21 @@ import { Link as LinkRouter } from 'react-router-dom';
 import { Link as LinkScroll } from 'react-scroll';
 import { FaTimes } from 'react-icons/fa';
 import Fade from 'react-reveal/Fade';
+import { useDispatch } from 'react-redux';
+import { toggleSideBar } from '../../redux/features/sidebar/sidebar';
 
-const Sidebar = ({ toggleSideBar, navLinks }) => {
+const Sidebar = ({ links }) => {
+  const dispatch = useDispatch();
+
   return (
     <Fade top duration={300}>
-      <div className='sidebar' onClick={toggleSideBar}>
+      <div className='sidebar' onClick={() => dispatch(toggleSideBar())}>
         <div className='sidebar__icon'>
           <FaTimes />
         </div>
         <div className='sidebar__wrapper'>
           <ul className='sidebar__wrapper__menu'>
-            {navLinks.map(link => (
+            {links.map(link => (
               <LinkScroll
                 className='menu-links menu-links--side'
                 to={link}
