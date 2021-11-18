@@ -85,7 +85,7 @@ apiService.getAllMyCocktails = async accessToken => {
     .catch(err => console.log(err));
 };
 
-// // DID NOT USE DO FAR
+// DID NOT USE DO FAR
 // apiService.createCocktail = async (cocktail, accessToken) => {
 //   return fetch(`${BASE_URL}/`, {
 //     method: 'POST',
