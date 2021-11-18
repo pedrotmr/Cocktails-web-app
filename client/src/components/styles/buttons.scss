@@ -53,3 +53,21 @@
   margin-left: 0.8rem;
   margin-right: -0.8rem;
 }
+
+.form__button {
+  background: #bf4d01;
+  margin-top: 1rem;
+  padding: 1.6rem 0;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background: #9b1504;
+    // color: black;
+    // background: white;
+  }
+}

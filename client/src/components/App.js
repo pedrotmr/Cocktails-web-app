@@ -1,74 +1,65 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './styles/App.css';
-import axios from 'axios';
-import Home from './home/Home';
-import SpiritList from './spirits/SpiritList';
-import SignIn from './forms/SignIn';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import Home from './home-page/Home';
+import SpiritPage from './spirits-page/SpiritPage';
+import Register from './forms/Register';
+import MyBar from './profile/MyBar';
+import PostDrink from './forms/PostDrink';
+import { fetchAllDrinks } from '../APIService/cocktails-api';
+import {
+  useGetVodkaCocktailsQuery,
+  useGetGinCocktailsQuery,
+} from '../APIService/cocktails-api';
 
 const App = () => {
+  const isAuthenticated = useSelector(state => state.userAuth.value);
   const navLinks = ['Cocktails', 'Spirits', 'Search', 'Sign Up'];
-  const [popular, setPopular] = useState([]);
-  const [latest, setLatest] = useState([]);
-  const [vodka, setVodka] = useState([]);
-  const [gin, setGin] = useState([]);
+  // const spirits = ['vodka', 'gin', 'rum', 'tequila', 'whiskey', 'brandy'];
+
+  const { data: vodka = [] } = useGetVodkaCocktailsQuery();
+  const { data: gin = [] } = useGetGinCocktailsQuery();
   const [rum, setRum] = useState([]);
   const [tequila, setTequila] = useState([]);
   const [whiskey, setWhiskey] = useState([]);
   const [brandy, setBrandy] = useState([]);
 
   useEffect(() => {
-    fetchDrinks('popular.php', setPopular);
-    fetchDrinks('latest.php', setLatest);
-    fetchDrinks('filter.php?i=vodka', setVodka);
-    fetchDrinks('filter.php?i=gin', setGin);
     fetchAllDrinks(['tequila', 'mezcal'], setTequila);
     fetchAllDrinks(['whiskey', 'bourbon', 'rye_whiskey', 'scotch'], setWhiskey);
     fetchAllDrinks(['rum', 'white_rum', 'dark_rum'], setRum);
     fetchAllDrinks(['brandy', 'cognac'], setBrandy);
   }, []);
 
-  const fetchDrinks = (input, setState) => {
-    axios
-      .get(`https://www.thecocktaildb.com/api/json/v2/9973533/${input}`)
-      .then(res => setState(res.data.drinks))
-      .catch(err => console.log(err));
-  };
-
-  const fetchAllDrinks = ([...args], setState) => {
-    args.forEach(arg => {
-      axios
-        .get(`https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=${arg}`)
-        .then(res => setState(prev => [...prev, ...res.data.drinks]))
-        .catch(err => console.log(err));
-    });
-  };
-
   return (
     <>
       <BrowserRouter>
         <Routes>
+          <Route path='/' element={<Home navLinks={navLinks} />} />
+          <Route path='/register' element={<Register />} />
           <Route
-            path='/'
-            element={<Home popular={popular} latest={latest} navLinks={navLinks} />}
-          />
-          <Route path='/signin' element={<SignIn />} />
-          <Route path='/mybar' element={<SignIn />} />
-          <Route path='/vodka' element={<SpiritList vodka={vodka} title={'Vodka'} />} />
-          <Route path='/gin' element={<SpiritList gin={gin} title={'Gin'} />} />
-          <Route path='/rum' element={<SpiritList rum={rum} title={'Rum'} />} />
-          <Route
-            path='/tequila'
-            element={<SpiritList tequila={tequila} title={'Tequila'} />}
+            path='/profile'
+            element={
+              isAuthenticated ? <MyBar navLinks={navLinks} /> : <Navigate to='/' />
+            }
           />
           <Route
-            path='/whiskey'
-            element={<SpiritList whiskey={whiskey} title={'Whiskey'} />}
+            path='/postDrink'
+            element={isAuthenticated ? <PostDrink /> : <Navigate to='/' />}
           />
-          <Route
-            path='/brandy'
-            element={<SpiritList brandy={brandy} title={'Brandy'} />}
-          />
+
+          <Route path='/vodka' element={<SpiritPage vodka={vodka} />} />
+          <Route path='/gin' element={<SpiritPage gin={gin} />} />
+          <Route path='/rum' element={<SpiritPage rum={rum} />} />
+          <Route path='/tequila' element={<SpiritPage tequila={tequila} />} />
+          <Route path='/whiskey' element={<SpiritPage whiskey={whiskey} />} />
+          <Route path='/brandy' element={<SpiritPage brandy={brandy} />} />
+
+          {/* TRIED TO IMPLEMENT WITH MAP FUNCTION... DID NOT WORK */}
+          {/* {spirits.map(spirit => {
+            return <Route path={`/${spirit}`} element={<SpiritPage spirit={spirit} />} />;
+          })} */}
         </Routes>
       </BrowserRouter>
     </>

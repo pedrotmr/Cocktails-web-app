@@ -1,0 +1,81 @@
+.drink-modal {
+  height: 60vh;
+  width: 60vw;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-60%);
+  border-radius: 10px;
+  background: #dadada;
+  z-index: 15;
+  display: flex;
+  justify-content: center;
+
+  &__like {
+    position: absolute;
+    right: 5rem;
+    top: 5rem;
+    font-size: 3rem;
+    animation: pulse 0.8s ease-in-out alternate infinite;
+
+    &:hover {
+      color: rgb(194, 31, 31);
+      cursor: pointer;
+    }
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }
+
+  &__info__wrapper {
+    margin-right: 10rem;
+    margin-left: 1rem;
+    line-height: 1.6;
+  }
+
+  &__name {
+    font-size: 3.5rem;
+    line-height: 1.2;
+  }
+
+  &__ingredients {
+    font-size: 1.4rem;
+  }
+
+  &__intructions {
+    margin-top: 2rem;
+  }
+
+  &__img-wrapper {
+    padding: 5rem;
+
+    img {
+      max-height: calc(((100vh - 80px) / 2.5));
+      border-radius: 5px;
+      box-shadow: 0 0.5rem 5rem 0.5rem rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  text-align: left;
+  padding: 2rem 5px 5px 0;
+  font-size: 1.5rem;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1.3);
+  }
+}

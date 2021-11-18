@@ -1,0 +1,41 @@
+.alert {
+  padding: 0.7rem;
+  margin: 1rem;
+  opacity: 0.9;
+  background: #f4f4f4;
+  color: #333;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.alert-primary {
+  background: #dc3545;
+  color: #fff;
+}
+
+.alert-light {
+  background: #f4f4f4;
+  color: #333;
+}
+
+.alert-dark {
+  background: #333333;
+  color: #fff;
+}
+
+.alert-danger {
+  background: #dc3545;
+  color: #fff;
+}
+
+.alert-success {
+  background: #28a745;
+  color: #fff;
+}
+
+.alert-white {
+  background: #fff;
+  color: #333;
+  border: #ccc solid 1px;
+}

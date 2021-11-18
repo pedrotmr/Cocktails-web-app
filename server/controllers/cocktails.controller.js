@@ -10,16 +10,6 @@ exports.getAllUsersCocktails = async (req, res) => {
   }
 };
 
-exports.getAllMyCocktails = async (req, res) => {
-  try {
-    const cocktails = await Cocktail.find({ user: req.user.id });
-    res.status(200).send(cocktails);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send('Could not get your cocktails');
-  }
-};
-
 exports.getCocktail = async (req, res) => {
   try {
     const cocktails = await Cocktail.findById(req.params.id);
@@ -36,7 +26,9 @@ exports.createCocktail = async (req, res) => {
     if (!name || !ingredients || !instructions || !picture) {
       return res.status(400).send('Please provide all information needed');
     }
-    const cocktail = await Cocktail.create({ ...req.body, user: req.user.id });
+    // Had to disable authentication for creating drink to work... Do not know why
+    // const cocktail = await Cocktail.create({ ...req.body, user: req.user.id });
+    const cocktail = await Cocktail.create({ ...req.body });
     res.status(201).send(cocktail);
   } catch (error) {
     console.log(error);
@@ -44,6 +36,18 @@ exports.createCocktail = async (req, res) => {
   }
 };
 
+// DID NOT USE DO FAR
+exports.getAllMyCocktails = async (req, res) => {
+  try {
+    const cocktails = await Cocktail.find({ user: req.user.id });
+    res.status(200).send(cocktails);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Could not get your cocktails');
+  }
+};
+
+// DID NOT USE DO FAR
 exports.updateCocktail = async (req, res) => {
   const { name, ingredients, instructions, picture } = req.body;
 
@@ -69,6 +73,7 @@ exports.updateCocktail = async (req, res) => {
   }
 };
 
+// DID NOT USE DO FAR
 exports.deleteCocktail = async (req, res) => {
   try {
     const cocktail = await Cocktail.findById(req.params.id);

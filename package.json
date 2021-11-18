@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "server": "cd server && npx nodemon",
-    "client": "cd client && npm start && npm run compile:sass"
+    "client": "cd client && npm start"
   },
   "repository": {
     "type": "git",
