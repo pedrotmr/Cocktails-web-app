@@ -6,19 +6,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import Modal from 'react-modal';
 import DrinksModal from './DrinksModal';
 import { fetchCocktail } from '../../APIService/cocktails-api';
+import { toggleDrinksModal } from '../../redux/features/drinks-modal/drinks-modal';
 
 const Carrousel = props => {
   const [id, setId] = useState('');
   const [data, setData] = useState([]);
   const drinkModalOpen = useSelector(state => state.drinksModal.value);
+  const dispatch = useDispatch();
 
   const handleClick = e => {
-    setId(e.target.alt);
-    console.log(id);
-    // fetchCocktail(id, setData);
-    // console.log(data);
-    // console.log(data.strDrink);
-    // dispatch(toggleDrinksModal());
+    setId(e.target.id);
+    console.log('name: ', e.target.alt, '|| id: ', id);
+    fetchCocktail(id, setData);
+    dispatch(toggleDrinksModal());
   };
 
   const sliderSettings = {

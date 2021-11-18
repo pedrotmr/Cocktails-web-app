@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 
 const DrinksModal = ({ data }) => {
   const dispatch = useDispatch();
+  console.log(data.strDrink);
 
   return (
     <>
