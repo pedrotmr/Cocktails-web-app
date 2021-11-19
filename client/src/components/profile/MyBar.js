@@ -1,33 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../menu/Navbar';
 import Sidebar from '../menu/Sidebar';
-import Carrousel from '../layouts/Carrousel';
+// import Carrousel from '../layouts/Carrousel';
 import CarrouselDB from '../layouts/CarrouselDB';
 import apiService from '../../APIService/cocktails-db-api';
-import { useGetGinCocktailsQuery } from '../../APIService/cocktails-api';
+// import { useGetGinCocktailsQuery } from '../../APIService/cocktails-api';
 import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../../redux/features/users/users.auth';
+// import { login } from '../../redux/features/users/users.auth';
 
 const MyBar = ({ navLinks }) => {
   const sideBarOpen = useSelector(state => state.sidebar.value);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [usersDrinks, setUsersDrinks] = useState([]);
   // +delete?: not sure why making this general API call
-  const { data = [], isFetching } = useGetGinCocktailsQuery();
+  // const { data = [], isFetching } = useGetGinCocktailsQuery();
 
   // +fix: do we need this? call to isAuthenticated action to get userAuth status
-  const accessToken = localStorage.getItem('accessToken');
-  const getProfile = async accessToken => {
-    const userInfo = await apiService.loadUser(accessToken);
-    if (userInfo) {
-      dispatch(login());
-    }
-  };
+  // const accessToken = localStorage.getItem('accessToken');
+  // const getProfile = async accessToken => {
+  //   const userInfo = await apiService.loadUser(accessToken);
+  //   if (userInfo) {
+  //     dispatch(login());
+  //   }
+  // };
 
   useEffect(() => {
     apiService.getAllUsersCocktails(setUsersDrinks);
     // + delete? not sure what this is doing
-    getProfile(accessToken);
+    // getProfile(accessToken);
   }, []);
 
   return (
