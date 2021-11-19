@@ -12,7 +12,8 @@ connectDB();
 let ids = [];
 
 describe('testing cocktail model', () => {
-  beforeEach('create test drinks', async () => {
+  beforeEach('create test drinks', async function (){
+    this.timeout(5000)
     const drinks = await Cocktail.create(mocks.testCocktails);
     ids = drinks.map(drink => drink._id);
   });
