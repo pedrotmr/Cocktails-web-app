@@ -8,6 +8,7 @@ import Modal from 'react-modal';
 import DrinksModal from './DrinksModal';
 import { fetchCocktail } from '../../APIService/cocktails-api';
 import { toggleDrinksModal } from '../../redux/features/drinks-modal/drinks-modal';
+import { changeCurrentDrink } from '../../redux/features/currentDrink/currentDrink';
 
 const Carrousel = props => {
   const [id, setId] = useState('');
@@ -15,12 +16,13 @@ const Carrousel = props => {
   const drinkModalOpen = useSelector(state => state.drinksModal.value);
   const dispatch = useDispatch();
 
-  const handleClick = async e => {
-    setId(e.target.id);
-    console.log('name: ', e.target.alt, '|| id: ', id);
-    // + fix: make modal wait for updated data to load
-    fetchCocktail(id, setData);
+  const handleClick = async (e, id) => {
+    const drink = await fetchCocktail(e.target.id);
+    //setData(drink.data.drinks[0]);
+    console.log(drink.data.drinks[0])
+    dispatch(changeCurrentDrink(drink.data.drinks[0]))
     dispatch(toggleDrinksModal());
+    // setData([])
   };
 
   const sliderSettings = {
@@ -82,7 +84,7 @@ const Carrousel = props => {
 
   return (
     <div>
-      {drinkModalOpen && (
+      {drinkModalOpen  && (
         <>
           <Modal />
             <DrinksModal data={data} />
@@ -101,7 +103,7 @@ const Carrousel = props => {
                       src={drink.strDrinkThumb}
                       alt={drink.strDrink}
                       id={drink.idDrink}
-                      onClick={handleClick}
+                      onClick={(e) => handleClick(e, drink.idDrink)}
                     />
                     <h2>{drink.strDrink}</h2>
                   </div>
