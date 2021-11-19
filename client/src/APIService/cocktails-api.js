@@ -45,10 +45,10 @@ export const searchDrinks = (input, setState) => {
     .catch(err => console.log(err));
 };
 
-export const fetchCocktail = (input, setState) => {
-  axios
+export const fetchCocktail = (input) => {
+  return axios
     .get(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${input}`)
-    .then(res => setState(res.data.drinks[0]))
+    .then(res => res)
     .catch(err => console.log(err));
 };
 
