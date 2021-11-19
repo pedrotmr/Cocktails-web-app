@@ -17,7 +17,7 @@ describe('Navbar adjusts for user auth status', () => {
 
   test('logged in user has correct links', () => {
     const history = createMemoryHistory()
-    store.dispatch(toggleModalSignIn())
+    // store.dispatch(toggleModalSignIn())
 
     render(
       <Provider store={store}>
