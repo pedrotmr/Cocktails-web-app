@@ -28,6 +28,7 @@ export const cocktailsApi = createApi({
 });
 
 // Fetching from multiples parameters
+// + maybe refactor to set state in each component
 export const fetchAllDrinks = ([...args], setState) => {
   args.forEach(arg => {
     axios

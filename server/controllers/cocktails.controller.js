@@ -29,6 +29,7 @@ exports.createCocktail = async (req, res) => {
     // Had to disable authentication for creating drink to work... Do not know why
     // const cocktail = await Cocktail.create({ ...req.body, user: req.user.id });
     const cocktail = await Cocktail.create({ ...req.body });
+    console.log(cocktail);
     res.status(201).send(cocktail);
   } catch (error) {
     console.log(error);

@@ -8,6 +8,8 @@ const Search = () => {
 
   const handleChange = e => setInput(e.target.value);
 
+
+  // +add?: api call for drinks by name
   const handleSubmit = e => {
     e.preventDefault();
     searchDrinks(input, setResult);
@@ -26,14 +28,14 @@ const Search = () => {
               className='search-input'
               type='text'
               name='text'
-              placeholder='Search cokctails by ingredients...'
+              placeholder='Search cocktails by ingredients...'
               value={input}
               onChange={handleChange}
             />
           </form>
 
           <div className='section__cocktails'>
-            {result.length && <Carrousel list={result} title={'Result'} />}
+            {result.length > 0 && <Carrousel list={result} title={'Result'} />}
           </div>
         </div>
       </div>

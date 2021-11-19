@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Spirits = () => {
+
+  // refactor to be dynamic
   return (
     <>
       <div className='section section--spirits section--photoBg'>
