@@ -1,5 +1,0 @@
-{
-  "mongoURI": "mongodb+srv://sam:pass123@user-cocktails.auetv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-
-  "jwtSecret": "secret"
-}
