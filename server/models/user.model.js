@@ -1,18 +1,19 @@
-const mongoose = require('mongoose');
+const User = require('./../models/user.schema');
 
-const userSchema = mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-});
+async function findUser(email) {
+  return await User.findOne({ email });
+}
 
-module.exports = mongoose.model('User', userSchema);
+async function findUserById(id) {
+  return User.findById(id);
+}
+
+async function createUser(user) {
+  return await User.create(user);
+}
+
+module.exports = {
+  findUser,
+  findUserById,
+  createUser
+}
