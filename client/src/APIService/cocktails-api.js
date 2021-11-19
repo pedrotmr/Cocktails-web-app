@@ -30,18 +30,24 @@ export const cocktailsApi = createApi({
 // Fetching from multiples parameters
 // + maybe refactor to set state in each component
 export const fetchAllDrinks = ([...args], setState) => {
-  args.forEach(arg => {
-    axios
+ return args.map(arg => {
+   return axios
       .get(`https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=${arg}`)
-      .then(res => setState(prev => [...prev, ...res.data.drinks]))
+      .then(res => {
+        setState(prev => [...prev, ...res.data.drinks])
+        return res
+      })
       .catch(err => console.log(err));
   });
 };
 
 export const searchDrinks = (input, setState) => {
-  axios
+  return axios
     .get(`https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=${input}`)
-    .then(res => setState(res.data.drinks))
+    .then(res => {
+      setState(res.data.drinks)
+      return res.data.drinks
+    })
     .catch(err => console.log(err));
 };
 

@@ -7,6 +7,7 @@ import { createMockStore } from '../../utils/mock-store';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { toggleModalSignIn } from '../../redux/features/signIn-modal/signIn-modal';
+import {login} from '../../redux/features/users/users.auth'
 
 let store;
 
@@ -17,33 +18,59 @@ describe('Navbar adjusts for user auth status', () => {
 
   test('logged in user has correct links', () => {
     const history = createMemoryHistory()
-    // store.dispatch(toggleModalSignIn())
-
+    store.dispatch(login())
+    const navLinks = ['Cocktails', 'Spirits', 'Search'];
     render(
       <Provider store={store}>
         <Router location={history.location} navigator={history}>
-          <Navbar navbar={['Test1', 'Test2', 'Test3']}/>
+          <Navbar navLinks = {navLinks}/>
         </Router>
       </Provider>  
     )
+    screen.getByText(/juicy/)
+    screen.getByText(/Cocktails/)
+    screen.getByText(/My Bar/)
+    screen.getByText(/Post a Drink/)
+    const signUp = screen.queryByText(/Sign Up/)
+    expect(signUp).toBeNull()
   })
+
+
+
+  test('user that is not logged in gets a sign in link', () => {
+    const history = createMemoryHistory()
+    const navLinks = ['Cocktails', 'Spirits', 'Search'];
+    render(
+      <Provider store={store}>
+        <Router location={history.location} navigator={history}>
+          <Navbar navLinks = {navLinks}/>
+        </Router>
+      </Provider>  
+    )
+    screen.getByText(/Sign Up/)
+    screen.getByText(/Sign In/)
+    const myBar = screen.queryByText(/My Bar/)
+    expect(myBar).toBeNull()
+  })
+
+
+
+
+  test('Should render spirits instead of navlinks if passed', () => {
+    const history = createMemoryHistory()
+    const navSpirits = ['Vodka', 'Gin', 'Rum', 'Whiskey', 'Tequila', 'Brandy'];
+    render(
+      <Provider store={store}>
+        <Router location={history.location} navigator={history}>
+          <Navbar navSpirits = {navSpirits}/>
+        </Router>
+      </Provider>  
+    )
+    screen.getByText(/Vodka/)
+    screen.getByText(/Gin/)
+    const cocktails = screen.queryByText(/Cocktails/)
+    expect(cocktails).toBeNull()
+  })
+  
 })
 
-// function render(
-//   ui,
-//   {
-//     preloadedState,
-//     store = configureStore({ reducer: { user: userReducer }, preloadedState }),
-//     ...renderOptions
-//   } = {}
-// ) {
-//   function Wrapper({ children }) {
-//     return <Provider store={store}>{children}</Provider>
-//   }
-//   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions })
-// }
-
-// // re-export everything
-// export * from '@testing-library/react'
-// // override render method
-// export { render }
