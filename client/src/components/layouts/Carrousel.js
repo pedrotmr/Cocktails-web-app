@@ -11,18 +11,13 @@ import { toggleDrinksModal } from '../../redux/features/drinks-modal/drinks-moda
 import { changeCurrentDrink } from '../../redux/features/currentDrink/currentDrink';
 
 const Carrousel = props => {
-  const [id, setId] = useState('');
-  const [data, setData] = useState([]);
   const drinkModalOpen = useSelector(state => state.drinksModal.value);
   const dispatch = useDispatch();
 
   const handleClick = async (e, id) => {
     const drink = await fetchCocktail(e.target.id);
-    //setData(drink.data.drinks[0]);
-    console.log(drink.data.drinks[0])
     dispatch(changeCurrentDrink(drink.data.drinks[0]))
     dispatch(toggleDrinksModal());
-    // setData([])
   };
 
   const sliderSettings = {
@@ -87,7 +82,7 @@ const Carrousel = props => {
       {drinkModalOpen  && (
         <>
           <Modal />
-            <DrinksModal data={data} />
+            <DrinksModal />
           <Modal />
         </>
       )}
