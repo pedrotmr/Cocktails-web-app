@@ -46,6 +46,7 @@ mocks.updatedCocktail = {
 
 mocks.testUsers = [
   {
+    _id: new mongoose.Types.ObjectId("6196bb716c33f7f7c8cfaed3"),
     name: "Peter",
     email: "peter@peter.peter",
     password: "wordpass"
@@ -61,5 +62,12 @@ mocks.testUsers = [
     password: "wordpass"
   },
 ]
+
+mocks.createTestUser = {
+  _id: new mongoose.Types.ObjectId("6196bb716c33f7f7c8cfaee5"),
+  name: "Tester",
+  email: "test@test.test",
+  password: "testpass"
+}
 
 module.exports = mocks;
