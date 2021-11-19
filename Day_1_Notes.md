@@ -3,6 +3,7 @@ Server:
 to do: 
   1. add database
   2. unit tests for components/functions that are working properly
+    - add to spirits component first, should be static data
   3. fix code and upgrade
   4. E2E testing
 
@@ -17,3 +18,8 @@ redux:
 
 General notes/questions: 
 - loadUser?
+- JWT failing after expiration...still exists on client side? 
+- carouselDB?
+
+Extra: 
+- sidebar

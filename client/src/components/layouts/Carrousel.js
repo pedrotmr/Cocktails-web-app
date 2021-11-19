@@ -4,6 +4,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useSelector, useDispatch } from 'react-redux';
 import Modal from 'react-modal';
+//++ Drinks Modal not working
 import DrinksModal from './DrinksModal';
 import { fetchCocktail } from '../../APIService/cocktails-api';
 import { toggleDrinksModal } from '../../redux/features/drinks-modal/drinks-modal';
@@ -14,9 +15,10 @@ const Carrousel = props => {
   const drinkModalOpen = useSelector(state => state.drinksModal.value);
   const dispatch = useDispatch();
 
-  const handleClick = e => {
+  const handleClick = async e => {
     setId(e.target.id);
     console.log('name: ', e.target.alt, '|| id: ', id);
+    // + fix: make modal wait for updated data to load
     fetchCocktail(id, setData);
     dispatch(toggleDrinksModal());
   };
@@ -83,7 +85,7 @@ const Carrousel = props => {
       {drinkModalOpen && (
         <>
           <Modal />
-          <DrinksModal data={data} />
+            <DrinksModal data={data} />
           <Modal />
         </>
       )}

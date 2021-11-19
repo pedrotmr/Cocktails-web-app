@@ -7,10 +7,13 @@ const DrinksModal = ({ data }) => {
   const dispatch = useDispatch();
   console.log(data.strDrink);
 
+  // +fix: props being passed thru, also see carousel component
+
   return (
     <>
       <div className='global-bg' onClick={() => dispatch(toggleDrinksModal())}></div>
       <div className='drink-modal'>
+        {/* + fix dispatch below */}
         <FaHeart className='drink-modal__like' onClick={dispatch} />
         <div className='drink-modal__wrapper'>
           <div className='drink-modal__img-wrapper'>
@@ -21,6 +24,7 @@ const DrinksModal = ({ data }) => {
             <h1 className='drink-modal__name'>{data.strDrink}</h1>
 
             <div className='drink-modal__ingredients'>
+              {/* + loop through/dynamic? */}
               <table>
                 <tr>
                   <th>Measure</th>

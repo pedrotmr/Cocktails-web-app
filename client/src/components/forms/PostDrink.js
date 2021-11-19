@@ -9,6 +9,7 @@ const PostDrink = () => {
   const sideBarOpen = useSelector(state => state.sidebar.value);
   const navLinks = ['Cocktails', 'Spirits', 'Search'];
 
+  // +fix: create initial state, use here and line 27
   const [cocktail, setCocktail] = useState({
     name: '',
     ingredients: '',
@@ -16,12 +17,14 @@ const PostDrink = () => {
     picture: '',
   });
 
+  // + fix: delete below line and update dependencies to cocktail.name, etc...
   const { name, ingredients, instructions, picture } = cocktail;
 
   const onChange = e => setCocktail({ ...cocktail, [e.target.name]: e.target.value });
 
   const onSubmit = e => {
     e.preventDefault();
+    // +fix in API client, function not active yet
     apiService.createCocktail(cocktail);
     setCocktail({
       name: '',

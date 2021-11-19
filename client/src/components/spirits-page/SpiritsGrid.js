@@ -17,6 +17,7 @@ const SpiritsGrid = props => {
       <div className='spirits__grid'>
         {props.list.map(drink => {
           return (
+            // update to be modal popup instead of new page
             <Link
               to={drink.idDrink}
               id={drink.idDrink}

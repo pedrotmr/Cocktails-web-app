@@ -12,6 +12,7 @@ const HeroSection = () => {
   const dispatch = useDispatch();
   const [userName, setUserName] = useState('');
 
+  // +maybe: move user auth one level up to Home, would need to pass down username as prop
   const accessToken = localStorage.getItem('accessToken');
   const getProfile = async accessToken => {
     const userInfo = await apiService.loadUser(accessToken);
@@ -21,6 +22,7 @@ const HeroSection = () => {
     }
   };
   useEffect(() => {
+    // +add: if(accessToken) ??
     getProfile(accessToken);
   }, [accessToken]);
 
