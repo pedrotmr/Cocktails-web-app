@@ -8,10 +8,12 @@ import Register from './forms/Register';
 import MyBar from './profile/MyBar';
 import PostDrink from './forms/PostDrink';
 import { fetchAllDrinks } from '../APIService/cocktails-api';
+import UpdateDrink from './forms/UpdateDrink'
 import {
   useGetVodkaCocktailsQuery,
   useGetGinCocktailsQuery,
 } from '../APIService/cocktails-api';
+
 
 const App = () => {
   const isAuthenticated = useSelector(state => state.userAuth.value);
@@ -55,7 +57,7 @@ const App = () => {
           <Route path='/tequila' element={<SpiritPage tequila={tequila} />} />
           <Route path='/whiskey' element={<SpiritPage whiskey={whiskey} />} />
           <Route path='/brandy' element={<SpiritPage brandy={brandy} />} />
-
+          <Route path='/updateDrink/:drinkName/:ingredients/:instructions' element = {<UpdateDrink />} />
           {/* TRIED TO IMPLEMENT WITH MAP FUNCTION... DID NOT WORK */}
           {/* {spirits.map(spirit => {
             return <Route path={`/${spirit}`} element={<SpiritPage spirit={spirit} />} />;

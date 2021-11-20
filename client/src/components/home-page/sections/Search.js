@@ -5,7 +5,6 @@ import { searchDrinks } from '../../../APIService/cocktails-api';
 const Search = () => {
   const [input, setInput] = useState('');
   const [result, setResult] = useState('');
-  console.log(result)
   const handleChange = e => setInput(e.target.value);
 
 

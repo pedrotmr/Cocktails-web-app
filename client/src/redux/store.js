@@ -7,6 +7,7 @@ import modalSignInReducer from './features/signIn-modal/signIn-modal';
 import favouritesReducer from './features/favourites/favourites';
 import drinksModalReducer from './features/drinks-modal/drinks-modal';
 import currentDrinkReducer from './features/currentDrink/currentDrink';
+import userMadeDrinkReducer from './features/userMadeDrink/userMadeDrink';
 
 export const store = configureStore({
   reducer: {
@@ -16,7 +17,8 @@ export const store = configureStore({
     favourites: favouritesReducer,
     drinksModal: drinksModalReducer,
     [cocktailsApi.reducerPath]: cocktailsApi.reducer,
-    currentDrink: currentDrinkReducer
+    currentDrink: currentDrinkReducer,
+    userMadeDrink: userMadeDrinkReducer
   },
   middleware: getDefaultMiddleware => {
     return getDefaultMiddleware().concat(cocktailsApi.middleware);
