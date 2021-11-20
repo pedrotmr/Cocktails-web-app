@@ -8,10 +8,9 @@ const Search = () => {
   const handleChange = e => setInput(e.target.value);
 
 
-  // +add?: api call for drinks by name
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    searchDrinks(input, setResult);
+    await searchDrinks(input, setResult);
     setInput('');
   };
 

@@ -4,7 +4,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useSelector, useDispatch } from 'react-redux';
 import Modal from 'react-modal';
-//++ Drinks Modal not working
 import DrinksModal from './DrinksModal';
 import { fetchCocktail } from '../../APIService/cocktails-api';
 import { toggleDrinksModal } from '../../redux/features/drinks-modal/drinks-modal';
@@ -22,14 +21,14 @@ const Carrousel = props => {
 
   const sliderSettings = {
     infinite: true,
-    slidesToShow: 4,
+    slidesToShow: Math.min(props.list.length, 4),
     slidesToScroll: 2,
     speed: 500,
     responsive: [
       {
         breakpoint: 1100,
         settings: {
-          slidesToShow: 3.5,
+          slidesToShow: Math.min(props.list.length, 3.5),
           slidesToScroll: 3,
           infinite: true,
         },
@@ -37,7 +36,7 @@ const Carrousel = props => {
       {
         breakpoint: 1010,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: Math.min(props.list.length, 3),
           slidesToScroll: 2,
           infinite: true,
         },
@@ -45,7 +44,7 @@ const Carrousel = props => {
       {
         breakpoint: 830,
         settings: {
-          slidesToShow: 2.5,
+          slidesToShow: Math.min(props.list.length, 2.5),
           slidesToScroll: 2,
           infinite: true,
         },
@@ -53,7 +52,7 @@ const Carrousel = props => {
       {
         breakpoint: 730,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: Math.min(props.list.length, 2),
           slidesToScroll: 1,
           infinite: true,
         },
@@ -61,7 +60,7 @@ const Carrousel = props => {
       {
         breakpoint: 630,
         settings: {
-          slidesToShow: 1.6,
+          slidesToShow: Math.min(props.list.length, 1.5),
           slidesToScroll: 1,
           initialSlide: 0,
         },
@@ -69,7 +68,7 @@ const Carrousel = props => {
       {
         breakpoint: 510,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: Math.min(props.list.length, 1),
           slidesToScroll: 1,
           initialSlide: 0,
         },

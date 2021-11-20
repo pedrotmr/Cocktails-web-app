@@ -36,7 +36,6 @@ exports.createCocktail = async (req, res) => {
   }
 };
 
-// DID NOT USE DO FAR
 exports.getAllMyCocktails = async (req, res) => {
   try {
     const cocktails = await CocktailModel.findCocktails("user", req.user._id);
@@ -47,7 +46,6 @@ exports.getAllMyCocktails = async (req, res) => {
   }
 };
 
-// DID NOT USE DO FAR
 exports.updateCocktail = async (req, res) => {
   const { name, ingredients, instructions, picture } = req.body;
 
@@ -71,7 +69,6 @@ exports.updateCocktail = async (req, res) => {
   }
 };
 
-// DID NOT USE DO FAR
 exports.deleteCocktail = async (req, res) => {
   try {
     const cocktail = await CocktailModel.getSingleCocktail(req.params.id);

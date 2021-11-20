@@ -52,7 +52,10 @@ apiService.getAllUsersCocktails = async setState => {
     mode: 'cors',
   })
     .then(res => res.json())
-    .then(res => setState(res))
+    .then(res => {
+      setState && setState(res)
+      return res
+    })
     .catch(err => console.log(err));
 };
 
