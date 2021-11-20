@@ -14,7 +14,7 @@ exports.authMiddleware = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    console.log(error);
+    console.log('Error authenticating user');
     res.status(401).send('Unauthorized access');
   }
 };

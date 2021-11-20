@@ -3,22 +3,19 @@ const expect = chai.expect;
 const should = chai.should();
 const Cocktail = require('../models/cocktail.schema');
 const CocktailModel = require('../models/cocktail.model');
-const connectDB = require('../db');
+const {connectDB} = require('../db');
 const mocks = require('./mocks');
-
-connectDB();
+const mongoose = require('mongoose');
 
 let ids = [];
 
 describe('testing cocktail model', () => {
-<<<<<<< Updated upstream:server/test/models.test.js
-  beforeEach('create test drinks', async function (){
-    this.timeout(5000)
-=======
-  
-  beforeEach('create test drinks', async () => {
+  before('connect to db', async () => {
+    await connectDB('model-cocktails');
     await Cocktail.deleteMany();
->>>>>>> Stashed changes:server/test/models.cocktails.test.js
+  })
+
+  beforeEach('create test drinks', async () => {
     const drinks = await Cocktail.create(mocks.testCocktails);
     ids = drinks.map(drink => drink._id);
   });
@@ -93,5 +90,9 @@ describe('testing cocktail model', () => {
       deleted.name.should.equal("newly created");
       newAll.length.should.equal(all.length - 1);
     })
+  })
+
+  after('disconnect DB', async () => {
+    await mongoose.connection.close();
   })
 })
