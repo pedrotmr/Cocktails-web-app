@@ -11,7 +11,9 @@ import { useSelector, useDispatch } from 'react-redux';
 const MyBar = ({ navLinks }) => {
   const sideBarOpen = useSelector(state => state.sidebar.value);
   // const dispatch = useDispatch();
-  const [usersDrinks, setUsersDrinks] = useState([]);
+  const [allUsersDrinks, setAllUsersDrinks] = useState([]);
+
+
   // +delete?: not sure why making this general API call
   // const { data = [], isFetching } = useGetGinCocktailsQuery();
 
@@ -25,7 +27,8 @@ const MyBar = ({ navLinks }) => {
   // };
 
   useEffect(() => {
-    apiService.getAllUsersCocktails(setUsersDrinks);
+    apiService.getAllUsersCocktails(setAllUsersDrinks);
+    apiService.getAllMyCocktails()
     // + delete? not sure what this is doing
     // getProfile(accessToken);
   }, []);
@@ -37,7 +40,9 @@ const MyBar = ({ navLinks }) => {
       <div className='section section'>
         <div className='section__cocktails'>
           {/* +fix: get normal carousel working and use here */}
-          <CarrouselDB list={usersDrinks} title={'What people are sharing'} />
+          <CarrouselDB list={allUsersDrinks} title={'What people are sharing'} />
+          <CarrouselDB list = {allUsersDrinks} title ={"My Created Drinks"} />
+          <CarrouselDB list ={allUsersDrinks} title = {"My Favorite Drinks"} />
           {/* That shoulb be liked video which i did not have time to implement */}
           {/* {!isFetching && <Carrousel list={data.drinks} title={'Drinks you liked'} />} */}
         </div>

@@ -32,21 +32,21 @@ exports.create = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await UserModel.findUser({ email });
+    const user = await UserModel.findUser( email );
     if (!user) {
-      return res.status(409).send({ error: '409', message: 'Invalid credentials' });
+      return res.status(409).send({ error: '409', message: 'Invalid username' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
-      return res.status(409).send({ error: '409', message: 'Invalid credentials' });
+      return res.status(409).send({ error: '409', message: 'Invalid pass' });
     const accessToken = jwt.sign({ _id: user._id }, config.get('jwtSecret'), {
       expiresIn: 36000,
     });
     res.status(200).send({ accessToken });
   } catch (error) {
     console.log(error);
-    res.status(406).send({ message: 'Invalid credentials' });
+    res.status(406).send({ message: 'error' });
   }
 };
 
