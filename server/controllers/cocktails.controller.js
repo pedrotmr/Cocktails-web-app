@@ -11,6 +11,7 @@ exports.getAllUsersCocktails = async (req, res) => {
 };
 
 exports.getCocktail = async (req, res) => {
+  console.log(req.params)
   try {
     const cocktail = await CocktailModel.getSingleCocktail(req.params.id);
     res.status(200).send(cocktail);

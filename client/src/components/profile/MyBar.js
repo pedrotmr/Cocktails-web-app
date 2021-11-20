@@ -42,9 +42,9 @@ const MyBar = ({ navLinks }) => {
       <div className='section section'>
         <div className='section__cocktails'>
           {/* +fix: get normal carousel working and use here */}
-          <CarrouselDB list={allUsersDrinks} title={'What people are sharing'} />
-          <CarrouselDB list = {myDrinks} title ={"My Created Drinks"} />
-          <CarrouselDB list ={allUsersDrinks} title = {"My Favorite Drinks"} />
+          <CarrouselDB list={allUsersDrinks} title={'What people are sharing'} userDrinks ={false} />
+          <CarrouselDB list = {myDrinks} title ={"My Created Drinks"} userDrinks ={true} />
+          <CarrouselDB list ={allUsersDrinks} title = {"My Favorite Drinks"} userDrinks ={false}/>
           {/* That shoulb be liked video which i did not have time to implement */}
           {/* {!isFetching && <Carrousel list={data.drinks} title={'Drinks you liked'} />} */}
         </div>

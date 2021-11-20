@@ -59,9 +59,7 @@ export const currentDrinkSlice = createSlice({
   initialState,
   reducers: {
     changeCurrentDrink: (state, action) => {
-      console.log(action, 'action');
       state.drinks = action.payload
-      console.log(state, 'state')
     },
   },
 });

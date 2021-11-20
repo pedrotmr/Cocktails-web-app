@@ -8,16 +8,18 @@ import Modal from 'react-modal';
 import apiService from '../../APIService/cocktails-db-api';
 import { toggleDrinksModal } from '../../redux/features/drinks-modal/drinks-modal';
 import { changeCurrentDrink } from '../../redux/features/currentDrink/currentDrink';
+import { turnOnUserMadeDrink } from '../../redux/features/userMadeDrink/userMadeDrink';
 import UserDrinksModal from './UserDrinksModal';
 
 const CarrouselDB = props => {
   const drinkModalOpen = useSelector(state => state.drinksModal.value);
-  console.log(drinkModalOpen)
   const dispatch = useDispatch();
   const handleClick = async (e, id) => {
-    // const accessToken = localStorage.getItem('accessToken');
     const drink = await apiService.getCocktail(e.target.id);
     dispatch(changeCurrentDrink(drink))
+    if(props.userDrinks) {
+      dispatch(turnOnUserMadeDrink())
+    }
     dispatch(toggleDrinksModal());
   };
   const sliderSettings = {
@@ -29,7 +31,7 @@ const CarrouselDB = props => {
       {
         breakpoint: 1100,
         settings: {
-          slidesToShow: 3.5,
+          slidesToShow: Math.min(props.list.length, 3.5),
           slidesToScroll: 3,
           infinite: true,
         },
@@ -37,7 +39,7 @@ const CarrouselDB = props => {
       {
         breakpoint: 1010,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: Math.min(props.list.length, 3),
           slidesToScroll: 2,
           infinite: true,
         },
@@ -45,7 +47,7 @@ const CarrouselDB = props => {
       {
         breakpoint: 830,
         settings: {
-          slidesToShow: 2.5,
+          slidesToShow: Math.min(props.list.length, 2.5),
           slidesToScroll: 2,
           infinite: true,
         },
@@ -53,7 +55,7 @@ const CarrouselDB = props => {
       {
         breakpoint: 730,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: Math.min(props.list.length, 2),
           slidesToScroll: 1,
           infinite: true,
         },
@@ -61,7 +63,7 @@ const CarrouselDB = props => {
       {
         breakpoint: 630,
         settings: {
-          slidesToShow: 1.6,
+          slidesToShow: Math.min(props.list.length, 1.6),
           slidesToScroll: 1,
           initialSlide: 0,
         },
@@ -69,7 +71,7 @@ const CarrouselDB = props => {
       {
         breakpoint: 510,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: Math.min(props.list.length, 1),
           slidesToScroll: 1,
           initialSlide: 0,
         },
@@ -82,7 +84,7 @@ const CarrouselDB = props => {
       {drinkModalOpen  && (
         <>
           <Modal />
-            <UserDrinksModal />
+            <UserDrinksModal userDrinks = {props.userDrinks} />
           <Modal />
         </>
       )}
