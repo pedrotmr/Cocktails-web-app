@@ -33,6 +33,7 @@ describe.only('test server endpoints', () => {
     await Cocktail.create(mocks.testCocktails);
   })
 
+  
   // No auth required:
   describe('POST /register', () => {
     it('should create a new user', async () => {
