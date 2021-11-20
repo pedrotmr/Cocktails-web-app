@@ -91,7 +91,7 @@ const Carrousel = props => {
         <Slider {...sliderSettings}>
           {props.list.map(drink => {
             return (
-              <>
+              <div key = {drink.idDrink}>
                 <nav className='link' key={drink.idDrink}>
                   <div className='section__drinks-list__card'>
                     <img
@@ -103,7 +103,7 @@ const Carrousel = props => {
                     <h2>{drink.strDrink}</h2>
                   </div>
                 </nav>
-              </>
+              </div>
             );
           })}
         </Slider>

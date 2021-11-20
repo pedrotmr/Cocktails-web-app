@@ -23,7 +23,10 @@ const HeroSection = () => {
   };
   useEffect(() => {
     // +add: if(accessToken) ??
-    getProfile(accessToken);
+    if (accessToken) {
+      console.log(accessToken)
+      getProfile(accessToken);
+    }
   }, [accessToken]);
 
   return (
