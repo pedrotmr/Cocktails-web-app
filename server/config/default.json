@@ -1,5 +1,7 @@
 {
   "mongoURI": "mongodb+srv://trent:pass123@user-cocktails.auetv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
 
+  "mongoTestURI": "mongodb+srv://sam:pass123@cluster0.a10rz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+
   "jwtSecret": "secret"
 }

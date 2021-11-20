@@ -9,7 +9,7 @@ exports.create = async (req, res) => {
     if (!name || !email || !password || !password2) {
       return res.status(400).send({ error: '400', message: 'Please fill in all fields' });
     }
-    const user = await UserModel.findUser({ email });
+    const user = await UserModel.findUser( email );
     if (user) {
       return res.status(409).send({ error: '409', message: 'User already exists' });
     }
@@ -32,7 +32,7 @@ exports.create = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await UserModel.findUser({ email });
+    const user = await UserModel.findUser( email );
     if (!user) {
       return res.status(409).send({ error: '409', message: 'Invalid credentials' });
     }

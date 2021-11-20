@@ -3,15 +3,17 @@ const expect = chai.expect;
 const should = chai.should();
 const User = require('../models/user.schema');
 const UserModel = require('../models/user.model');
-const connectDB = require('../db');
+const {connectDB} = require('../db');
 const mocks = require('./mocks');
+const mongoose = require('mongoose');
 
-connectDB();
 
 let ids = [];
 
 describe('testing user model', () => {
   before('add test users', async () => {
+    connectDB('model-users');
+    await User.deleteMany();
     const users = await User.create(mocks.testUsers);
     ids = users.map(user => user._id);
   })
@@ -54,5 +56,6 @@ describe('testing user model', () => {
 
   after('remove test users', async () => {
     ids.forEach(async id => await User.findByIdAndDelete(id));
+    mongoose.connection.close()
   })
 })

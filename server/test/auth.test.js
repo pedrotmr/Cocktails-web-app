@@ -5,12 +5,13 @@ const supertest = require('supertest');
 const sinon = require('sinon');
 const { authMiddleware } = require('../middlewares/auth');
 const mocks = require('./mocks');
-const connectDB = require('../db');
+const {connectDB} = require('../db');
 const User = require('../models/user.schema');
 const config = require('config');
 
 const testJWTCorrect = 'Bearer ' + jwt.sign({_id: mocks.createTestUser._id}, config.get('jwtSecret'));
 const testJWTWrongUser = 'Bearer ' + jwt.sign({_id: mocks.createTestCocktail._id}, 'test-secret-key');
+
 
 function testNext(req, res) {
   res.status(261).send('next func reached');
@@ -24,10 +25,11 @@ app.get('/authTest', authMiddleware, testCallback);
 
 const request = supertest(app);
 
-describe.only('test user auth', () => {
-
+describe('test user auth', () => {
+  
   before('create test user', async () => {
-    connectDB();
+    connectDB('auth-middleware');
+    await User.deleteMany();
     await User.create(mocks.createTestUser);
   })
 
@@ -42,7 +44,7 @@ describe.only('test user auth', () => {
     res.status.should.equal(401);
   })
 
-  it.only('should call next() if verified JWT and user', async () => {
+  it('should call next() if verified JWT and user', async () => {
     const res = await request.get('/authTest')
       .set('Authorization', testJWTCorrect);
       res.status.should.equal(261);
@@ -52,5 +54,6 @@ describe.only('test user auth', () => {
 
   after('remove test user', async () => {
     await User.findByIdAndDelete(mocks.createTestUser._id);
+    mongoose.connection.close();
   })
 })
