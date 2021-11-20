@@ -58,7 +58,7 @@ const App = () => {
           <Route path='/tequila' element={<SpiritPage tequila={tequila} />} />
           <Route path='/whiskey' element={<SpiritPage whiskey={whiskey} />} />
           <Route path='/brandy' element={<SpiritPage brandy={brandy} />} />
-          <Route path='/updateDrink/:drinkName/:ingredients/:instructions' element = {<UpdateDrink />} />
+          <Route path='/updateDrink/:drinkName/:ingredients/:instructions/:_id' element = {<UpdateDrink />} />
           {/* TRIED TO IMPLEMENT WITH MAP FUNCTION... DID NOT WORK */}
           {/* {spirits.map(spirit => {
             return <Route path={`/${spirit}`} element={<SpiritPage spirit={spirit} />} />;

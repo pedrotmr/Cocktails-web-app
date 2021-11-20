@@ -33,7 +33,7 @@ const UserDrinksModal = ( ) => {
                 <p>{currentDrink.ingredients}</p>
                 {userMadeDrink && <button onClick={
                   () => {
-                    navigate(`/updateDrink/${currentDrink.name}/${currentDrink.ingredients}/${currentDrink.instructions}`)
+                    navigate(`/updateDrink/${currentDrink.name}/${currentDrink.ingredients}/${currentDrink.instructions}/${currentDrink._id}`)
                   }
                 }>Update Drink</button>}
             </div>
