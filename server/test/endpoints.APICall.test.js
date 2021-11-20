@@ -1,19 +1,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const expect = require('chai').expect;
-const jwt = require('jsonwebtoken');
 const supertest = require('supertest');
+const jwt = require('jsonwebtoken');
 const sinon = require('sinon');
 const mocks = require('./mocks');
 const {connectDB} = require('../db');
 const User = require('../models/user.schema');
 const Cocktail = require('../models/cocktail.schema');
-const config = require('config');
 const router = require('../router');
+const config = require('config');
 
-
-const testJWTCorrect = 'Bearer ' + jwt.sign({_id: mocks.createTestUser._id}, config.get('jwtSecret'));
-const testJWTWrongUser = 'Bearer ' + jwt.sign({_id: mocks.createTestCocktail._id}, 'test-secret-key');
+const testJWT1 = 'Bearer ' + jwt.sign({_id: mocks.testUsers[0]._id}, config.get('jwtSecret'));
+const testJWT2 = 'Bearer ' + jwt.sign({_id: mocks.testUsers[1]._id}, config.get('jwtSecret'));
 
 const app = express();
 app.use(express.json());
@@ -33,69 +32,120 @@ describe.only('test server endpoints', () => {
     await Cocktail.create(mocks.testCocktails);
   })
 
+
+  //no auth required
+  describe('does not require user auth', () => {
+    describe('non-covered endpoint', () => {
+      it('should return error message', async () => {
+        const res = await request.get('/wrong');
+        expect(res.text).to.equal('Sorry, not found 😞');
+      })
+    })  
   
-  // No auth required:
-  describe('POST /register', () => {
-    it('should create a new user', async () => {
-      const res = await request.post('/register')
-        .send(mocks.registerUser);
-      expect(res.status).to.equal(201);
-      expect(res.body).to.haveOwnProperty('accessToken');
+    describe('POST /register', () => {
+      it('should create a new user', async () => {
+        const res = await request.post('/register')
+          .send(mocks.registerUser);
+        expect(res.status).to.equal(201);
+        expect(res.body).to.haveOwnProperty('accessToken');
+      })
+  
+      it('should fail if not sent full info', async () => {
+        const res = await request.post('/register')
+          .send(mocks.loginUser);
+        expect(res.status).to.equal(400);
+        expect(res.body.message).to.equal('Please fill in all fields');
+      })
+  
+      it('should fail if user exists or passwords don\'t match', async () => {
+        const res = await request.post('/register')
+          .send(mocks.dupeRegisterUser);
+        expect(res.status).to.equal(409);
+        expect(res.body.message).to.equal('User already exists');
+      })
+    })
+  
+    describe('POST /login', () => {
+      it('should log a user in', async () => {
+        const res = await request.post('/login')
+          .send(mocks.loginUser);
+        expect(res.status).to.equal(200);
+        expect(res.body).to.haveOwnProperty('accessToken');
+      })
+  
+      it('should fail if not sent full info', async () => {
+        const res = await request.post('/login')
+          .send({ email: "email"});
+        expect(res.status).to.equal(400);
+        expect(res.body.message).to.equal('Please fill in all fields');
+      })
+  
+      it('should fail if no user or password not a match', async () => {
+        const resNoUser = await request.post('/login')
+          .send({ email: 'h', password: 'l' });
+        const resBadPass = await request.post('/login')
+          .send({ email: 'steven@steven.steven', password: 'wrongpass'});
+        expect(resNoUser.status && resBadPass.status).to.equal(409);
+        expect(resNoUser.body.message && resBadPass.body.message).to.equal('Invalid credentials');
+      })
+    })
+  
+    describe('GET /cocktails', () => {
+      it('should return all user cocktails', async () => {
+        const res = await request.get('/cocktails')
+        res.status.should.equal(200);
+        res.body.length.should.equal(3);
+        await Cocktail.create(mocks.createTestCocktail);
+        const res2 = await request.get('/cocktails')
+        res2.body.length.should.equal(4);
+        res2.body.map(r => r.name).should.include('newly created' && 'Test');
+      })
     })
 
-    it('should fail if not sent full info', async () => {
-      const res = await request.post('/register')
-        .send(mocks.loginUser);
-      expect(res.status).to.equal(400);
-      expect(res.body.message).to.equal('Please fill in all fields');
-    })
-
-    it('should fail if user exists or passwords don\'t match', async () => {
-      const resDupe = await request.post('/register')
-        .send(mocks.dupeRegisterUser);
-      const resMismatch = await request.post('/register')
-        .send(mocks.registerUserMismatchPass);
-      expect(resDupe.status).to.equal(409);
-      expect(resDupe.body.message).to.equal('User already exists');
-      expect(resMismatch.status).to.equal(409);
-      expect(resMismatch.body.message).to.equal('Enter valid password, ensure both passwords match');
+    describe('GET /cocktail/:id', () => {
+      it('should return the specified cocktail', async () => {
+        const res = await request.get(`/cocktail/${mocks.testCocktails[1]._id.toString()}`);
+        expect(res.body.name).to.equal('Please work');
+      })
     })
   })
 
-  describe('POST /login', () => {
-    it('should log a user in', async () => {
-      const res = await request.post('/login')
-        .send(mocks.loginUser);
-      expect(res.status).to.equal(200);
-      expect(res.body).to.haveOwnProperty('accessToken');
+
+  // requires auth
+  describe.only('requires user auth', () => {
+    describe('GET /', () => {
+      it('should return user info', async () => {
+        const res1 = await request.get('/')
+          .set('Authorization', testJWT1);
+        expect(res1.body.name).to.equal('Peter');
+        const res2 = await request.get('/')
+          .set('Authorization', testJWT2);
+        expect(res2.body.name).to.equal('Steven');
+      })
     })
 
-    it('should fail if not sent full info', async () => {
-      const res = await request.post('/login')
-        .send({ email: "email"});
-      expect(res.status).to.equal(400);
-      expect(res.body.message).to.equal('Please fill in all fields');
+    describe('GET /myCocktails', () => {
+      it('should return user\'s cocktails', async () => {
+        const res = await request.get('/myCocktails')
+          .set('Authorization', testJWT1);
+        expect(res.body.length).to.equal(2);
+        expect(res.body.map(d => d.name)).to.include('Please work' && 'Final test');
+        const res2 = await request.get('/myCocktails')
+          .set('Authorization', testJWT2);
+        expect(res2.body.length).to.equal(0);
+      })
     })
 
-    it('should fail if no user or password not a match', async () => {
-      const resNoUser = await request.post('/login')
-        .send({ email: 'h', password: 'l' });
-      const resBadPass = await request.post('/login')
-        .send({ email: 'steven@steven.steven', password: 'wrongpass'});
-      expect(resNoUser.status && resBadPass.status).to.equal(409);
-      expect(resNoUser.body.message && resBadPass.body.message).to.equal('Invalid credentials');
-    })
-  })
-
-  describe.only('GET /cocktails', () => {
-    it('should return all user cocktails', async () => {
-      const res = await request.get('/cocktails')
-      res.status.should.equal(200);
-      res.body.length.should.equal(3);
-      await Cocktail.create(mocks.createTestCocktail);
-      const res2 = await request.get('/cocktails')
-      res2.body.length.should.equal(4);
-      res2.body.map(r => r.name).should.include('newly created' && 'Test');
+    describe('POST /', () => {
+      it('should create a new cocktail', async () => {
+        const create = await request.post('/')
+          .set('Authorization', testJWT2)
+          .send(mocks.newCocktail);
+        expect(create.status).to.equal(201);
+        const found = await Cocktail.findOne({name: mocks.newCocktail.name});
+        expect(found._doc).to.haveOwnProperty('name' && 'instructions' && 'picture');
+        expect(found._doc.picture).to.equal('fakeurl.web');
+      })
     })
   })
 

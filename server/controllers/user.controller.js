@@ -37,11 +37,11 @@ exports.login = async (req, res) => {
     }
     const user = await UserModel.findUser( email );
     if (!user) {
-      return res.status(409).send({ error: '409', message: 'Invalid username' });
+      return res.status(409).send({ error: '409', message: 'Invalid credentials' });
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
-      return res.status(409).send({ error: '409', message: 'Invalid pass' });
+      return res.status(409).send({ error: '409', message: 'Invalid credentials' });
     const accessToken = jwt.sign({ _id: user._id }, config.get('jwtSecret'), {
       expiresIn: 36000,
     });

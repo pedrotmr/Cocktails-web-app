@@ -14,7 +14,7 @@ mocks.testCocktails = [
   },
   {
     _id: mongoose.Types.ObjectId("6197d84878eb0c27e8ea32ae"),
-    user: new mongoose.Types.ObjectId(),
+    user: mongoose.Types.ObjectId("6196bb716c33f7f7c8cfaed3"),
     name: "Please work",
     ingredients: "test ingredients",
     instructions: "Steam it",
@@ -22,7 +22,7 @@ mocks.testCocktails = [
   },
   {
     _id: mongoose.Types.ObjectId("6197d84878eb0c27e8ea5aaa"),
-    user: new mongoose.Types.ObjectId(),
+    user: mongoose.Types.ObjectId("6196bb716c33f7f7c8cfaed3"),
     name: "Final test",
     ingredients: "test ingredients",
     instructions: "Bake it",
@@ -33,6 +33,13 @@ mocks.testCocktails = [
 mocks.createTestCocktail = {
   _id: new mongoose.Types.ObjectId("6197d84878eb0c27e8ea4eee"),
   user: new mongoose.Types.ObjectId(),
+  name: "newly created",
+  ingredients: "bananas",
+  instructions: "Fry it",
+  picture: 'fakeurl.web',
+}
+
+mocks.newCocktail = {
   name: "newly created",
   ingredients: "bananas",
   instructions: "Fry it",
