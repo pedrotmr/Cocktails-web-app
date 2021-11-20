@@ -18,14 +18,14 @@ const PostDrink = () => {
   });
 
   // + fix: delete below line and update dependencies to cocktail.name, etc...
-  const { name, ingredients, instructions, picture } = cocktail;
+  const { name, ingredients, instructions } = cocktail;
 
   const onChange = e => setCocktail({ ...cocktail, [e.target.name]: e.target.value });
 
   const onSubmit = e => {
     e.preventDefault();
-    // +fix in API client, function not active yet
-    apiService.createCocktail(cocktail);
+    const accessToken = localStorage.getItem('accessToken');
+    apiService.createCocktail(cocktail, accessToken);
     setCocktail({
       name: '',
       ingredients: '',

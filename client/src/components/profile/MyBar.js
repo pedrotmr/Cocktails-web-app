@@ -12,6 +12,7 @@ const MyBar = ({ navLinks }) => {
   const sideBarOpen = useSelector(state => state.sidebar.value);
   // const dispatch = useDispatch();
   const [allUsersDrinks, setAllUsersDrinks] = useState([]);
+  const [myDrinks, setMyDrinks] = useState([]);
 
 
   // +delete?: not sure why making this general API call
@@ -27,8 +28,9 @@ const MyBar = ({ navLinks }) => {
   // };
 
   useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
     apiService.getAllUsersCocktails(setAllUsersDrinks);
-    apiService.getAllMyCocktails()
+    apiService.getAllMyCocktails(setMyDrinks, accessToken)
     // + delete? not sure what this is doing
     // getProfile(accessToken);
   }, []);
@@ -41,7 +43,7 @@ const MyBar = ({ navLinks }) => {
         <div className='section__cocktails'>
           {/* +fix: get normal carousel working and use here */}
           <CarrouselDB list={allUsersDrinks} title={'What people are sharing'} />
-          <CarrouselDB list = {allUsersDrinks} title ={"My Created Drinks"} />
+          <CarrouselDB list = {myDrinks} title ={"My Created Drinks"} />
           <CarrouselDB list ={allUsersDrinks} title = {"My Favorite Drinks"} />
           {/* That shoulb be liked video which i did not have time to implement */}
           {/* {!isFetching && <Carrousel list={data.drinks} title={'Drinks you liked'} />} */}
