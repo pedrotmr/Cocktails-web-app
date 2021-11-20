@@ -5,15 +5,15 @@ const config = require('config');
 
 exports.create = async (req, res) => {
   try {
-    const { name, email, password, password2 } = req.body;
-    if (!name || !email || !password || !password2) {
+    const { name, email, password } = req.body;
+    if (!name || !email || !password) {
       return res.status(400).send({ error: '400', message: 'Please fill in all fields' });
     }
     const user = await UserModel.findUser( email );
     if (user) {
       return res.status(409).send({ error: '409', message: 'User already exists' });
     }
-    if (password === '' || password !== password2) {
+    if (password === '') {
       return res.status(409).send({ error: '409', message: 'Enter valid password, ensure both passwords match' });
     }
 
