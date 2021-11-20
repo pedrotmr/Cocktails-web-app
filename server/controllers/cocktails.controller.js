@@ -27,10 +27,7 @@ exports.createCocktail = async (req, res) => {
     if (!name || !ingredients || !instructions || !picture) {
       return res.status(400).send('Please provide all information needed');
     }
-    // Had to disable authentication for creating drink to work... Do not know why
     const cocktail = await CocktailModel.createCocktail({ ...req.body, user: id });
-    // const cocktail = await Cocktail.create({ ...req.body });
-    // console.log(cocktail);
     res.status(201).send(cocktail);
   } catch (error) {
     console.log(error);
@@ -41,7 +38,7 @@ exports.createCocktail = async (req, res) => {
 // DID NOT USE DO FAR
 exports.getAllMyCocktails = async (req, res) => {
   try {
-    const cocktails = await CocktailModel.findCocktails("user", req.user.id);
+    const cocktails = await CocktailModel.findCocktails("user", req.user._id);
     res.status(200).send(cocktails);
   } catch (error) {
     console.log(error);
