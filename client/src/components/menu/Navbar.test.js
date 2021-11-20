@@ -6,7 +6,6 @@ import Navbar from './Navbar';
 import { createMockStore } from '../../utils/mock-store';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import { toggleModalSignIn } from '../../redux/features/signIn-modal/signIn-modal';
 import {login} from '../../redux/features/users/users.auth'
 
 let store;

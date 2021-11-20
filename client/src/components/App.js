@@ -41,7 +41,7 @@ const App = () => {
           <Route
             path='/profile'
             element={
-              isAuthenticated ? <MyBar navLinks={navLinks} /> : <Navigate to='/' />
+              isAuthenticated ? <MyBar navLinks={[...navLinks].slice(0, 3)} /> : <Navigate to='/' />
             }
           />
           <Route

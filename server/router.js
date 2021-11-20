@@ -6,8 +6,8 @@ const { authMiddleware } = require('./middlewares/auth');
 // Drinks
 // + add: auth middleware
 router.get('/cocktails', drinksController.getAllUsersCocktails);
-router.get('/myCocktails', authMiddleware, drinksController.getAllMyCocktails);
-router.get('/cocktail/:id', authMiddleware, drinksController.getCocktail);
+router.get('/myCocktails', drinksController.getAllMyCocktails);
+router.get('/cocktail/:id',  drinksController.getCocktail);
 // Had to disable authentication for creating drink to work... Do not know why
 router.post('/',authMiddleware, drinksController.createCocktail);
 // router.post('/', drinksController.createCocktail);

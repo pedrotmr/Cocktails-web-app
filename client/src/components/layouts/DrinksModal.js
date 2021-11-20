@@ -6,14 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const DrinksModal = ({ data }) => {
   const dispatch = useDispatch();
   const currentDrink = useSelector(state => state.currentDrink.drinks);
-  // const [currentDrink, setCurrentDrink] = useState('')
-  // console.log(currentDrink, 'this is cur drink from modal')
-  // useEffect(() => {
-  //   if(data.idDrink)
-  //   setCurrentDrink(data)
-  // },[data])
   // +fix: props being passed thru, also see carousel component
-  console.log(currentDrink, 'this is the current drink')
   return (
     <>
     {currentDrink && 
