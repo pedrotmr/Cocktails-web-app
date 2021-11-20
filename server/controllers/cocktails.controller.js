@@ -49,18 +49,17 @@ exports.getAllMyCocktails = async (req, res) => {
 
 // DID NOT USE DO FAR
 exports.updateCocktail = async (req, res) => {
-  const { name, ingredients, instructions, picture } = req.body;
+  const { name, ingredients, instructions } = req.body;
 
   const cocktailDetails = {};
   if (name) cocktailDetails.name = name;
   if (ingredients) cocktailDetails.ingredients = ingredients;
   if (instructions) cocktailDetails.instructions = instructions;
-  if (picture) cocktailDetails.picture = picture;
 
   try {
     const cocktail = await CocktailModel.getSingleCocktail(req.params.id);
     if (!cocktail) return res.status(404).send('Cocktail not found');
-    if (cocktail.user !== req.user._id) {
+    if (cocktail.user.toString() !== req.user._id.toString()) {
       return res.status(401).send('Not authorized');
     }
     const updated = await CocktailModel.updateCocktail(req.params.id, cocktailDetails);
