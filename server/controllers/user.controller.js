@@ -32,11 +32,13 @@ exports.create = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).send({ error: '400', message: 'Please fill in all fields' });
+    }
     const user = await UserModel.findUser( email );
     if (!user) {
       return res.status(409).send({ error: '409', message: 'Invalid credentials' });
     }
-
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
       return res.status(409).send({ error: '409', message: 'Invalid credentials' });

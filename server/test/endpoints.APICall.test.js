@@ -34,7 +34,7 @@ describe.only('test server endpoints', () => {
   })
 
   // No auth required:
-  describe('register a user', () => {
+  describe('POST /register', () => {
     it('should create a new user', async () => {
       const res = await request.post('/register')
         .send(mocks.registerUser);
@@ -61,14 +61,42 @@ describe.only('test server endpoints', () => {
     })
   })
 
-  // afterEach('remove test data', async () => {
-  //   mocks.testUsers.forEach(async user => {
-  //     await Cocktail.findByIdAndDelete(user._id);
-  //   });
-  //   mocks.testCocktails.forEach(async drink => {
-  //     await Cocktail.findByIdAndDelete(drink._id);
-  //   });
-  // })
+  describe('POST /login', () => {
+    it('should log a user in', async () => {
+      const res = await request.post('/login')
+        .send(mocks.loginUser);
+      expect(res.status).to.equal(200);
+      expect(res.body).to.haveOwnProperty('accessToken');
+    })
+
+    it('should fail if not sent full info', async () => {
+      const res = await request.post('/login')
+        .send({ email: "email"});
+      expect(res.status).to.equal(400);
+      expect(res.body.message).to.equal('Please fill in all fields');
+    })
+
+    it('should fail if no user or password not a match', async () => {
+      const resNoUser = await request.post('/login')
+        .send({ email: 'h', password: 'l' });
+      const resBadPass = await request.post('/login')
+        .send({ email: 'steven@steven.steven', password: 'wrongpass'});
+      expect(resNoUser.status && resBadPass.status).to.equal(409);
+      expect(resNoUser.body.message && resBadPass.body.message).to.equal('Invalid credentials');
+    })
+  })
+
+  describe.only('GET /cocktails', () => {
+    it('should return all user cocktails', async () => {
+      const res = await request.get('/cocktails')
+      res.status.should.equal(200);
+      res.body.length.should.equal(3);
+      await Cocktail.create(mocks.createTestCocktail);
+      const res2 = await request.get('/cocktails')
+      res2.body.length.should.equal(4);
+      res2.body.map(r => r.name).should.include('newly created' && 'Test');
+    })
+  })
 
   after('disconnect db', async () => {
     await mongoose.connection.close();
