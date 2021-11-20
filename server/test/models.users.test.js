@@ -10,7 +10,7 @@ connectDB();
 
 let ids = [];
 
-describe.only('testing user model', () => {
+describe('testing user model', () => {
   before('add test users', async () => {
     const users = await User.create(mocks.testUsers);
     ids = users.map(user => user._id);

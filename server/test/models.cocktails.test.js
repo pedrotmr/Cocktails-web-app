@@ -11,14 +11,9 @@ connectDB();
 let ids = [];
 
 describe('testing cocktail model', () => {
-<<<<<<< Updated upstream:server/test/models.test.js
-  beforeEach('create test drinks', async function (){
-    this.timeout(5000)
-=======
   
   beforeEach('create test drinks', async () => {
     await Cocktail.deleteMany();
->>>>>>> Stashed changes:server/test/models.cocktails.test.js
     const drinks = await Cocktail.create(mocks.testCocktails);
     ids = drinks.map(drink => drink._id);
   });
