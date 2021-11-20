@@ -18,7 +18,7 @@ const HeroSection = () => {
     const userInfo = await apiService.loadUser(accessToken);
     if (userInfo) {
       dispatch(login());
-      setUserName(userInfo[0].name);
+      setUserName(userInfo.name);
     }
   };
   useEffect(() => {
