@@ -4,7 +4,6 @@ const userController = require('./controllers/user.controller');
 const { authMiddleware } = require('./middlewares/auth');
 
 // Drinks
-// + add: auth middleware
 router.get('/cocktails', drinksController.getAllUsersCocktails);
 router.get('/myCocktails', authMiddleware, drinksController.getAllMyCocktails);
 router.get('/cocktail/:id', drinksController.getCocktail);

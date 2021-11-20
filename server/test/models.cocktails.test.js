@@ -12,10 +12,10 @@ let ids = [];
 describe('testing cocktail model', () => {
   before('connect to db', async () => {
     await connectDB('model-cocktails');
-    await Cocktail.deleteMany();
   })
-
+  
   beforeEach('create test drinks', async () => {
+    await Cocktail.deleteMany();
     const drinks = await Cocktail.create(mocks.testCocktails);
     ids = drinks.map(drink => drink._id);
   });
@@ -56,11 +56,8 @@ describe('testing cocktail model', () => {
     it('should create a cocktail', async () => {
       const newDrink = await CocktailModel.createCocktail(mocks.createTestCocktail);
       newDrink.name.should.equal('newly created');
-    })
-    
-    it('should exist in the database', async () => {
-      const cocktail = await CocktailModel.findCocktails("name", "newly created");
-      cocktail[0].instructions.should.equal("Fry it");
+      const cocktail = await Cocktail.findOne({name: "newly created"});
+      cocktail.instructions.should.equal("Fry it");
     })
 
     after('delete new entry', async () => {
@@ -79,20 +76,13 @@ describe('testing cocktail model', () => {
   })
 
   describe('deleteCocktail() function', () => {
-    before ('add test cocktail', async () => {
-      await Cocktail.create(mocks.createTestCocktail);
-    })
-
     it('should delete a cocktail', async () => {
+      await Cocktail.create(mocks.createTestCocktail);
       const all = await Cocktail.find();
       const deleted = await CocktailModel.deleteCocktail(mocks.createTestCocktail._id);
       const newAll = await Cocktail.find();
       deleted.name.should.equal("newly created");
       newAll.length.should.equal(all.length - 1);
     })
-  })
-
-  after('disconnect DB', async () => {
-    await mongoose.connection.close();
   })
 })

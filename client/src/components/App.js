@@ -13,15 +13,16 @@ import {
   useGetVodkaCocktailsQuery,
   useGetGinCocktailsQuery,
 } from '../APIService/cocktails-api';
+import { useGetSpiritsByTypeQuery } from '../APIService/cocktails-api';
 
 
 const App = () => {
   const isAuthenticated = useSelector(state => state.userAuth.value);
   const navLinks = ['Cocktails', 'Spirits', 'Search', 'Sign Up'];
-  // const spirits = ['vodka', 'gin', 'rum', 'tequila', 'whiskey', 'brandy'];
+  const spirits = ['vodka', 'gin', 'rum', 'tequila', 'whiskey', 'brandy'];
 
-  const { data: vodka = [] } = useGetVodkaCocktailsQuery();
-  const { data: gin = [] } = useGetGinCocktailsQuery();
+  const { data: vodka = [] } = useGetSpiritsByTypeQuery('vodka');
+  const { data: gin = [] } = useGetSpiritsByTypeQuery('gin');
   const [rum, setRum] = useState([]);
   const [tequila, setTequila] = useState([]);
   const [whiskey, setWhiskey] = useState([]);

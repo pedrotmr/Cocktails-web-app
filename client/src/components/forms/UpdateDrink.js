@@ -16,7 +16,7 @@ const UpdateDrink = () => {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log(drinkName, ingredients, instructions)
+    
   }
   return (
     <>

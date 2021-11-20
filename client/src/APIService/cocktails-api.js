@@ -15,11 +15,8 @@ export const cocktailsApi = createApi({
     getLatestCocktails: builder.query({
       query: () => 'latest.php',
     }),
-    getVodkaCocktails: builder.query({
-      query: () => 'filter.php?i=vodka',
-    }),
-    getGinCocktails: builder.query({
-      query: () => 'filter.php?i=gin',
+    getSpiritsByType: builder.query({
+      query: (spirit) => `filter.php?i=${spirit}`,
     }),
     getCocktailInfo: builder.query({
       query: id => `lookup.php?i=${id}`,
@@ -61,8 +58,7 @@ export const fetchCocktail = (input) => {
 export const {
   useGetPopularCocktailsQuery,
   useGetLatestCocktailsQuery,
-  useGetVodkaCocktailsQuery,
-  useGetGinCocktailsQuery,
+  useGetSpiritsByTypeQuery,
   useGetCocktailInfoQuery,
   useSearchCocktailQuery,
 } = cocktailsApi;

@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const expect = require('chai').expect;
 const jwt = require('jsonwebtoken');
 const supertest = require('supertest');
@@ -54,6 +55,5 @@ describe('test user auth', () => {
 
   after('remove test user', async () => {
     await User.findByIdAndDelete(mocks.createTestUser._id);
-    mongoose.connection.close();
   })
 })
