@@ -20,7 +20,7 @@ app.use(router);
 
 const request = supertest(app);
 
-describe.only('test server endpoints', () => {
+describe('test server endpoints', () => {
   before('connect to db', async () => {
     await connectDB('controller-endpoints');
   })
@@ -112,7 +112,7 @@ describe.only('test server endpoints', () => {
 
 
   // requires auth
-  describe.only('requires user auth', () => {
+  describe('requires user auth', () => {
     describe('GET /', () => {
       it('should return user info', async () => {
         const res1 = await request.get('/')
@@ -147,9 +147,5 @@ describe.only('test server endpoints', () => {
         expect(found._doc.picture).to.equal('fakeurl.web');
       })
     })
-  })
-
-  after('disconnect db', async () => {
-    await mongoose.connection.close();
   })
 })
