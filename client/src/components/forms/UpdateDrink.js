@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { useParams } from "react-router-dom";
 import Navbar from '../menu/Navbar';
+import { useNavigate } from 'react-router-dom';
 import apiService from '../../APIService/cocktails-db-api';
 // import FileBase64 from 'react-file-base64';
 const UpdateDrink = () => {
@@ -8,6 +9,7 @@ const UpdateDrink = () => {
   const [ingredients, setIngredients] = useState('');
   const [instructions, setInstructions] = useState('');
   const [_id, set_Id] = useState('');
+  const navigate = useNavigate();
   let params = useParams();
   useEffect(() => {
     if (params) {
@@ -21,7 +23,8 @@ const UpdateDrink = () => {
   const onSubmit = (e) => {
     e.preventDefault()
     const accessToken = localStorage.getItem('accessToken');
-    apiService.updateCocktail(_id, accessToken, {name: drinkName, ingredients, instructions})
+    apiService.updateCocktail(_id, accessToken, {name: drinkName, ingredients, instructions});
+    navigate('/profile');
   }
   return (
     <>
