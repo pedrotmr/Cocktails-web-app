@@ -118,18 +118,18 @@ apiService.updateCocktail = async (id, accessToken, cocktail) => {
 };
 
 // // DID NOT USE DO FAR
-// apiService.deleteCocktail = async (id, accessToken) => {
-//   return await fetch(`${BASE_URL}/${id}`, {
-//     method: 'DELETE',
-//     credentials: 'include',
-//     mode: 'cors',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${accessToken}`,
-//     },
-//   })
-//     .then(res => res.json())
-//     .catch(err => console.log(err));
-// };
+apiService.deleteCocktail = async (id, accessToken) => {
+  return await fetch(`${BASE_URL}/${id}`, {
+    method: 'DELETE',
+    credentials: 'include',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  })
+    .then(res => res.json())
+    .catch(err => console.log(err));
+};
 
 export default apiService;

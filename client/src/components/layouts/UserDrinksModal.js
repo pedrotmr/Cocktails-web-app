@@ -4,13 +4,12 @@ import { toggleDrinksModal } from '../../redux/features/drinks-modal/drinks-moda
 import { useDispatch, useSelector } from 'react-redux';
 import { turnOffUserMadeDrink } from '../../redux/features/userMadeDrink/userMadeDrink'
 import { useNavigate } from 'react-router-dom';
+import apiService from '../../APIService/cocktails-db-api';
 const UserDrinksModal = ( ) => {
   const currentDrink = useSelector(state => state.currentDrink.drinks);
   const userMadeDrink = useSelector(state => state.userMadeDrink.value)
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(currentDrink);
-
   return (
     <>
       <div>
@@ -34,8 +33,18 @@ const UserDrinksModal = ( ) => {
                 {userMadeDrink && <button onClick={
                   () => {
                     navigate(`/updateDrink/${currentDrink.name}/${currentDrink.ingredients}/${currentDrink.instructions}/${currentDrink._id}`)
+                    dispatch(toggleDrinksModal());
+                    dispatch(turnOffUserMadeDrink())
                   }
                 }>Update Drink</button>}
+                {
+                  userMadeDrink && <button onClick = {() => {
+                    const accessToken = localStorage.getItem('accessToken');
+                    apiService.deleteCocktail(currentDrink._id, accessToken);
+                    dispatch(toggleDrinksModal());
+                    dispatch(turnOffUserMadeDrink())
+                  }}>Delete</button>
+                }
             </div>
           </div>
         </div>

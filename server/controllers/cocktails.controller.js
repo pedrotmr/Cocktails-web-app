@@ -75,7 +75,7 @@ exports.deleteCocktail = async (req, res) => {
   try {
     const cocktail = await CocktailModel.getSingleCocktail(req.params.id);
     if (!cocktail) return res.status(404).send('Cocktail not found');
-    if (cocktail.user !== req.user._id) {
+    if (cocktail.user.toString() !== req.user._id.toString()) {
       return res.status(401).send('Not authorized');
     }
     await CocktailModel.deleteCocktail(req.params.id);
