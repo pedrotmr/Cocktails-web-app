@@ -1,38 +1,32 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import Navbar from '../menu/Navbar';
 import Sidebar from '../menu/Sidebar';
-// import Carrousel from '../layouts/Carrousel';
 import CarrouselDB from '../layouts/CarrouselDB';
 import apiService from '../../APIService/cocktails-db-api';
-// import { useGetGinCocktailsQuery } from '../../APIService/cocktails-api';
 import { useSelector, useDispatch } from 'react-redux';
-// import { login } from '../../redux/features/users/users.auth';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../../redux/features/users/users.auth';
 
 const MyBar = ({ navLinks }) => {
   const sideBarOpen = useSelector(state => state.sidebar.value);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [allUsersDrinks, setAllUsersDrinks] = useState([]);
   const [myDrinks, setMyDrinks] = useState([]);
-  console.log(myDrinks);
-
-  // +delete?: not sure why making this general API call
-  // const { data = [], isFetching } = useGetGinCocktailsQuery();
-
-  // +fix: do we need this? call to isAuthenticated action to get userAuth status
-  // const accessToken = localStorage.getItem('accessToken');
-  // const getProfile = async accessToken => {
-  //   const userInfo = await apiService.loadUser(accessToken);
-  //   if (userInfo) {
-  //     dispatch(login());
-  //   }
-  // };
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
+    async function checkAuth() {
+      const accessToken = localStorage.getItem('accessToken');
+      const notAuth = await apiService.getAllMyCocktails(setMyDrinks, accessToken);
+      if (notAuth) {
+        dispatch(logout());
+        navigate('/');
+        return
+      }
+    }
+    checkAuth()
     apiService.getAllUsersCocktails(setAllUsersDrinks);
-    apiService.getAllMyCocktails(setMyDrinks, accessToken)
-    // + delete? not sure what this is doing
-    // getProfile(accessToken);
   }, []);
 
   return (
@@ -41,7 +35,6 @@ const MyBar = ({ navLinks }) => {
       <Navbar scroll={'disable'} navLinks={navLinks} />
       <div className='section section'>
         <div className='section__cocktails'>
-          {/* +fix: get normal carousel working and use here */}
           <CarrouselDB list={allUsersDrinks} title={'What people are sharing'} userDrinks ={false} />
           <CarrouselDB list = {myDrinks} title ={"My Created Drinks"} userDrinks ={true}/>
           <CarrouselDB list ={allUsersDrinks} title = {"My Favorite Drinks"} userDrinks ={false}/>

@@ -25,6 +25,11 @@ apiService.loadUser = accessToken => {
     },
   })
     .then(res => res.json())
+    .then(res => {
+      console.log(res, 'status')
+      if (res.status === 406) return false
+      else return res
+    })
     .catch(err => console.log(err));
 };
 
@@ -84,7 +89,10 @@ apiService.getAllMyCocktails = async (setState, accessToken) => {
     },
   })
     .then(res => res.json())
-    .then(res => setState(res))
+    .then(res => {
+      if (res.status === (401 || 403)) return true
+      else setState(res)
+    })
     .catch(err => console.log(err));
 };
 
@@ -103,7 +111,6 @@ apiService.createCocktail = async (cocktail, accessToken) => {
     .catch(err => console.log(err));
 };
 
-// // DID NOT USE DO FAR
 apiService.updateCocktail = async (id, accessToken, cocktail) => {
   return fetch(`${BASE_URL}/${id}`, {
     method: 'PUT',
@@ -120,7 +127,6 @@ apiService.updateCocktail = async (id, accessToken, cocktail) => {
     .catch(err => console.log(err));
 };
 
-// // DID NOT USE DO FAR
 apiService.deleteCocktail = async (id, accessToken) => {
   return await fetch(`${BASE_URL}/${id}`, {
     method: 'DELETE',

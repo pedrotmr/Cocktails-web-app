@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import axios from 'axios';
-import apiService from './cocktails-db-api';
 
 // Trying fecthing method from reduz tookil
 // Downside: cannot be used inside other functions i.e useEffect
