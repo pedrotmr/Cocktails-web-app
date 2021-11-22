@@ -15,6 +15,7 @@ router.delete('/myCocktails/:id', authMiddleware, drinksController.deleteCocktai
 router.post('/register', userController.create);
 router.post('/login', userController.login);
 router.get('/', authMiddleware, userController.loadUser);
+router.put('/myList', authMiddleware, userController.updateList);
 
 //Error
 router.get('*', (req, res) => {

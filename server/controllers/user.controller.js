@@ -61,3 +61,15 @@ exports.loadUser = async (req, res) => {
     res.status(406).send({ message: 'Resource not found' });
   }
 };
+
+exports.updateList = async (req, res) => {
+  try {
+    const drinkID = req.body.drinkID;
+    const userID = req.user._id;
+    const updatedUser = await UserModel.updateList(userID, drinkID);
+    res.status(201).send(updatedUser);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({message: 'Error loading your list'});
+  }
+}
