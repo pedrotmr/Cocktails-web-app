@@ -29,10 +29,16 @@ const App = () => {
   const [brandy, setBrandy] = useState([]);
 
   useEffect(() => {
-    fetchAllDrinks(['tequila', 'mezcal'], setTequila);
-    fetchAllDrinks(['whiskey', 'bourbon', 'rye_whiskey', 'scotch'], setWhiskey);
-    fetchAllDrinks(['rum', 'white_rum', 'dark_rum'], setRum);
-    fetchAllDrinks(['brandy', 'cognac'], setBrandy);
+    let isMounted = true;
+    if( isMounted) {
+      fetchAllDrinks(['tequila', 'mezcal'], setTequila);
+      fetchAllDrinks(['whiskey', 'bourbon', 'rye_whiskey', 'scotch'], setWhiskey);
+      fetchAllDrinks(['rum', 'white_rum', 'dark_rum'], setRum);
+      fetchAllDrinks(['brandy', 'cognac'], setBrandy);
+    }
+    return () => {
+      isMounted = false;
+    }
   }, []);
 
   return (

@@ -13,7 +13,6 @@ const MyBar = ({ navLinks }) => {
   // const dispatch = useDispatch();
   const [allUsersDrinks, setAllUsersDrinks] = useState([]);
   const [myDrinks, setMyDrinks] = useState([]);
-  console.log(myDrinks);
 
   // +delete?: not sure why making this general API call
   // const { data = [], isFetching } = useGetGinCocktailsQuery();
