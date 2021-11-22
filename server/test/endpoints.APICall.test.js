@@ -147,5 +147,25 @@ describe('test server endpoints', () => {
         expect(found._doc.picture).to.equal('fakeurl.web');
       })
     })
+
+    describe('PUT /myCocktails/:id', () => {
+      it('should update a cocktail', async() => {
+        await request.put(`/myCocktails/${mocks.testCocktails[1]._id}`)
+          .set('Authorization', testJWT1)
+          .send({name: 'Updated!'});
+        const res = (await Cocktail.find()).map(c => c.name);
+        res.should.include('Updated!');
+      })
+    })
+
+    describe('DELETE /myCocktails/:id', () => {
+      it('should delete a cocktail', async() => {
+        await request.delete(`/myCocktails/${mocks.testCocktails[1]._id}`)
+          .set('Authorization', testJWT1);
+        const res = (await Cocktail.find()).map(c => c.name);
+        res.length.should.equal(2);
+        res.should.not.include('Please work');
+      })
+    })
   })
 })

@@ -25,10 +25,9 @@ export const cocktailsApi = createApi({
 });
 
 // Fetching from multiples parameters
-// + maybe refactor to set state in each component
 export const fetchAllDrinks = ([...args], setState) => {
- return args.map(arg => {
-   return axios
+return args.map(arg => {
+  return axios
       .get(`https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=${arg}`)
       .then(res => {
         setState(prev => [...prev, ...res.data.drinks])
@@ -38,14 +37,31 @@ export const fetchAllDrinks = ([...args], setState) => {
   });
 };
 
-export const searchDrinks = (input, setState) => {
-  return axios
+export const searchDrinks = async (input, setState) => {
+  const ingr = await axios
     .get(`https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=${input}`)
     .then(res => {
-      setState(res.data.drinks)
-      return res.data.drinks
+      if (res.data.drinks !== 'None Found') {
+        return res.data.drinks
+      }
+      else return [];
     })
     .catch(err => console.log(err));
+
+  const drinks = await axios
+  .get(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${input}`)
+  .then(res => {
+    if (res.data.drinks !== null) {
+      return res.data.drinks
+    }
+    else return [];
+  })
+  .catch(err => console.log(err));
+
+  const results = [];
+  ingr.length && results.push(...ingr);
+  drinks.length && results.push(...drinks);
+  setState([...drinks, ...ingr])
 };
 
 export const fetchCocktail = (input) => {
