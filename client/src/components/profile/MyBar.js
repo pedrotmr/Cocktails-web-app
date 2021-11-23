@@ -18,6 +18,7 @@ const MyBar = ({ navLinks }) => {
   const [allUsersDrinks, setAllUsersDrinks] = useState([]);
   const [myDrinks, setMyDrinks] = useState([]);
   const [favDrinks, setFavDrinks] = useState([]);
+  const [currSelected, setCurrSelected] = useState(false);
 
   useEffect(() => {
     async function checkAuth() {

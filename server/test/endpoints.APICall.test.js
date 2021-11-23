@@ -167,5 +167,22 @@ describe('test server endpoints', () => {
         res.should.not.include('Please work');
       })
     })
+
+    describe('PUT /myList', () => {
+      it('should update a user list', async () => {
+        await request.put('/myList')
+          .set('Authorization', testJWT1)
+          .send({drinkID: 10001});
+        const user1 = await User.findById(mocks.testUsers[0]._id);
+        // expect(user1.savedDrinks[0]).to.equal("1");
+        // expect(user1.savedDrinks[1]).to.equal("10001");
+        await request.put('/myList')
+          .set('Authorization', testJWT1)
+          .send({drinkID: 10001});
+        const user2 = await User.findById(mocks.testUsers[0]._id);
+        expect(user2.savedDrinks[0]).to.equal("1");
+        expect(user2.savedDrinks[1]).to.equal(undefined);
+      })
+    })
   })
 })

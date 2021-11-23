@@ -45,7 +45,6 @@ exports.login = async (req, res) => {
     const accessToken = jwt.sign({ _id: user._id }, config.get('jwtSecret'), {
       expiresIn: 36000,
     });
-    console.log(accessToken, 'access token')
     res.status(200).send({ accessToken });
   } catch (error) {
     console.log(error);
