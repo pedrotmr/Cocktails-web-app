@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 import { FaAngleDoubleDown } from 'react-icons/fa';
 import DrinksModal from '../layouts/DrinksModal';
@@ -9,11 +9,13 @@ import { changeCurrentDrink } from '../../redux/features/currentDrink/currentDri
 import { useSelector, useDispatch } from 'react-redux';
 const SpiritsGrid = props => {
   const dispatch = useDispatch();
-  const drinkModalOpen = useSelector(state => state.drinksModal.value);
+  // const drinkModalOpen = useSelector(state => state.drinksModal.value);
+  const [ drinkModalOpen, setDrinkModalOpen ] = useState(false);
   const handleClick = async (e, id) => {
     const drink = await fetchCocktail(e.target.id);
     dispatch(changeCurrentDrink(drink.data.drinks[0]))
-    dispatch(toggleDrinksModal());
+    // dispatch(toggleDrinksModal());
+    setDrinkModalOpen(true);
   };
   return (
     <>
@@ -21,7 +23,7 @@ const SpiritsGrid = props => {
     {drinkModalOpen  && (
         <>
           <Modal />
-            <DrinksModal />
+            <DrinksModal setState={setDrinkModalOpen} />
           <Modal />
         </>
       )}
@@ -38,7 +40,7 @@ const SpiritsGrid = props => {
         {props.list.map(drink => {
           return (
             // update to be modal popup instead of new page
-            <>
+            <div key = {drink.idDrink}>
             <nav className='link' key={drink.idDrink}>
               <div className='section__drinks-list__card'>
                 <img
@@ -50,7 +52,7 @@ const SpiritsGrid = props => {
                 <h2>{drink.strDrink}</h2>
               </div>
             </nav>
-          </>
+          </div>
           );
         })}
       </div>
