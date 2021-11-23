@@ -7,7 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import apiService from '../../APIService/cocktails-db-api';
 const UserDrinksModal = ({ setState }) => {
   const currentDrink = useSelector(state => state.currentDrink.drinks);
-  const userMadeDrink = useSelector(state => state.userMadeDrink.value)
+  console.log(currentDrink.name, 'current drink');
+  console.log('hello')
+  const userMadeDrink = useSelector(state => state.userMadeDrink.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   console.log(currentDrink, 'currdrink')

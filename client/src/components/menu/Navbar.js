@@ -26,7 +26,10 @@ const Navbar = props => {
     window.scrollY >= 80 ? setScrollNav(true) : setScrollNav(false);
 
   useEffect(() => {
-    window.addEventListener('scroll', changeNav);
+    let isMounted = true;
+    if(isMounted) {
+      window.addEventListener('scroll', changeNav);
+    }
   }, []);
 
   // if Authenticated ? display SignUp : display MyBar

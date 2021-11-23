@@ -15,6 +15,7 @@ const CarrouselDB = props => {
   // const drinkModalOpen = useSelector(state => state.drinksModal.value);
   const [ drinkModalOpen, setDrinkModalOpen ] = useState(false);
   const dispatch = useDispatch();
+
   const handleClick = async (e, id) => {
     const drink = await apiService.getCocktail(e.target.id);
     dispatch(changeCurrentDrink(drink))
