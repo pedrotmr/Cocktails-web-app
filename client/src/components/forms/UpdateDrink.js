@@ -33,7 +33,7 @@ const UpdateDrink = () => {
         <div className='form__wrapper'>
           <div className='form__content'>
             <form action='' className='form__form form__form--drinks' onSubmit={(e) => onSubmit(e)}>
-              <h1 className='form__header'> Add New Cocktail</h1>
+              <h1 className='form__header'> Update Cocktail</h1>
               <label className='form__label'>Name of the Cocktails</label>
               <input
                 type='text'
