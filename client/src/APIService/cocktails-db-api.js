@@ -110,7 +110,8 @@ apiService.getAllMyCocktails = async (setState, accessToken) => {
   })
     .then(res => res.json())
     .then(res => {
-      if (res.status === (401 || 403)) return true
+      console.log(res.status)
+      if (res.status === (401 || 403)) return false
       else {
         setState(res)
         return res
