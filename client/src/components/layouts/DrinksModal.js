@@ -1,20 +1,38 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaHeart } from 'react-icons/fa';
 import { toggleDrinksModal } from '../../redux/features/drinks-modal/drinks-modal';
 import { useDispatch, useSelector } from 'react-redux';
+import apiService from '../../APIService/cocktails-db-api';
+import { setUser } from '../../redux/features/users/currUser';
 
 const DrinksModal = ({ data }) => {
   const dispatch = useDispatch();
   const currentDrink = useSelector(state => state.currentDrink.drinks);
-  // +fix: props being passed thru, also see carousel component
+  const currUser = useSelector(state => state.currUser.user);
+  const [ favDrink, setFavDrink ] = useState(false);
+
+  useEffect(() => {
+    currUser.savedDrinks.includes(currentDrink.idDrink) && setFavDrink(true)
+  }, [])
+
+  async function updateFavList() {
+    console.log(currentDrink.idDrink);
+    const accessToken = localStorage.getItem('accessToken')
+    const updatedUser = await apiService.updateUserFavs(accessToken, currentDrink.idDrink);
+    dispatch(setUser(updatedUser));
+    setFavDrink(!favDrink);
+  }
+
   return (
     <>
     {currentDrink && 
       <div>
       <div className='global-bg' onClick={() => dispatch(toggleDrinksModal())}></div>
       <div className='drink-modal'>
-        {/* + fix dispatch below */}
-        <FaHeart className='drink-modal__like' onClick={dispatch} />
+          <FaHeart className='drink-modal__like' 
+            style={favDrink ? {color: "red"} : {color: "black"}} 
+            onClick={updateFavList} 
+          />
         <div className='drink-modal__wrapper'>
           <div className='drink-modal__img-wrapper'>
             <img src={currentDrink.strDrinkThumb} alt={currentDrink.strDrink} />
