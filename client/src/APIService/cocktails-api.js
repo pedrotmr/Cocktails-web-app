@@ -15,11 +15,8 @@ export const cocktailsApi = createApi({
     getLatestCocktails: builder.query({
       query: () => 'latest.php',
     }),
-    getVodkaCocktails: builder.query({
-      query: () => 'filter.php?i=vodka',
-    }),
-    getGinCocktails: builder.query({
-      query: () => 'filter.php?i=gin',
+    getSpiritsByType: builder.query({
+      query: (spirit) => `filter.php?i=${spirit}`,
     }),
     getCocktailInfo: builder.query({
       query: id => `lookup.php?i=${id}`,
@@ -29,33 +26,55 @@ export const cocktailsApi = createApi({
 
 // Fetching from multiples parameters
 export const fetchAllDrinks = ([...args], setState) => {
-  args.forEach(arg => {
-    axios
+return args.map(arg => {
+  return axios
       .get(`https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=${arg}`)
-      .then(res => setState(prev => [...prev, ...res.data.drinks]))
+      .then(res => {
+        setState(prev => [...prev, ...res.data.drinks])
+        return res
+      })
       .catch(err => console.log(err));
   });
 };
 
-export const searchDrinks = (input, setState) => {
-  axios
+export const searchDrinks = async (input, setState) => {
+  const ingr = await axios
     .get(`https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=${input}`)
-    .then(res => setState(res.data.drinks))
+    .then(res => {
+      if (res.data.drinks !== 'None Found') {
+        return res.data.drinks
+      }
+      else return [];
+    })
     .catch(err => console.log(err));
+
+  const drinks = await axios
+  .get(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${input}`)
+  .then(res => {
+    if (res.data.drinks !== null) {
+      return res.data.drinks
+    }
+    else return [];
+  })
+  .catch(err => console.log(err));
+
+  const results = [];
+  ingr.length && results.push(...ingr);
+  drinks.length && results.push(...drinks);
+  setState([...drinks, ...ingr])
 };
 
-export const fetchCocktail = (input, setState) => {
-  axios
+export const fetchCocktail = (input) => {
+  return axios
     .get(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${input}`)
-    .then(res => setState(res.data.drinks[0]))
+    .then(res => res)
     .catch(err => console.log(err));
 };
 
 export const {
   useGetPopularCocktailsQuery,
   useGetLatestCocktailsQuery,
-  useGetVodkaCocktailsQuery,
-  useGetGinCocktailsQuery,
+  useGetSpiritsByTypeQuery,
   useGetCocktailInfoQuery,
   useSearchCocktailQuery,
 } = cocktailsApi;

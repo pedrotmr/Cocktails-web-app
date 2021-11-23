@@ -1,18 +1,31 @@
-const mongoose = require('mongoose');
+const User = require('./../models/user.schema');
 
-const userSchema = mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-});
+async function findUser(email) {
+  return await User.findOne({ email });
+}
 
-module.exports = mongoose.model('User', userSchema);
+async function findUserById(id) {
+  return User.findById(id);
+}
+
+async function createUser(user) {
+  return await User.create(user);
+}
+
+async function updateList(user, drink) {
+  const { savedDrinks } = await User.findById(user);
+  if (savedDrinks.includes(drink)) {
+    const index = savedDrinks.indexOf(drink);
+    savedDrinks.splice(index, 1);
+    return await User.findByIdAndUpdate(user, { savedDrinks }, { returnDocument: "after" });
+  } else {
+    return await User.findByIdAndUpdate(user, { $push: { savedDrinks: drink }}, { returnDocument: "after" });
+  }
+}
+
+module.exports = {
+  findUser,
+  findUserById,
+  createUser,
+  updateList
+}

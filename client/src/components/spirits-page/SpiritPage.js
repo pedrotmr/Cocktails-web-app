@@ -12,7 +12,9 @@ const SpiritPage = props => {
   useEffect(() => {
     window.scrollTo(0, 0);
     setIsOnTop(true);
-  });
+  }, []);
+
+    // + maybe use redux to store each liquor list and refactor below to be dynamic
 
   return (
     <>

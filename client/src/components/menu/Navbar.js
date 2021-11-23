@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, NavLink } from 'react-router-dom';
 import { animateScroll as scroll } from 'react-scroll';
 import { FaBars } from 'react-icons/fa';
 import Modal from 'react-modal';
 import Login from '../forms/Login';
 import { NavHashLink } from 'react-router-hash-link';
 import apiService from '../../APIService/cocktails-db-api';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/features/users/users.auth';
 import { toggleSideBar } from '../../redux/features/sidebar/sidebar';
 import { toggleModalSignIn } from '../../redux/features/signIn-modal/signIn-modal';
+import { resetUser } from '../../redux/features/users/currUser';
 
 const Navbar = props => {
   const [scrollNav, setScrollNav] = useState(false);
@@ -24,34 +24,34 @@ const Navbar = props => {
     window.scrollY >= 80 ? setScrollNav(true) : setScrollNav(false);
 
   useEffect(() => {
-    window.addEventListener('scroll', changeNav);
+    let isMounted = true;
+    if(isMounted) {
+      window.addEventListener('scroll', changeNav);
+    }
   }, []);
 
   // if Authenticated ? display SignUp : display MyBar
   const authLink = !isAuthenticated ? (
-    <Link
-      className='menu-links menu-links--nav'
+    <NavLink
+      className={({ isActive }) => "menu-links menu-links--nav" + (isActive ? " menu-links--active" : "")}
       to='/register'
-      activeClassName='menu-links--active'
     >
       Sign Up
-    </Link>
+    </NavLink>
   ) : (
     <>
-      <Link
-        className='menu-links menu-links--nav'
+      <NavLink
+        className={({ isActive }) => "menu-links menu-links--nav" + (isActive ? " menu-links--active" : "")}
         to='/profile'
-        activeClass='menu-links--active'
       >
         My Bar
-      </Link>
-      <Link
-        className='menu-links menu-links--nav'
+      </NavLink>
+      <NavLink
+        className={({ isActive }) => "menu-links menu-links--nav" + (isActive ? " menu-links--active" : "")}
         to='/postDrink'
-        activeClass='menu-links--active'
       >
         Post a Drink
-      </Link>
+      </NavLink>
     </>
   );
 
@@ -59,6 +59,7 @@ const Navbar = props => {
     const accessToken = localStorage.getItem('accessToken');
     apiService.logout(accessToken);
     dispatch(logout());
+    dispatch(resetUser());
     navigate('/');
   };
 
@@ -105,7 +106,6 @@ const Navbar = props => {
                   to={`/#${link}`}
                   scroll={el => el.scrollIntoView({ behavior: 'smooth', block: 'end' })}
                   key={link}
-                  activeClassName='menu-links--active'
                 >
                   {link}
                 </NavHashLink>

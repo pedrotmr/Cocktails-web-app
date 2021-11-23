@@ -1,26 +1,31 @@
-const mongoose = require('mongoose');
+const Cocktail = require('../models/cocktail.schema');
 
-const cocktailSchema = mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'users',
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  ingredients: {
-    type: String,
-    required: true,
-  },
-  instructions: {
-    type: String,
-    required: true,
-  },
-  picture: {
-    type: String,
-    required: true,
-  },
-});
+async function findCocktails (key, value) {
+  return key && value 
+    ? await Cocktail.find({ [key]: value })
+    : await Cocktail.find();
+}
 
-module.exports = mongoose.model('Cocktail', cocktailSchema);
+async function getSingleCocktail(id) {
+  return await Cocktail.findById(id);
+}
+
+async function createCocktail(cocktail) {
+  return Cocktail.create(cocktail);
+}
+
+async function updateCocktail(id, updates) {
+  return await Cocktail.findByIdAndUpdate(id, updates, { returnDocument: 'after'});
+}
+
+async function deleteCocktail(id) {
+  return Cocktail.findByIdAndDelete(id);
+}
+
+module.exports = {
+  findCocktails,
+  getSingleCocktail,
+  createCocktail,
+  updateCocktail,
+  deleteCocktail
+}

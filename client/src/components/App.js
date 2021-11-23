@@ -8,28 +8,33 @@ import Register from './forms/Register';
 import MyBar from './profile/MyBar';
 import PostDrink from './forms/PostDrink';
 import { fetchAllDrinks } from '../APIService/cocktails-api';
+import UpdateDrink from './forms/UpdateDrink'
 import {
   useGetVodkaCocktailsQuery,
   useGetGinCocktailsQuery,
 } from '../APIService/cocktails-api';
+import { useGetSpiritsByTypeQuery } from '../APIService/cocktails-api';
+
 
 const App = () => {
   const isAuthenticated = useSelector(state => state.userAuth.value);
   const navLinks = ['Cocktails', 'Spirits', 'Search', 'Sign Up'];
-  // const spirits = ['vodka', 'gin', 'rum', 'tequila', 'whiskey', 'brandy'];
+  const spirits = ['vodka', 'gin', 'rum', 'tequila', 'whiskey', 'brandy'];
 
-  const { data: vodka = [] } = useGetVodkaCocktailsQuery();
-  const { data: gin = [] } = useGetGinCocktailsQuery();
+  const { data: vodka = [] } = useGetSpiritsByTypeQuery('vodka');
+  const { data: gin = [] } = useGetSpiritsByTypeQuery('gin');
   const [rum, setRum] = useState([]);
   const [tequila, setTequila] = useState([]);
   const [whiskey, setWhiskey] = useState([]);
   const [brandy, setBrandy] = useState([]);
 
   useEffect(() => {
-    fetchAllDrinks(['tequila', 'mezcal'], setTequila);
-    fetchAllDrinks(['whiskey', 'bourbon', 'rye_whiskey', 'scotch'], setWhiskey);
-    fetchAllDrinks(['rum', 'white_rum', 'dark_rum'], setRum);
-    fetchAllDrinks(['brandy', 'cognac'], setBrandy);
+
+      fetchAllDrinks(['tequila', 'mezcal'], setTequila);
+      fetchAllDrinks(['whiskey', 'bourbon', 'rye_whiskey', 'scotch'], setWhiskey);
+      fetchAllDrinks(['rum', 'white_rum', 'dark_rum'], setRum);
+      fetchAllDrinks(['brandy', 'cognac'], setBrandy);
+
   }, []);
 
   return (
@@ -41,7 +46,7 @@ const App = () => {
           <Route
             path='/profile'
             element={
-              isAuthenticated ? <MyBar navLinks={navLinks} /> : <Navigate to='/' />
+              isAuthenticated ? <MyBar navLinks={[...navLinks].slice(0, 3)} /> : <Navigate to='/' />
             }
           />
           <Route
@@ -55,7 +60,7 @@ const App = () => {
           <Route path='/tequila' element={<SpiritPage tequila={tequila} />} />
           <Route path='/whiskey' element={<SpiritPage whiskey={whiskey} />} />
           <Route path='/brandy' element={<SpiritPage brandy={brandy} />} />
-
+          <Route path='/updateDrink/:drinkName/:ingredients/:instructions/:_id' element = {<UpdateDrink />} />
           {/* TRIED TO IMPLEMENT WITH MAP FUNCTION... DID NOT WORK */}
           {/* {spirits.map(spirit => {
             return <Route path={`/${spirit}`} element={<SpiritPage spirit={spirit} />} />;

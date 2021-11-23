@@ -1,20 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Spinner from '../helpers/Spinner';
+import { useSelector, useDispatch } from 'react-redux';
+import Modal from 'react-modal';
+//++ Drinks Modal not working
+import apiService from '../../APIService/cocktails-db-api';
+import { toggleDrinksModal } from '../../redux/features/drinks-modal/drinks-modal';
+import { changeCurrentDrink } from '../../redux/features/currentDrink/currentDrink';
+import { turnOnUserMadeDrink } from '../../redux/features/userMadeDrink/userMadeDrink';
+import UserDrinksModal from './UserDrinksModal';
 
 const CarrouselDB = props => {
+  const drinkModalOpen = useSelector(state => state.drinksModal.value);
+  const dispatch = useDispatch();
+
+  const handleClick = async (e, id) => {
+    const drink = await apiService.getCocktail(e.target.id);
+    dispatch(changeCurrentDrink(drink))
+    if(props.userDrinks) {
+      dispatch(turnOnUserMadeDrink())
+    }
+    dispatch(toggleDrinksModal());
+  };
   const sliderSettings = {
     infinite: true,
-    slidesToShow: 4,
+    slidesToShow: Math.min(props.list.length, 4),
     slidesToScroll: 2,
     speed: 500,
     responsive: [
       {
         breakpoint: 1100,
         settings: {
-          slidesToShow: 3.5,
+          slidesToShow: Math.min(props.list.length, 3.5),
           slidesToScroll: 3,
           infinite: true,
         },
@@ -22,7 +40,7 @@ const CarrouselDB = props => {
       {
         breakpoint: 1010,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: Math.min(props.list.length, 3),
           slidesToScroll: 2,
           infinite: true,
         },
@@ -30,7 +48,7 @@ const CarrouselDB = props => {
       {
         breakpoint: 830,
         settings: {
-          slidesToShow: 2.5,
+          slidesToShow: Math.min(props.list.length, 2.5),
           slidesToScroll: 2,
           infinite: true,
         },
@@ -38,7 +56,7 @@ const CarrouselDB = props => {
       {
         breakpoint: 730,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: Math.min(props.list.length, 2),
           slidesToScroll: 1,
           infinite: true,
         },
@@ -46,7 +64,7 @@ const CarrouselDB = props => {
       {
         breakpoint: 630,
         settings: {
-          slidesToShow: 1.6,
+          slidesToShow: Math.min(props.list.length, 1.6),
           slidesToScroll: 1,
           initialSlide: 0,
         },
@@ -54,30 +72,40 @@ const CarrouselDB = props => {
       {
         breakpoint: 510,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: Math.min(props.list.length, 1),
           slidesToScroll: 1,
           initialSlide: 0,
         },
       },
     ],
   };
-  console.log(props.list);
 
   return (
     <div>
+      {drinkModalOpen  && (
+        <>
+          <Modal />
+            <UserDrinksModal  />
+          <Modal />
+        </>
+      )}
       <div className='section__drinks-list'>
         <h1 className='section__header section__header'>{props.title}</h1>
         <Slider {...sliderSettings}>
           {props.list.map(drink => {
             return (
-              <>
+              <div key ={drink._id}>
                 <nav className='link' key={drink._id}>
                   <div className='section__drinks-list__card'>
-                    <img src={drink.picture} alt={drink.name} id={drink._id} />
+                    <img 
+                      src={drink.picture} 
+                      alt={drink.name} 
+                      id={drink._id}
+                      onClick = {handleClick} />
                     <h2>{drink.name}</h2>
                   </div>
                 </nav>
-              </>
+              </div>
             );
           })}
         </Slider>

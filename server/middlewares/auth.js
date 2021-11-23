@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const User = require('./../models/user.model');
+const UserModel = require('./../models/user.model');
 const config = require('config');
 
 exports.authMiddleware = async (req, res, next) => {
@@ -9,12 +9,12 @@ exports.authMiddleware = async (req, res, next) => {
 
   try {
     const { _id } = jwt.verify(token, config.get('jwtSecret'));
-    const user = await User.findOne({ _id });
+    const user = await UserModel.findUserById(_id);
     if (!user) return res.sendStatus(401);
     req.user = user;
     next();
   } catch (error) {
-    console.log(error);
+    console.log('Error authenticating user');
     res.status(401).send('Unauthorized access');
   }
 };

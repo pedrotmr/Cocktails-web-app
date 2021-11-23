@@ -5,12 +5,12 @@ import { searchDrinks } from '../../../APIService/cocktails-api';
 const Search = () => {
   const [input, setInput] = useState('');
   const [result, setResult] = useState('');
-
   const handleChange = e => setInput(e.target.value);
 
-  const handleSubmit = e => {
+
+  const handleSubmit = async e => {
     e.preventDefault();
-    searchDrinks(input, setResult);
+    await searchDrinks(input, setResult);
     setInput('');
   };
 
@@ -26,14 +26,14 @@ const Search = () => {
               className='search-input'
               type='text'
               name='text'
-              placeholder='Search cokctails by ingredients...'
+              placeholder='Search cocktails by ingredients...'
               value={input}
               onChange={handleChange}
             />
           </form>
 
           <div className='section__cocktails'>
-            {result.length && <Carrousel list={result} title={'Result'} />}
+            {result.length > 0 && <Carrousel list={result} title={'Result'} />}
           </div>
         </div>
       </div>
