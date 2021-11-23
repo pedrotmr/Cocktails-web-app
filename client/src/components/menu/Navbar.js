@@ -11,6 +11,7 @@ import { logout } from '../../redux/features/users/users.auth';
 import { toggleSideBar } from '../../redux/features/sidebar/sidebar';
 import { toggleModalSignIn } from '../../redux/features/signIn-modal/signIn-modal';
 import { resetUser } from '../../redux/features/users/currUser';
+import { toggleDrinksModal } from '../../redux/features/drinks-modal/drinks-modal';
 
 const Navbar = props => {
   const [scrollNav, setScrollNav] = useState(false);
@@ -19,6 +20,7 @@ const Navbar = props => {
 
   const signInModalOpen = useSelector(state => state.modalSignIn.value);
   const isAuthenticated = useSelector(state => state.userAuth.value);
+  const drinksModal = useSelector(state => state.drinksModal.value);
 
   const changeNav = () =>
     window.scrollY >= 80 ? setScrollNav(true) : setScrollNav(false);
@@ -60,6 +62,10 @@ const Navbar = props => {
     navigate('/');
   };
 
+  const checkDrinkModal = () => {
+    drinksModal && dispatch(toggleDrinksModal());
+  }
+
   return (
     <>
       <div
@@ -75,7 +81,10 @@ const Navbar = props => {
           <Link
             className='navbar__logo'
             to='/'
-            onClick={() => scroll.scrollToTop()}
+            onClick={() => {
+              checkDrinkModal();
+              scroll.scrollToTop();
+            }}
             // Change logo color to black on register page ir props.black
             style={
               props.black ? { color: '#000', fontSize: '3.5rem' } : { color: '#fff' }
@@ -103,6 +112,7 @@ const Navbar = props => {
                   to={`/#${link}`}
                   scroll={el => el.scrollIntoView({ behavior: 'smooth', block: 'end' })}
                   key={link}
+                  onClick={checkDrinkModal}
                 >
                   {link}
                 </NavHashLink>

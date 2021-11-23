@@ -9,17 +9,13 @@ import MyBar from './profile/MyBar';
 import PostDrink from './forms/PostDrink';
 import { fetchAllDrinks } from '../APIService/cocktails-api';
 import UpdateDrink from './forms/UpdateDrink'
-import {
-  useGetVodkaCocktailsQuery,
-  useGetGinCocktailsQuery,
-} from '../APIService/cocktails-api';
 import { useGetSpiritsByTypeQuery } from '../APIService/cocktails-api';
 
 
 const App = () => {
   const isAuthenticated = useSelector(state => state.userAuth.value);
   const navLinks = ['Cocktails', 'Spirits', 'Search', 'Sign Up'];
-  const spirits = ['vodka', 'gin', 'rum', 'tequila', 'whiskey', 'brandy'];
+  // const spirits = ['vodka', 'gin', 'rum', 'tequila', 'whiskey', 'brandy'];
 
   const { data: vodka = [] } = useGetSpiritsByTypeQuery('vodka');
   const { data: gin = [] } = useGetSpiritsByTypeQuery('gin');

@@ -11,9 +11,10 @@ import { useSelector } from 'react-redux';
 const Home = () => {
   const sideBarOpen = useSelector(state => state.sidebar.value);
   const navLinks = ['Cocktails', 'Spirits', 'Search'];
+
   return (
     <>
-      {sideBarOpen && <Sidebar navLinks={navLinks} />}
+      {sideBarOpen && <Sidebar navLinks={navLinks}/>}
       <Navbar navLinks={navLinks} />
       <HeroSection />
       <Element name='Cocktails' id='Cocktails'>
