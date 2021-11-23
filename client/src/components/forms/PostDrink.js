@@ -45,6 +45,7 @@ const PostDrink = () => {
     const accessToken = localStorage.getItem('accessToken');
     apiService.createCocktail(cocktail, accessToken);
     setCocktail(initialState);
+    navigate('/profile')
   };
 
   return (

@@ -100,6 +100,8 @@ const CarrouselDB = props => {
                 <nav className='link' key={drink._id}>
                   <div className='section__drinks-list__card'>
                     <img 
+                      height='200px'
+                      width='200px'
                       src={drink.picture} 
                       alt={drink.name} 
                       id={drink._id}
