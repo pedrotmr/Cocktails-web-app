@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/features/users/users.auth';
 import { toggleSideBar } from '../../redux/features/sidebar/sidebar';
 import { toggleModalSignIn } from '../../redux/features/signIn-modal/signIn-modal';
+import { resetUser } from '../../redux/features/users/currUser';
 
 const Navbar = props => {
   const [scrollNav, setScrollNav] = useState(false);
@@ -55,6 +56,7 @@ const Navbar = props => {
     const accessToken = localStorage.getItem('accessToken');
     apiService.logout(accessToken);
     dispatch(logout());
+    dispatch(resetUser());
     navigate('/');
   };
 

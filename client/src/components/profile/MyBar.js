@@ -3,17 +3,21 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../menu/Navbar';
 import Sidebar from '../menu/Sidebar';
 import CarrouselDB from '../layouts/CarrouselDB';
+import Carrousel from '../layouts/Carrousel';
 import apiService from '../../APIService/cocktails-db-api';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../../redux/features/users/users.auth';
+import { fetchCocktail } from '../../APIService/cocktails-api';
 
 const MyBar = ({ navLinks }) => {
   const sideBarOpen = useSelector(state => state.sidebar.value);
+  const currUser = useSelector(state => state.currUser.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [allUsersDrinks, setAllUsersDrinks] = useState([]);
   const [myDrinks, setMyDrinks] = useState([]);
+  const [favDrinks, setFavDrinks] = useState([]);
 
   useEffect(() => {
     async function checkAuth() {
@@ -27,6 +31,15 @@ const MyBar = ({ navLinks }) => {
     }
     checkAuth()
     apiService.getAllUsersCocktails(setAllUsersDrinks);
+    if (currUser.savedDrinks) {
+      const { savedDrinks } = currUser;
+      let fullList = [];
+      savedDrinks.forEach(async d => {
+        const drink = await fetchCocktail(d);
+        fullList.push(...drink.data.drinks)
+        if (savedDrinks.length === fullList.length) setFavDrinks(fullList);
+      })      
+    }
   }, []);
 
   return (
@@ -37,7 +50,7 @@ const MyBar = ({ navLinks }) => {
         <div className='section__cocktails'>
           <CarrouselDB list={allUsersDrinks} title={'What people are sharing'} userDrinks ={false} />
           <CarrouselDB list = {myDrinks} title ={"My Created Drinks"} userDrinks ={true}/>
-          <CarrouselDB list ={allUsersDrinks} title = {"My Favorite Drinks"} userDrinks ={false}/>
+          <Carrousel list ={favDrinks} title = {"My Favorite Drinks"} userDrinks ={false}/>
           {/* That shoulb be liked video which i did not have time to implement */}
           {/* {!isFetching && <Carrousel list={data.drinks} title={'Drinks you liked'} />} */}
         </div>

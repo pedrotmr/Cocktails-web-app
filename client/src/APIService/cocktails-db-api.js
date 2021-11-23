@@ -1,3 +1,4 @@
+
 const BASE_URL = 'http://localhost:3001';
 
 const apiService = {};
@@ -26,12 +27,27 @@ apiService.loadUser = accessToken => {
   })
     .then(res => res.json())
     .then(res => {
-      console.log(res, 'status')
       if (res.status === 406) return false
       else return res
     })
     .catch(err => console.log(err));
 };
+
+apiService.updateUserFavs = (accessToken, drinkID) => {
+  console.log(drinkID, 'ID')
+  return fetch(`${BASE_URL}/myList`, {
+    method: 'PUT',
+    credentials: 'include',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({drinkID}),
+  })
+    .then(res => res.json())
+    .catch(err => console.log(err));
+}
 
 apiService.login = async user => {
   return await fetch(`${BASE_URL}/login`, {
