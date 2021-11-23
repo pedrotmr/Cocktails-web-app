@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState} from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -10,13 +10,15 @@ import { toggleDrinksModal } from '../../redux/features/drinks-modal/drinks-moda
 import { changeCurrentDrink } from '../../redux/features/currentDrink/currentDrink';
 
 const Carrousel = props => {
-  const drinkModalOpen = useSelector(state => state.drinksModal.value);
+  // const drinkModalOpen = useSelector(state => state.drinksModal.value);
+  const [ drinkModalOpen, setDrinkModalOpen ] = useState(false);
   const dispatch = useDispatch();
 
   const handleClick = async (e, id) => {
     const drink = await fetchCocktail(e.target.id);
     dispatch(changeCurrentDrink(drink.data.drinks[0]))
-    dispatch(toggleDrinksModal());
+    // dispatch(toggleDrinksModal());
+    setDrinkModalOpen(true);
   };
 
   const sliderSettings = {
@@ -81,7 +83,7 @@ const Carrousel = props => {
       {drinkModalOpen  && (
         <>
           <Modal />
-            <DrinksModal />
+            <DrinksModal  setState={setDrinkModalOpen} />
           <Modal />
         </>
       )}

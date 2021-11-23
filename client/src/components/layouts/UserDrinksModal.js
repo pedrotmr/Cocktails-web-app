@@ -5,16 +5,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { turnOffUserMadeDrink } from '../../redux/features/userMadeDrink/userMadeDrink'
 import { useNavigate } from 'react-router-dom';
 import apiService from '../../APIService/cocktails-db-api';
-const UserDrinksModal = ( ) => {
+const UserDrinksModal = ({ setState }) => {
   const currentDrink = useSelector(state => state.currentDrink.drinks);
   const userMadeDrink = useSelector(state => state.userMadeDrink.value)
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  console.log(currentDrink, 'currdrink')
   return (
     <>
       <div>
         <div className='global-bg' onClick={() => {
-          dispatch(toggleDrinksModal());
+          setState(false)
           if(userMadeDrink) {
           dispatch(turnOffUserMadeDrink())
           }

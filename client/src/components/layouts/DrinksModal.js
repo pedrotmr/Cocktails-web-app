@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import apiService from '../../APIService/cocktails-db-api';
 import { setUser } from '../../redux/features/users/currUser';
 
-const DrinksModal = ({ data }) => {
+const DrinksModal = ({ data, setState }) => {
   const dispatch = useDispatch();
   const currentDrink = useSelector(state => state.currentDrink.drinks);
   const currUser = useSelector(state => state.currUser.user);
@@ -37,7 +37,7 @@ const DrinksModal = ({ data }) => {
     <>
     {currentDrink && 
       <div>
-      <div className='global-bg' onClick={() => dispatch(toggleDrinksModal())}></div>
+      <div className='global-bg' onClick={() => setState(false)}></div>
       <div className='drink-modal'>
           {Object.keys(currUser).length 
             ? <FaHeart className='drink-modal__like' 
