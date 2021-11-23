@@ -16,7 +16,6 @@ const DrinksModal = ({ data }) => {
   }, [])
 
   async function updateFavList() {
-    console.log(currentDrink.idDrink);
     const accessToken = localStorage.getItem('accessToken')
     const updatedUser = await apiService.updateUserFavs(accessToken, currentDrink.idDrink);
     dispatch(setUser(updatedUser));

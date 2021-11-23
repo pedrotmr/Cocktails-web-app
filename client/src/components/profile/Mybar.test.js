@@ -6,14 +6,19 @@ import MyBar from './MyBar';
 import { createMockStore } from '../../utils/mock-store';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import {login} from '../../redux/features/users/users.auth'
+import {login} from '../../redux/features/users/users.auth';
 import apiService from '../../APIService/cocktails-db-api';
+import { setUser } from '../../redux/features/users/currUser';
+
 let store;
+const mockUser = {
+  name:'Name',
+}
 
 describe('should properly call functions', () => {
-
   beforeEach(() => {
     store = createMockStore();
+    store.dispatch(setUser(mockUser))
   })
   
   test('call db to get users drinks', () => {
