@@ -12,7 +12,9 @@ const DrinksModal = ({ data }) => {
   const [ favDrink, setFavDrink ] = useState(false);
 
   useEffect(() => {
-    currUser.savedDrinks.includes(currentDrink.idDrink) && setFavDrink(true)
+    if(currUser.savedDrinks.length){
+      currUser.savedDrinks.includes(currentDrink.idDrink) && setFavDrink(true)
+    }
   }, [])
 
   async function updateFavList() {
@@ -42,7 +44,7 @@ const DrinksModal = ({ data }) => {
 
             <div className='drink-modal__ingredients'>
               {/* + loop through/dynamic? */}
-              {/* <table>
+              <table>
                 <tr>
                   <th>Measure</th>
                   <th>Ingredients</th>
@@ -71,7 +73,7 @@ const DrinksModal = ({ data }) => {
                   <td>{currentDrink.strMeasure6}</td>
                   <td>{currentDrink.strIngredient6}</td>
                 </tr>
-              </table> */}
+              </table>
               <div className='drink-modal__intructions'>
                 <p>{currentDrink.strInstructions}</p>
               </div>

@@ -14,6 +14,7 @@ import UserDrinksModal from './UserDrinksModal';
 const CarrouselDB = props => {
   const drinkModalOpen = useSelector(state => state.drinksModal.value);
   const dispatch = useDispatch();
+
   const handleClick = async (e, id) => {
     const drink = await apiService.getCocktail(e.target.id);
     dispatch(changeCurrentDrink(drink))
@@ -84,7 +85,7 @@ const CarrouselDB = props => {
       {drinkModalOpen  && (
         <>
           <Modal />
-            <UserDrinksModal userDrinks = {props.userDrinks} />
+            <UserDrinksModal  />
           <Modal />
         </>
       )}

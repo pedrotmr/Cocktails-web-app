@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { setupListeners } from '@reduxjs/toolkit/query';
 import { cocktailsApi } from '../APIService/cocktails-api';
 import sideBarReducer from '../redux/features/sidebar/sidebar';
 import userAuthReducer from '../redux/features/users/users.auth';
