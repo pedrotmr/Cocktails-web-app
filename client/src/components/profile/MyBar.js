@@ -7,7 +7,7 @@ import Carrousel from '../layouts/Carrousel';
 import apiService from '../../APIService/cocktails-db-api';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { logout } from '../../redux/features/users/users.auth';
+import { logout, login } from '../../redux/features/users/users.auth';
 import { fetchCocktail } from '../../APIService/cocktails-api';
 
 const MyBar = ({ navLinks }) => {
@@ -18,20 +18,8 @@ const MyBar = ({ navLinks }) => {
   const [allUsersDrinks, setAllUsersDrinks] = useState([]);
   const [myDrinks, setMyDrinks] = useState([]);
   const [favDrinks, setFavDrinks] = useState([]);
-  const [currSelected, setCurrSelected] = useState(false);
 
-  useEffect(() => {
-    async function checkAuth() {
-      const accessToken = localStorage.getItem('accessToken');
-      const isAuth = await apiService.getAllMyCocktails(setMyDrinks, accessToken);
-      if (!isAuth) {
-        dispatch(logout());
-        navigate('/');
-        return
-      }
-    }
-    checkAuth()
-    apiService.getAllUsersCocktails(setAllUsersDrinks);
+  async function getFavDrinks() {
     if (currUser.savedDrinks) {
       const { savedDrinks } = currUser;
       let fullList = [];
@@ -41,7 +29,26 @@ const MyBar = ({ navLinks }) => {
         if (savedDrinks.length === fullList.length) setFavDrinks(fullList);
       })      
     }
+  }
+
+  useEffect(() => {
+    async function checkAuth() {
+      const accessToken = localStorage.getItem('accessToken');
+      const isAuth = await apiService.getAllMyCocktails(setMyDrinks, accessToken);
+      if (!isAuth) {
+        dispatch(logout());
+        navigate('/');
+        return
+      } else {dispatch(login())}
+    }
+    checkAuth()
+    apiService.getAllUsersCocktails(setAllUsersDrinks);
+    getFavDrinks();
   }, []);
+
+  useEffect(() => {
+    getFavDrinks();
+  }, [currUser])
 
   return (
     <>

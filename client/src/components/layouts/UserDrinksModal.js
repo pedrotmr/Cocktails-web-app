@@ -21,7 +21,7 @@ const UserDrinksModal = ({ setState }) => {
           }}></div>
         <div className='drink-modal'>
         {/* + fix dispatch below */}
-        <FaHeart className='drink-modal__like' onClick={dispatch} />
+        <FaHeart className='drink-modal__like' />
         <div className='drink-modal__wrapper'>
           <div className='drink-modal__img-wrapper'>
           <img src={currentDrink.picture} alt={currentDrink.name} />
@@ -42,7 +42,7 @@ const UserDrinksModal = ({ setState }) => {
             {userMadeDrink && <button className='btn'  onClick={
               () => {
                 navigate(`/updateDrink/${currentDrink.name}/${currentDrink.ingredients}/${currentDrink.instructions}/${currentDrink._id}`)
-                dispatch(toggleDrinksModal());
+                setState(false)
                 dispatch(turnOffUserMadeDrink())
               }
             }>Update Drink</button>}
@@ -50,7 +50,7 @@ const UserDrinksModal = ({ setState }) => {
               userMadeDrink && <button className='btn' onClick = {() => {
                 const accessToken = localStorage.getItem('accessToken');
                 apiService.deleteCocktail(currentDrink._id, accessToken);
-                dispatch(toggleDrinksModal());
+                setState(false)
                 dispatch(turnOffUserMadeDrink())
               }}>Delete</button>
             }

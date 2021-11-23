@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaHeart } from 'react-icons/fa';
-import { toggleDrinksModal } from '../../redux/features/drinks-modal/drinks-modal';
+// import { toggleDrinksModal } from '../../redux/features/drinks-modal/drinks-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import apiService from '../../APIService/cocktails-db-api';
 import { setUser } from '../../redux/features/users/currUser';
@@ -28,7 +28,6 @@ const DrinksModal = ({ data, setState }) => {
 
   function checkFavError() {
     if (!Object.keys(currUser).length) {
-      console.log('should be toggling')
       setFavError(true)
       setInterval(() => {
         setFavError(false)
@@ -54,7 +53,7 @@ const DrinksModal = ({ data, setState }) => {
           </div>
 
           <div className='drink-modal__info__wrapper'>
-            {favError && <p style={{ position: 'absolute', right: '10rem', top: '5.3rem' }}>Please sign in to save drinks</p>}
+            {favError && <p style={{ position: 'absolute', right: '2rem', top: '1rem', inlineSize: '8em', color: 'darkred'}}>Please sign in to save drinks</p>}
             <h1 className='drink-modal__name'>{currentDrink.strDrink}</h1>
 
             <div className='drink-modal__ingredients'>

@@ -154,7 +154,7 @@ apiService.updateCocktail = async (id, accessToken, cocktail) => {
 };
 
 apiService.deleteCocktail = async (id, accessToken) => {
-  return await fetch(`${BASE_URL}/${id}`, {
+  return await fetch(`${BASE_URL}/myCocktails/${id}`, {
     method: 'DELETE',
     credentials: 'include',
     mode: 'cors',

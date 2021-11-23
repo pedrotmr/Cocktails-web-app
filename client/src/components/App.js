@@ -11,11 +11,9 @@ import { fetchAllDrinks } from '../APIService/cocktails-api';
 import UpdateDrink from './forms/UpdateDrink'
 import { useGetSpiritsByTypeQuery } from '../APIService/cocktails-api';
 
-
 const App = () => {
   const isAuthenticated = useSelector(state => state.userAuth.value);
   const navLinks = ['Cocktails', 'Spirits', 'Search', 'Sign Up'];
-  // const spirits = ['vodka', 'gin', 'rum', 'tequila', 'whiskey', 'brandy'];
 
   const { data: vodka = [] } = useGetSpiritsByTypeQuery('vodka');
   const { data: gin = [] } = useGetSpiritsByTypeQuery('gin');
@@ -25,7 +23,6 @@ const App = () => {
   const [brandy, setBrandy] = useState([]);
 
   useEffect(() => {
-
       fetchAllDrinks(['tequila', 'mezcal'], setTequila);
       fetchAllDrinks(['whiskey', 'bourbon', 'rye_whiskey', 'scotch'], setWhiskey);
       fetchAllDrinks(['rum', 'white_rum', 'dark_rum'], setRum);
@@ -41,13 +38,11 @@ const App = () => {
           <Route path='/register' element={<Register />} />
           <Route
             path='/profile'
-            element={
-              isAuthenticated ? <MyBar navLinks={[...navLinks].slice(0, 3)} /> : <Navigate to='/' />
-            }
+            element={<MyBar navLinks={[...navLinks].slice(0, 3)} />}
           />
           <Route
             path='/postDrink'
-            element={isAuthenticated ? <PostDrink /> : <Navigate to='/' />}
+            element={<PostDrink />}
           />
 
           <Route path='/vodka' element={<SpiritPage vodka={vodka} />} />

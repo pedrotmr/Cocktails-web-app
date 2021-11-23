@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import FileBase64 from 'react-file-base64';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { logout } from '../../redux/features/users/users.auth';
+import { logout, login } from '../../redux/features/users/users.auth';
 
 const PostDrink = () => {
   const sideBarOpen = useSelector(state => state.sidebar.value);
@@ -33,7 +33,7 @@ const PostDrink = () => {
         dispatch(logout());
         navigate('/');
         return
-      }
+      } else {dispatch(login())}
     }
     checkAuth()
   }, []);

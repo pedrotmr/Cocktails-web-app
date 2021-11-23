@@ -12,7 +12,6 @@ import { turnOnUserMadeDrink } from '../../redux/features/userMadeDrink/userMade
 import UserDrinksModal from './UserDrinksModal';
 
 const CarrouselDB = props => {
-  // const drinkModalOpen = useSelector(state => state.drinksModal.value);
   const [ drinkModalOpen, setDrinkModalOpen ] = useState(false);
   const dispatch = useDispatch();
 
@@ -22,7 +21,6 @@ const CarrouselDB = props => {
     if(props.userDrinks) {
       dispatch(turnOnUserMadeDrink())
     }
-    // dispatch(toggleDrinksModal());
     setDrinkModalOpen(true);
   };
   const sliderSettings = {
