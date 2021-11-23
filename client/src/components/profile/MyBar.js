@@ -23,7 +23,8 @@ const MyBar = ({ navLinks }) => {
     async function checkAuth() {
       const accessToken = localStorage.getItem('accessToken');
       const notAuth = await apiService.getAllMyCocktails(setMyDrinks, accessToken);
-      if (notAuth) {
+      console.log(notAuth, 'not auth');
+      if (!notAuth) {
         dispatch(logout());
         navigate('/');
         return
