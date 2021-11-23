@@ -22,8 +22,8 @@ const MyBar = ({ navLinks }) => {
   useEffect(() => {
     async function checkAuth() {
       const accessToken = localStorage.getItem('accessToken');
-      const notAuth = await apiService.getAllMyCocktails(setMyDrinks, accessToken);
-      if (notAuth) {
+      const isAuth = await apiService.getAllMyCocktails(setMyDrinks, accessToken);
+      if (!isAuth) {
         dispatch(logout());
         navigate('/');
         return
