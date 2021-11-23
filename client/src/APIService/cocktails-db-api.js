@@ -95,7 +95,10 @@ apiService.getAllMyCocktails = async (setState, accessToken) => {
     .then(res => res.json())
     .then(res => {
       if (res.status === (401 || 403)) return true
-      else setState(res)
+      else {
+        setState(res)
+        return res
+      }
     })
     .catch(err => console.log(err));
 };
@@ -119,7 +122,7 @@ apiService.createCocktail = async (cocktail, accessToken) => {
 };
 
 apiService.updateCocktail = async (id, accessToken, cocktail) => {
-  return fetch(`${BASE_URL}/${id}`, {
+  return fetch(`${BASE_URL}/myCocktails/${id}`, {
     method: 'PUT',
     credentials: 'include',
     mode: 'cors',
@@ -130,7 +133,7 @@ apiService.updateCocktail = async (id, accessToken, cocktail) => {
     body: JSON.stringify(cocktail),
   })
     .then(res => res.json())
-    .then(res => console.log(res))
+    .then(res => res)
     .catch(err => console.log(err));
 };
 
