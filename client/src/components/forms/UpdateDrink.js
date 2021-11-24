@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import apiService from '../../APIService/cocktails-db-api';
 import { useDispatch } from 'react-redux';
 import { login, logout } from '../../redux/features/users/users.auth';
+import { refreshUserDrinks } from '../../redux/features/userMadeDrink/allUserDrinks';
 // import FileBase64 from 'react-file-base64';
 
 
@@ -40,6 +41,7 @@ const UpdateDrink = () => {
     e.preventDefault()
     const accessToken = localStorage.getItem('accessToken');
     apiService.updateCocktail(_id, accessToken, {name: drinkName, ingredients, instructions});
+    dispatch(refreshUserDrinks());
     navigate('/profile');
   }
   return (
