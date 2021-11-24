@@ -76,8 +76,10 @@ const MyBar = ({ navLinks }) => {
       <Navbar scroll={'disable'} navLinks={navLinks} />
       <div className='section section'>
         <div className='section__cocktails'>
-          <CarrouselDB list={allUsersDrinks} title={'What people are sharing'} userDrinks ={false} />
+          <CarrouselDB list={allUsersDrinks} title={'What people are sharing'} userDrinks ={false} className='allUserDrinks' />
+          <div className='myDrinks'>
           <CarrouselDB list = {myDrinks} title ={"My Created Drinks"} userDrinks ={true}/>
+          </div>
           <Carrousel list ={favDrinks} title = {"My Favorite Drinks"} userDrinks ={false}/>
           {/* That shoulb be liked video which i did not have time to implement */}
           {/* {!isFetching && <Carrousel list={data.drinks} title={'Drinks you liked'} />} */}

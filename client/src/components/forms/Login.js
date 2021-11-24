@@ -66,6 +66,7 @@ const Login = () => {
                     className='form__input'
                     type='email'
                     name='email'
+                    placeholder='Enter your email address'
                     onChange={onChange}
                   />
                   <label className='form__label'>Password</label>
