@@ -11,12 +11,15 @@ const DrinksModal = ({ data, setState }) => {
   const currUser = useSelector(state => state.currUser.user);
   const [ favDrink, setFavDrink ] = useState(false);
   const [ favError, setFavError ] = useState(false);
+  console.log(currUser, 'USER')
+  console.log(Object.keys(currUser).length, 'curruser keys')
 
   useEffect(() => {
-    if(currUser.savedDrinks.length){
-      currUser.savedDrinks.includes(currentDrink.idDrink) && setFavDrink(true)
+    if(currUser.savedDrinks) {
+      if(currUser.savedDrinks.length){
+        currUser.savedDrinks.includes(currentDrink.idDrink) && setFavDrink(true)
+      }
     }
-
   }, [])
 
   async function updateFavList() {

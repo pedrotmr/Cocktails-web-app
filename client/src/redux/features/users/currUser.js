@@ -12,7 +12,7 @@ export const currUserSlice = createSlice({
       state.user = action.payload;
     },
     resetUser: state => {
-      state.user = initialState;
+      state.user = {};
     }
   },
 });
