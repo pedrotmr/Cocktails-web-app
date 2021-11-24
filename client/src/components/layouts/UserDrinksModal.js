@@ -1,15 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaHeart } from 'react-icons/fa';
-import { toggleDrinksModal } from '../../redux/features/drinks-modal/drinks-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { turnOffUserMadeDrink } from '../../redux/features/userMadeDrink/userMadeDrink'
 import { useNavigate } from 'react-router-dom';
 import apiService from '../../APIService/cocktails-db-api';
+import { refreshUserDrinks } from '../../redux/features/userMadeDrink/allUserDrinks';
+
 const UserDrinksModal = ({ setState }) => {
   const currentDrink = useSelector(state => state.currentDrink.drinks);
   const userMadeDrink = useSelector(state => state.userMadeDrink.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  async function sendDeleteDrink() {
+    const accessToken = localStorage.getItem('accessToken');
+    await apiService.deleteCocktail(currentDrink._id, accessToken);
+    setState(false)
+    dispatch(turnOffUserMadeDrink());
+    dispatch(refreshUserDrinks());
+  }
+
   return (
     <>
       <div>
@@ -48,10 +58,7 @@ const UserDrinksModal = ({ setState }) => {
             }>Update Drink</button>}
             {
               userMadeDrink && <button className='btn' onClick = {() => {
-                const accessToken = localStorage.getItem('accessToken');
-                apiService.deleteCocktail(currentDrink._id, accessToken);
-                setState(false)
-                dispatch(turnOffUserMadeDrink())
+                sendDeleteDrink();
               }}>Delete</button>
             }
 

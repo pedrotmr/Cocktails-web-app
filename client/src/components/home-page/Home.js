@@ -8,6 +8,7 @@ import Search from './sections/Search';
 import { Element } from 'react-scroll';
 import { useSelector } from 'react-redux';
 
+
 const Home = () => {
   const sideBarOpen = useSelector(state => state.sidebar.value);
   const navLinks = ['Cocktails', 'Spirits', 'Search'];

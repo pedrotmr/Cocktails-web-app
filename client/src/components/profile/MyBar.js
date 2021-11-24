@@ -9,15 +9,33 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logout, login } from '../../redux/features/users/users.auth';
 import { fetchCocktail } from '../../APIService/cocktails-api';
+import { setUser } from '../../redux/features/users/currUser';
 
 const MyBar = ({ navLinks }) => {
   const sideBarOpen = useSelector(state => state.sidebar.value);
   const currUser = useSelector(state => state.currUser.user);
+  const {trigger} = useSelector(state => state.userDrinks);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [allUsersDrinks, setAllUsersDrinks] = useState([]);
   const [myDrinks, setMyDrinks] = useState([]);
   const [favDrinks, setFavDrinks] = useState([]);
+
+  async function checkAuth() {
+    const accessToken = localStorage.getItem('accessToken');
+    const user = await apiService.loadUser(accessToken);
+    if (!user) {
+      dispatch(logout());
+      navigate('/');
+      return
+    } else {
+      dispatch(login())
+      !Object.keys(currUser).length && dispatch(setUser(user))
+      getMyDrinks(accessToken);
+      getAllUserDrinks();
+      getFavDrinks();
+    }
+  }
 
   async function getFavDrinks() {
     if (currUser.savedDrinks) {
@@ -31,24 +49,26 @@ const MyBar = ({ navLinks }) => {
     }
   }
 
+  async function getMyDrinks(accessToken) {
+    await apiService.getAllMyCocktails(setMyDrinks, accessToken)
+  }
+
+  async function getAllUserDrinks () {
+    await apiService.getAllUsersCocktails(setAllUsersDrinks);
+  }
+
   useEffect(() => {
-    async function checkAuth() {
-      const accessToken = localStorage.getItem('accessToken');
-      const isAuth = await apiService.getAllMyCocktails(setMyDrinks, accessToken);
-      if (!isAuth) {
-        dispatch(logout());
-        navigate('/');
-        return
-      } else {dispatch(login())}
-    }
     checkAuth()
-    apiService.getAllUsersCocktails(setAllUsersDrinks);
-    getFavDrinks();
   }, []);
 
   useEffect(() => {
     getFavDrinks();
   }, [currUser])
+
+  useEffect(() => {
+    checkAuth();
+    getAllUserDrinks();
+  }, [trigger])
 
   return (
     <>
