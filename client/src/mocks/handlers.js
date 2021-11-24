@@ -74,7 +74,7 @@ rest.get('http://localhost:3001/cocktails', (req, res, ctx) => {
     )
 }),
 
-rest.delete('http://localhost:3001/:id', (req, res, ctx) => {
+rest.delete('http://localhost:3001/myCocktails/:id', (req, res, ctx) => {
   const isAuthenticated = sessionStorage.getItem('accessToken');
   const {id} = req.params
   if (!isAuthenticated) {
