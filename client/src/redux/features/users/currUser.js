@@ -15,6 +15,7 @@ export const currUserSlice = createSlice({
     },
     resetUser: state => {
       state.user = initialState;
+      console.log(state.user)
     }
   },
 });
