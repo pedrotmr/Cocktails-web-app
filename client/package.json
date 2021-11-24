@@ -6,6 +6,7 @@
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
     "@reduxjs/toolkit": "^1.6.2",
+    "@testing-library/cypress": "^8.0.2",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -35,7 +36,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -56,6 +58,7 @@
     ]
   },
   "devDependencies": {
+    "cypress": "^9.1.0",
     "msw": "^0.35.0"
   }
 }
