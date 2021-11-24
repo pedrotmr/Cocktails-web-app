@@ -1,5 +1,5 @@
-describe('My First Test', () => {
-  it('Visits cocktail-web-app', () => {
+describe('Complete end to end tests', () => {
+  it('Tests login, update, favorite, and deleting drinks', () => {
     cy.visit('http://localhost:3000');
     cy.contains('Sign In').click();
     cy.contains('Sign in to your account')
@@ -10,7 +10,7 @@ describe('My First Test', () => {
     cy.findByRole('button', { name: 'Continue'}).click()
     cy.contains('Welcome back banana!');
     cy.contains('Cocktails').click()
-    cy.get('[alt="Brandy Alexander"]').click({multiple:true})
+    cy.get('[alt="Brandy Alexander"]').first().click()
     cy.get('.drink-modal__like').click()
     cy.wait(1000);
     cy.contains('My Bar').click()
@@ -41,8 +41,31 @@ describe('My First Test', () => {
       cy.findByRole('button', { name: 'Delete'}).click()
     })
     cy.contains('New one2').should('not.exist');
-
-
-
+  })
+  it.only('Tests for search-bar and spirits page', () => {
+    cy.visit('http://localhost:3000');
+    cy.findByPlaceholderText('Search cocktails by ingredients...')
+      .type('gin {enter}')
+    cy.contains('Gin Fizz')
+    cy.contains('Gin Sour')
+    cy.findByPlaceholderText('Search cocktails by ingredients...')
+    .type('Moscow Mule {enter}')
+    cy.get('.search-bar-carrousel').within(() =>{
+      cy.contains('Moscow Mule')
+      cy.get('[alt="Moscow Mule"]').click()
+      cy.get('.drink-modal__like').click()
+      cy.contains('Please sign in to save drinks')
+      cy.get('.global-bg').click({force:true})
+    })
+    cy.get('.row__image--1').click()
+    cy.url().should('include', 'vodka')
+    cy.contains('155 Belmont')
+    cy.contains('501 Blue')
+    cy.contains('Whiskey').click()
+    cy.contains('Allegheny')
+    cy.contains('Bourbon Sling')
+    cy.contains('juicy').click()
+    cy.contains('Get started').click()
+    cy.url().should('include', 'register')
   })
 })
