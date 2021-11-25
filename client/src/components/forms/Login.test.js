@@ -13,20 +13,6 @@ beforeEach(() => {
   store = createMockStore()
 })
 
-  test('It should properly render when modal sign in is true', () => {
-    const history = createMemoryHistory()
-    store.dispatch(toggleModalSignIn())
-    render(
-      <Provider store={store} >
-        <Router location ={history.location} navigator ={history} >
-            <Login />
-        </Router>
-      </Provider>
-    )
-    screen.getByPlaceholderText(/Password/);
-    screen.getByRole('button', {name: 'Continue'})
-  })
-
   test('should not render when modal sign in is false', () => {
     const history = createMemoryHistory()
     render(
@@ -57,9 +43,5 @@ beforeEach(() => {
   screen.getByText(/Please fill in all the fields/)
   })
 
-  
-  test('should render homepage on login', () => {
-
-  })
 
 })
