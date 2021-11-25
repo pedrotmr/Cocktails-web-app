@@ -62,6 +62,7 @@ export const searchDrinks = async (input, setState) => {
   ingr.length && results.push(...ingr);
   drinks.length && results.push(...drinks);
   setState([...drinks, ...ingr])
+  return results
 };
 
 export const fetchCocktail = (input) => {

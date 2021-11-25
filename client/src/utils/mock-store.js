@@ -7,7 +7,8 @@ import modalSignInReducer from '../redux/features/signIn-modal/signIn-modal';
 import favouritesReducer from '../redux/features/favourites/favourites';
 import drinksModalReducer from '../redux/features/drinks-modal/drinks-modal';
 import currentDrinkReducer from '../redux/features/currentDrink/currentDrink';
-import userMadeDrinkReducer from '../redux/features/userMadeDrink/userMadeDrink'
+import userMadeDrinkReducer from '../redux/features/userMadeDrink/userMadeDrink';
+import userDrinksReducer from '../redux/features/userMadeDrink/allUserDrinks';
 
 export const createMockStore = () => configureStore({
   reducer: {
@@ -20,5 +21,6 @@ export const createMockStore = () => configureStore({
     currentDrink: currentDrinkReducer,
     userMadeDrink: userMadeDrinkReducer,
     currUser: currUserReducer,
+    userDrinks: userDrinksReducer
   }
 });
