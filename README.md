@@ -27,3 +27,10 @@ npm start
 - [Trent Arnold](https://github.com/trentarnold)
 - [Sam Well](https://github.com/swelch1)
 
+### Tech Stack:
+- React
+- Redux
+- SASS
+- Node
+- Express
+- MongoDB
