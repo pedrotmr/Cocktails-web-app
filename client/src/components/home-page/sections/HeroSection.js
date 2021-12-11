@@ -4,6 +4,7 @@ import { MdArrowForward, MdKeyboardArrowRight } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../../../redux/features/users/users.auth';
+import { setUser } from '../../../redux/features/users/currUser';
 import apiService from '../../../APIService/cocktails-db-api';
 
 const HeroSection = () => {
@@ -17,11 +18,14 @@ const HeroSection = () => {
     const userInfo = await apiService.loadUser(accessToken);
     if (userInfo) {
       dispatch(login());
-      setUserName(userInfo[0].name);
+      dispatch(setUser(userInfo));
+      setUserName(userInfo.name);
     }
   };
   useEffect(() => {
-    getProfile(accessToken);
+    if (accessToken) {
+      getProfile(accessToken);
+    }
   }, [accessToken]);
 
   return (

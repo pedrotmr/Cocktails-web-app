@@ -34,6 +34,7 @@ const Login = () => {
       return setAlertMsg('Please fill in all the fields', 'danger');
     const user = { email, password };
     const res = await apiService.login(user);
+    console.log(res);
     if (res.error) {
       return setAlertMsg(res.message, 'danger');
     } else {
@@ -65,6 +66,7 @@ const Login = () => {
                     className='form__input'
                     type='email'
                     name='email'
+                    placeholder='Enter your email address'
                     onChange={onChange}
                   />
                   <label className='form__label'>Password</label>
@@ -72,6 +74,7 @@ const Login = () => {
                     className='form__input'
                     type='password'
                     name='password'
+                    placeholder="Password"
                     onChange={onChange}
                   />
                   <button className='form__button' type='submit'>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -7,30 +7,30 @@ import Modal from 'react-modal';
 import DrinksModal from './DrinksModal';
 import { fetchCocktail } from '../../APIService/cocktails-api';
 import { toggleDrinksModal } from '../../redux/features/drinks-modal/drinks-modal';
+import { changeCurrentDrink } from '../../redux/features/currentDrink/currentDrink';
 
 const Carrousel = props => {
-  const [id, setId] = useState('');
-  const [data, setData] = useState([]);
-  const drinkModalOpen = useSelector(state => state.drinksModal.value);
+  // const drinkModalOpen = useSelector(state => state.drinksModal.value);
+  const [ drinkModalOpen, setDrinkModalOpen ] = useState(false);
   const dispatch = useDispatch();
 
-  const handleClick = e => {
-    setId(e.target.id);
-    console.log('name: ', e.target.alt, '|| id: ', id);
-    fetchCocktail(id, setData);
-    dispatch(toggleDrinksModal());
+  const handleClick = async (e, id) => {
+    const drink = await fetchCocktail(e.target.id);
+    dispatch(changeCurrentDrink(drink.data.drinks[0]))
+    // dispatch(toggleDrinksModal());
+    setDrinkModalOpen(true);
   };
 
   const sliderSettings = {
     infinite: true,
-    slidesToShow: 4,
+    slidesToShow: Math.min(props.list.length, 4),
     slidesToScroll: 2,
     speed: 500,
     responsive: [
       {
         breakpoint: 1100,
         settings: {
-          slidesToShow: 3.5,
+          slidesToShow: Math.min(props.list.length, 3.5),
           slidesToScroll: 3,
           infinite: true,
         },
@@ -38,7 +38,7 @@ const Carrousel = props => {
       {
         breakpoint: 1010,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: Math.min(props.list.length, 3),
           slidesToScroll: 2,
           infinite: true,
         },
@@ -46,7 +46,7 @@ const Carrousel = props => {
       {
         breakpoint: 830,
         settings: {
-          slidesToShow: 2.5,
+          slidesToShow: Math.min(props.list.length, 2.5),
           slidesToScroll: 2,
           infinite: true,
         },
@@ -54,7 +54,7 @@ const Carrousel = props => {
       {
         breakpoint: 730,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: Math.min(props.list.length, 2),
           slidesToScroll: 1,
           infinite: true,
         },
@@ -62,7 +62,7 @@ const Carrousel = props => {
       {
         breakpoint: 630,
         settings: {
-          slidesToShow: 1.6,
+          slidesToShow: Math.min(props.list.length, 1.5),
           slidesToScroll: 1,
           initialSlide: 0,
         },
@@ -70,7 +70,7 @@ const Carrousel = props => {
       {
         breakpoint: 510,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: Math.min(props.list.length, 1),
           slidesToScroll: 1,
           initialSlide: 0,
         },
@@ -80,10 +80,10 @@ const Carrousel = props => {
 
   return (
     <div>
-      {drinkModalOpen && (
+      {drinkModalOpen  && (
         <>
           <Modal />
-          <DrinksModal data={data} />
+            <DrinksModal  setState={setDrinkModalOpen} />
           <Modal />
         </>
       )}
@@ -92,19 +92,19 @@ const Carrousel = props => {
         <Slider {...sliderSettings}>
           {props.list.map(drink => {
             return (
-              <>
+              <div key = {drink.idDrink}>
                 <nav className='link' key={drink.idDrink}>
                   <div className='section__drinks-list__card'>
                     <img
                       src={drink.strDrinkThumb}
                       alt={drink.strDrink}
                       id={drink.idDrink}
-                      onClick={handleClick}
+                      onClick={(e) => handleClick(e, drink.idDrink)}
                     />
                     <h2>{drink.strDrink}</h2>
                   </div>
                 </nav>
-              </>
+              </div>
             );
           })}
         </Slider>

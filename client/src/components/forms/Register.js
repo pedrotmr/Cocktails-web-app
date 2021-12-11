@@ -29,6 +29,7 @@ const Register = () => {
 
   const onSubmit = async e => {
     e.preventDefault();
+    // +add: form validation for each field
     if (password !== password2) return setAlertMsg('Passwords do no match', 'danger');
     const newUser = { name, email, password };
     const res = await apiService.register(newUser);

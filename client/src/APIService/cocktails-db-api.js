@@ -1,3 +1,4 @@
+
 const BASE_URL = 'http://localhost:3001';
 
 const apiService = {};
@@ -25,8 +26,28 @@ apiService.loadUser = accessToken => {
     },
   })
     .then(res => res.json())
+    .then(res => {
+      if (res.status === 406) return false
+      else return res
+    })
     .catch(err => console.log(err));
 };
+
+apiService.updateUserFavs = (accessToken, drinkID) => {
+  console.log(drinkID, 'ID')
+  return fetch(`${BASE_URL}/myList`, {
+    method: 'PUT',
+    credentials: 'include',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({drinkID}),
+  })
+    .then(res => res.json())
+    .catch(err => console.log(err));
+}
 
 apiService.login = async user => {
   return await fetch(`${BASE_URL}/login`, {
@@ -37,7 +58,11 @@ apiService.login = async user => {
     body: JSON.stringify(user),
   })
     .then(res => res.json())
-    .catch(err => console.log(err));
+    .then(res => {
+      console.log(res, 'this is the res')
+      return res
+    })
+    .catch(err => console.log(err, 'this is the error'));
 };
 
 apiService.logout = accessToken => {
@@ -52,7 +77,10 @@ apiService.getAllUsersCocktails = async setState => {
     mode: 'cors',
   })
     .then(res => res.json())
-    .then(res => setState(res))
+    .then(res => {
+      setState && setState(res)
+      return res
+    })
     .catch(err => console.log(err));
 };
 
@@ -70,8 +98,7 @@ apiService.getCocktail = async (id, accessToken) => {
     .catch(err => console.log(err));
 };
 
-// DID NOT USE DO FAR
-apiService.getAllMyCocktails = async accessToken => {
+apiService.getAllMyCocktails = async (setState, accessToken) => {
   return await fetch(`${BASE_URL}/myCocktails`, {
     method: 'GET',
     credentials: 'include',
@@ -82,10 +109,16 @@ apiService.getAllMyCocktails = async accessToken => {
     },
   })
     .then(res => res.json())
+    .then(res => {
+      if (res.status === (401 || 403)) return false
+      else {
+        setState(res)
+        return res
+      }
+    })
     .catch(err => console.log(err));
 };
 
-// DID NOT USE DO FAR
 apiService.createCocktail = async (cocktail, accessToken) => {
   return fetch(`${BASE_URL}/`, {
     method: 'POST',
@@ -98,12 +131,14 @@ apiService.createCocktail = async (cocktail, accessToken) => {
     body: JSON.stringify(cocktail),
   })
     .then(res => res.json())
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err)
+      return err;
+    });
 };
 
-// DID NOT USE DO FAR
-apiService.updateCocktail = async (id, accessToken) => {
-  return fetch(`${BASE_URL}/${id}`, {
+apiService.updateCocktail = async (id, accessToken, cocktail) => {
+  return fetch(`${BASE_URL}/myCocktails/${id}`, {
     method: 'PUT',
     credentials: 'include',
     mode: 'cors',
@@ -111,15 +146,15 @@ apiService.updateCocktail = async (id, accessToken) => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify(cocktail),
   })
     .then(res => res.json())
+    .then(res => res)
     .catch(err => console.log(err));
 };
 
-// DID NOT USE DO FAR
-apiService.deleteCocktail = async (id, accessToken) => {
-  return await fetch(`${BASE_URL}/${id}`, {
+apiService.deleteCocktail = (id, accessToken) => {
+  return fetch(`${BASE_URL}/myCocktails/${id}`, {
     method: 'DELETE',
     credentials: 'include',
     mode: 'cors',

@@ -1,34 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import apiService from '../../APIService/cocktails-db-api';
 import Navbar from '../menu/Navbar';
 import Sidebar from '../menu/Sidebar';
 import { useSelector } from 'react-redux';
 import FileBase64 from 'react-file-base64';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { logout, login } from '../../redux/features/users/users.auth';
 
 const PostDrink = () => {
   const sideBarOpen = useSelector(state => state.sidebar.value);
   const navLinks = ['Cocktails', 'Spirits', 'Search'];
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const [cocktail, setCocktail] = useState({
+  const initialState = {
     name: '',
     ingredients: '',
     instructions: '',
     picture: '',
-  });
+  }
 
-  const { name, ingredients, instructions, picture } = cocktail;
+  const [cocktail, setCocktail] = useState(initialState);
+
+  const { name, ingredients, instructions } = cocktail;
+
+  useEffect(() => {
+    async function checkAuth() {
+      const accessToken = localStorage.getItem('accessToken');
+      const isAuth = await apiService.loadUser(accessToken);
+      if (!isAuth) {
+        dispatch(logout());
+        navigate('/');
+        return
+      } else {dispatch(login())}
+    }
+    checkAuth()
+  }, []);
 
   const onChange = e => setCocktail({ ...cocktail, [e.target.name]: e.target.value });
 
   const onSubmit = e => {
     e.preventDefault();
-    apiService.createCocktail(cocktail);
-    setCocktail({
-      name: '',
-      ingredients: '',
-      instructions: '',
-      picture: '',
-    });
+    const accessToken = localStorage.getItem('accessToken');
+    apiService.createCocktail(cocktail, accessToken);
+    setCocktail(initialState);
+    navigate('/profile')
   };
 
   return (
