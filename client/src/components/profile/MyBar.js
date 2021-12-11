@@ -14,7 +14,7 @@ import { setUser } from '../../redux/features/users/currUser';
 const MyBar = ({ navLinks }) => {
   const sideBarOpen = useSelector(state => state.sidebar.value);
   const currUser = useSelector(state => state.currUser.user);
-  const {trigger} = useSelector(state => state.userDrinks);
+  const { trigger } = useSelector(state => state.userDrinks);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [allUsersDrinks, setAllUsersDrinks] = useState([]);
@@ -27,10 +27,10 @@ const MyBar = ({ navLinks }) => {
     if (!user) {
       dispatch(logout());
       navigate('/');
-      return
+      return;
     } else {
-      dispatch(login())
-      !Object.keys(currUser).length && dispatch(setUser(user))
+      dispatch(login());
+      !Object.keys(currUser).length && dispatch(setUser(user));
       getMyDrinks(accessToken);
       getAllUserDrinks();
       getFavDrinks();
@@ -43,32 +43,32 @@ const MyBar = ({ navLinks }) => {
       let fullList = [];
       savedDrinks.forEach(async d => {
         const drink = await fetchCocktail(d);
-        fullList.push(...drink.data.drinks)
+        fullList.push(...drink.data.drinks);
         if (savedDrinks.length === fullList.length) setFavDrinks(fullList);
-      })      
+      });
     }
   }
 
   async function getMyDrinks(accessToken) {
-    await apiService.getAllMyCocktails(setMyDrinks, accessToken)
+    await apiService.getAllMyCocktails(setMyDrinks, accessToken);
   }
 
-  async function getAllUserDrinks () {
+  async function getAllUserDrinks() {
     await apiService.getAllUsersCocktails(setAllUsersDrinks);
   }
 
   useEffect(() => {
-    checkAuth()
+    checkAuth();
   }, []);
 
   useEffect(() => {
     getFavDrinks();
-  }, [currUser])
+  }, [currUser]);
 
   useEffect(() => {
     checkAuth();
     getAllUserDrinks();
-  }, [trigger])
+  }, [trigger]);
 
   return (
     <>
@@ -76,13 +76,23 @@ const MyBar = ({ navLinks }) => {
       <Navbar scroll={'disable'} navLinks={navLinks} />
       <div className='section section'>
         <div className='section__cocktails'>
-          <CarrouselDB list={allUsersDrinks} title={'What people are sharing'} userDrinks ={false} className='allUserDrinks' />
-          <div className='myDrinks'>
-          <CarrouselDB list = {myDrinks} title ={"My Created Drinks"} userDrinks ={true}/>
-          </div>
-          <Carrousel list ={favDrinks} title = {"My Favorite Drinks"} userDrinks ={false}/>
-          {/* That shoulb be liked video which i did not have time to implement */}
-          {/* {!isFetching && <Carrousel list={data.drinks} title={'Drinks you liked'} />} */}
+          <CarrouselDB
+            list={allUsersDrinks}
+            title={'What people are sharing'}
+            userDrinks={false}
+            className='allUserDrinks'
+          />
+          {myDrinks.length && (
+            <div className='myDrinks'>
+              <CarrouselDB
+                list={myDrinks}
+                title={'My Created Drinks'}
+                userDrinks={true}
+              />
+            </div>
+          )}
+
+          <Carrousel list={favDrinks} title={'My Favorite Drinks'} userDrinks={false} />
         </div>
       </div>
     </>
