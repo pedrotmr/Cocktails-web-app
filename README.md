@@ -25,7 +25,7 @@ npm start
 ### Collaborators 🤝
 - [Pedro Ramos](https://github.com/namaziay)
 - [Trent Arnold](https://github.com/trentarnold)
-- [Sam Well](https://github.com/swelch1)
+- [Sam Welch](https://github.com/swelch1)
 
 
 ### Tech Stack:
