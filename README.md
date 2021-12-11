@@ -22,7 +22,7 @@ cd client
 npm i
 npm start
 ```
-### Collaborators 🤝 🤝
+### Collaborators 🤝
 - [Pedro Ramos](https://github.com/namaziay)
 - [Trent Arnold](https://github.com/trentarnold)
 - [Sam Well](https://github.com/swelch1)
