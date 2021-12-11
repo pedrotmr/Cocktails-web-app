@@ -3,15 +3,32 @@ import { useParams } from "react-router-dom";
 import Navbar from '../menu/Navbar';
 import { useNavigate } from 'react-router-dom';
 import apiService from '../../APIService/cocktails-db-api';
+import { useDispatch } from 'react-redux';
+import { login, logout } from '../../redux/features/users/users.auth';
+import { refreshUserDrinks } from '../../redux/features/userMadeDrink/allUserDrinks';
 // import FileBase64 from 'react-file-base64';
+
+
 const UpdateDrink = () => {
   const [drinkName, setDrinkName] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [instructions, setInstructions] = useState('');
   const [_id, set_Id] = useState('');
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   let params = useParams();
+  
   useEffect(() => {
+    async function checkAuth() {
+      const accessToken = localStorage.getItem('accessToken');
+      const isAuth = await apiService.loadUser(accessToken);
+      if (!isAuth) {
+        dispatch(logout());
+        navigate('/');
+        return
+      } else {dispatch(login())}
+    }
+    checkAuth()
     if (params) {
       setDrinkName(params.drinkName);
       setIngredients(params.ingredients);
@@ -24,6 +41,7 @@ const UpdateDrink = () => {
     e.preventDefault()
     const accessToken = localStorage.getItem('accessToken');
     apiService.updateCocktail(_id, accessToken, {name: drinkName, ingredients, instructions});
+    dispatch(refreshUserDrinks());
     navigate('/profile');
   }
   return (

@@ -74,7 +74,7 @@ rest.get('http://localhost:3001/cocktails', (req, res, ctx) => {
     )
 }),
 
-rest.delete('http://localhost:3001/:id', (req, res, ctx) => {
+rest.delete('http://localhost:3001/myCocktails/:id', (req, res, ctx) => {
   const isAuthenticated = sessionStorage.getItem('accessToken');
   const {id} = req.params
   if (!isAuthenticated) {
@@ -147,7 +147,40 @@ rest.get('http://localhost:3001/cocktail/:id', (req, res, ctx) => {
       picture:'test-picture'
     })
   )
+}),
+
+rest.get(`https://www.thecocktaildb.com/api/json/v2/9973533/filter.php`,(req, res, ctx) => {
+  return res(
+    ctx.status(200),
+    ctx.json({
+        drinks:  [{
+          name:'test-name',
+          ingredients:'test-ingredients',
+          instructions:'test-instructions',
+          picture:'test-picture' 
+        }]
+      }
+    )
+  )
+}),
+rest.get(`https://www.thecocktaildb.com/api/json/v1/1/search.php`,(req, res, ctx) => {
+  return res(
+    ctx.status(200),
+    ctx.json({
+        drinks:  [{
+          name:'test-name',
+          ingredients:'test-ingredients',
+          instructions:'test-instructions',
+          picture:'test-picture' 
+        }]
+      }
+    )
+  )
 })
+
+
+
+
 
 
 

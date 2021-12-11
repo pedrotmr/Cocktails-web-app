@@ -11,7 +11,6 @@ exports.getAllUsersCocktails = async (req, res) => {
 };
 
 exports.getCocktail = async (req, res) => {
-  console.log(req.params)
   try {
     const cocktail = await CocktailModel.getSingleCocktail(req.params.id);
     res.status(200).send(cocktail);
@@ -22,14 +21,15 @@ exports.getCocktail = async (req, res) => {
 };
 
 exports.createCocktail = async (req, res) => {
-  const { name, ingredients, instructions, picture } = req.body;
+  const cocktail = req.body;
   const id = req.user._id;
   try {
-    if (!name || !ingredients || !instructions || !picture) {
+    if (!cocktail.name || !cocktail.ingredients || !cocktail.instructions) {
       return res.status(400).send('Please provide all information needed');
     }
-    const cocktail = await CocktailModel.createCocktail({ ...req.body, user: id });
-    res.status(201).send(cocktail);
+    if (!cocktail.picture) cocktail.picture = "https://assets.dragoart.com/images/167030_502/how-to-draw-a-martini-step-7_5e4ccafd6f4580.52436546_95160_5_3.gif"
+    const cocktailCreation = await CocktailModel.createCocktail({ ...cocktail, user: id });
+    res.status(201).send(cocktailCreation);
   } catch (error) {
     console.log(error);
     res.status(500).send('Could not create cocktail');

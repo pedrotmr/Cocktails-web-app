@@ -110,7 +110,6 @@ apiService.getAllMyCocktails = async (setState, accessToken) => {
   })
     .then(res => res.json())
     .then(res => {
-      console.log(res.status)
       if (res.status === (401 || 403)) return false
       else {
         setState(res)
@@ -154,8 +153,8 @@ apiService.updateCocktail = async (id, accessToken, cocktail) => {
     .catch(err => console.log(err));
 };
 
-apiService.deleteCocktail = async (id, accessToken) => {
-  return await fetch(`${BASE_URL}/${id}`, {
+apiService.deleteCocktail = (id, accessToken) => {
+  return fetch(`${BASE_URL}/myCocktails/${id}`, {
     method: 'DELETE',
     credentials: 'include',
     mode: 'cors',

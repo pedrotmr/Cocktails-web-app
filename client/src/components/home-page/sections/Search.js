@@ -33,7 +33,9 @@ const Search = () => {
           </form>
 
           <div className='section__cocktails'>
-            {result.length > 0 && <Carrousel list={result} title={'Result'} />}
+            <div className='search-bar-carrousel'>
+              {result.length > 0 && <Carrousel list={result} title={'Result'} />}
+            </div>
           </div>
         </div>
       </div>

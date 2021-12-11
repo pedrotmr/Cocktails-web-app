@@ -60,6 +60,7 @@ mocks.testUsers = [
     name: "Peter",
     email: "peter@peter.peter",
     password: bcrypt.hashSync("wordpass", 10),
+    savedDrinks: ['1']
   },
   {
     _id: new mongoose.Types.ObjectId("6196bb716c33f7f7c8cfccc1"),

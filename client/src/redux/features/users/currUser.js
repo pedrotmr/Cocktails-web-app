@@ -1,9 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  user: {
-    savedDrinks: []
-  },
+  user: {},
 };
 
 export const currUserSlice = createSlice({
@@ -14,7 +12,7 @@ export const currUserSlice = createSlice({
       state.user = action.payload;
     },
     resetUser: state => {
-      state.user = initialState;
+      state.user = {};
     }
   },
 });

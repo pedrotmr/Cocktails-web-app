@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { FaHeart } from 'react-icons/fa';
-import { toggleDrinksModal } from '../../redux/features/drinks-modal/drinks-modal';
+// import { toggleDrinksModal } from '../../redux/features/drinks-modal/drinks-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import apiService from '../../APIService/cocktails-db-api';
 import { setUser } from '../../redux/features/users/currUser';
 
-const DrinksModal = ({ data }) => {
+const DrinksModal = ({ data, setState }) => {
   const dispatch = useDispatch();
   const currentDrink = useSelector(state => state.currentDrink.drinks);
   const currUser = useSelector(state => state.currUser.user);
   const [ favDrink, setFavDrink ] = useState(false);
+  const [ favError, setFavError ] = useState(false);
+  console.log(currUser, 'USER')
+  console.log(Object.keys(currUser).length, 'curruser keys')
 
   useEffect(() => {
-    if(currUser.savedDrinks.length){
-      currUser.savedDrinks.includes(currentDrink.idDrink) && setFavDrink(true)
+    if(currUser.savedDrinks) {
+      if(currUser.savedDrinks.length){
+        currUser.savedDrinks.includes(currentDrink.idDrink) && setFavDrink(true)
+      }
     }
   }, [])
 
@@ -24,22 +29,34 @@ const DrinksModal = ({ data }) => {
     setFavDrink(!favDrink);
   }
 
+  function checkFavError() {
+    if (!Object.keys(currUser).length) {
+      setFavError(true)
+      setInterval(() => {
+        setFavError(false)
+      }, 3000)
+    }
+  }
+
   return (
     <>
     {currentDrink && 
       <div>
-      <div className='global-bg' onClick={() => dispatch(toggleDrinksModal())}></div>
+      <div className='global-bg' onClick={() => setState(false)}></div>
       <div className='drink-modal'>
-          <FaHeart className='drink-modal__like' 
-            style={favDrink ? {color: "red"} : {color: "black"}} 
-            onClick={updateFavList} 
-          />
+          {Object.keys(currUser).length 
+            ? <FaHeart className='drink-modal__like' 
+              style={favDrink ? {color: "red"} : {color: "black"}} 
+              onClick={updateFavList} 
+            />
+            : <FaHeart className='drink-modal__like' style={{color: "rgb(197, 197, 197)"}} onClick={checkFavError} />}
         <div className='drink-modal__wrapper'>
           <div className='drink-modal__img-wrapper'>
             <img src={currentDrink.strDrinkThumb} alt={currentDrink.strDrink} />
           </div>
 
           <div className='drink-modal__info__wrapper'>
+            {favError && <p style={{ position: 'absolute', right: '2rem', top: '1rem', inlineSize: '8em', color: 'darkred'}}>Please sign in to save drinks</p>}
             <h1 className='drink-modal__name'>{currentDrink.strDrink}</h1>
 
             <div className='drink-modal__ingredients'>

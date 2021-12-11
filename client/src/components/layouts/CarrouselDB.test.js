@@ -57,17 +57,4 @@ describe('Login Component', () => {
     const drinkName = screen.queryByText(/test-ingredients/);
     expect(drinkName).toBeNull()
   })
-
-  test(`should render modal when drink modal open is true`, () => {
-    store.dispatch(changeCurrentDrink(mockCocktail));
-    store.dispatch(toggleDrinksModal())
-    render(
-      <Provider store={store} >
-        <Router location ={history.location} navigator ={history} >
-            <CarrouselDB list = {mockCocktailArray}></CarrouselDB>
-        </Router>
-      </Provider>
-    )
-    screen.getByText(/test-ingredients/);
-  })
 })
