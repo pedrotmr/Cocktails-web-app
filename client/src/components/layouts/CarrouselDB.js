@@ -2,24 +2,22 @@ import React, { useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Modal from 'react-modal';
-//++ Drinks Modal not working
 import apiService from '../../APIService/cocktails-db-api';
-import { toggleDrinksModal } from '../../redux/features/drinks-modal/drinks-modal';
 import { changeCurrentDrink } from '../../redux/features/currentDrink/currentDrink';
 import { turnOnUserMadeDrink } from '../../redux/features/userMadeDrink/userMadeDrink';
 import UserDrinksModal from './UserDrinksModal';
 
 const CarrouselDB = props => {
-  const [ drinkModalOpen, setDrinkModalOpen ] = useState(false);
+  const [drinkModalOpen, setDrinkModalOpen] = useState(false);
   const dispatch = useDispatch();
 
   const handleClick = async (e, id) => {
     const drink = await apiService.getCocktail(e.target.id);
-    dispatch(changeCurrentDrink(drink))
-    if(props.userDrinks) {
-      dispatch(turnOnUserMadeDrink())
+    dispatch(changeCurrentDrink(drink));
+    if (props.userDrinks) {
+      dispatch(turnOnUserMadeDrink());
     }
     setDrinkModalOpen(true);
   };
@@ -82,10 +80,10 @@ const CarrouselDB = props => {
 
   return (
     <div>
-      {drinkModalOpen  && (
+      {drinkModalOpen && (
         <>
           <Modal />
-            <UserDrinksModal  setState={setDrinkModalOpen} userDrinks = {props.userDrinks} />
+          <UserDrinksModal setState={setDrinkModalOpen} userDrinks={props.userDrinks} />
           <Modal />
         </>
       )}
@@ -94,16 +92,17 @@ const CarrouselDB = props => {
         <Slider {...sliderSettings}>
           {props.list.map(drink => {
             return (
-              <div key ={drink._id}>
+              <div key={drink._id}>
                 <nav className='link' key={drink._id}>
                   <div className='section__drinks-list__card'>
-                    <img 
+                    <img
                       height='200px'
                       width='200px'
-                      src={drink.picture} 
-                      alt={drink.name} 
+                      src={drink.picture}
+                      alt={drink.name}
                       id={drink._id}
-                      onClick = {handleClick} />
+                      onClick={handleClick}
+                    />
                     <h2>{drink.name}</h2>
                   </div>
                 </nav>

@@ -1,12 +1,12 @@
 .drink-modal {
-  height: 90vh;
-  width: 90vw;
+  height: 60vh;
+  width: 60vw;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-60%);
   border-radius: 10px;
-  background: green;
+  background: #dadada;
   z-index: 15;
   display: flex;
   justify-content: center;
@@ -25,7 +25,7 @@
   }
 
   &__wrapper {
-    height: 90vh;
+    height: 60vh;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -11,8 +11,7 @@ const DrinksModal = ({ data, setState }) => {
   const currUser = useSelector(state => state.currUser.user);
   const [ favDrink, setFavDrink ] = useState(false);
   const [ favError, setFavError ] = useState(false);
-  console.log(currUser, 'USER')
-  console.log(Object.keys(currUser).length, 'curruser keys')
+
 
   useEffect(() => {
     if(currUser.savedDrinks) {
@@ -40,14 +39,14 @@ const DrinksModal = ({ data, setState }) => {
 
   return (
     <>
-    {currentDrink && 
+    {currentDrink &&
       <div>
       <div className='global-bg' onClick={() => setState(false)}></div>
       <div className='drink-modal'>
-          {Object.keys(currUser).length 
-            ? <FaHeart className='drink-modal__like' 
-              style={favDrink ? {color: "red"} : {color: "black"}} 
-              onClick={updateFavList} 
+          {Object.keys(currUser).length
+            ? <FaHeart className='drink-modal__like'
+              style={favDrink ? {color: "red"} : {color: "black"}}
+              onClick={updateFavList}
             />
             : <FaHeart className='drink-modal__like' style={{color: "rgb(197, 197, 197)"}} onClick={checkFavError} />}
         <div className='drink-modal__wrapper'>

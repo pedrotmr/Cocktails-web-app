@@ -55,7 +55,7 @@
   &__form {
     background: #010101;
     width: 40rem;
-    // height: 25vh;
+    // height: 80vh;
     z-index: 1;
     display: grid;
     margin: 0 auto;
@@ -77,7 +77,8 @@
     }
 
     &--drinks {
-      width: 70rem;
+      width: 65rem;
+      height: 95%;
 
       @media screen and (max-width: 550px) {
         width: 40rem;

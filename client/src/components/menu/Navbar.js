@@ -27,31 +27,22 @@ const Navbar = props => {
 
   useEffect(() => {
     let isMounted = true;
-    if(isMounted) {
+    if (isMounted) {
       window.addEventListener('scroll', changeNav);
     }
   }, []);
 
   // if Authenticated ? display SignUp : display MyBar
   const authLink = !isAuthenticated ? (
-    <NavLink
-      className={({ isActive }) => "menu-links menu-links--nav" + (isActive ? " menu-links--active" : "")}
-      to='/register'
-    >
+    <NavLink className='menu-links menu-links--nav' to='/register'>
       Sign Up
     </NavLink>
   ) : (
     <>
-      <NavLink
-        className={({ isActive }) => "menu-links menu-links--nav" + (isActive ? " menu-links--active" : "")}
-        to='/profile'
-      >
+      <NavLink className='menu-links menu-links--nav' to='/profile'>
         My Bar
       </NavLink>
-      <NavLink
-        className={({ isActive }) => "menu-links menu-links--nav" + (isActive ? " menu-links--active" : "")}
-        to='/postDrink'
-      >
+      <NavLink className='menu-links menu-links--nav' to='/postDrink'>
         Post a Drink
       </NavLink>
     </>
@@ -67,7 +58,7 @@ const Navbar = props => {
 
   const checkDrinkModal = () => {
     drinksModal && dispatch(toggleDrinksModal());
-  }
+  };
 
   return (
     <>

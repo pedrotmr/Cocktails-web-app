@@ -3,13 +3,11 @@ import { Link as LinkRouter } from 'react-router-dom';
 import { Link as LinkScroll } from 'react-scroll';
 import { FaTimes } from 'react-icons/fa';
 import Fade from 'react-reveal/Fade';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toggleSideBar } from '../../redux/features/sidebar/sidebar';
-import { HashLink, NavHashLink } from 'react-router-hash-link';
 
 const Sidebar = props => {
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector(state => state.userAuth.value);
 
   // DID NO THAVE TIME TO FINISH -> PRETTY MUCH THE SAME LOGIC AS THE NAVBAR
 

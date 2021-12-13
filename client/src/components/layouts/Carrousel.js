@@ -1,23 +1,20 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Modal from 'react-modal';
 import DrinksModal from './DrinksModal';
 import { fetchCocktail } from '../../APIService/cocktails-api';
-import { toggleDrinksModal } from '../../redux/features/drinks-modal/drinks-modal';
 import { changeCurrentDrink } from '../../redux/features/currentDrink/currentDrink';
 
 const Carrousel = props => {
-  // const drinkModalOpen = useSelector(state => state.drinksModal.value);
-  const [ drinkModalOpen, setDrinkModalOpen ] = useState(false);
+  const [drinkModalOpen, setDrinkModalOpen] = useState(false);
   const dispatch = useDispatch();
 
   const handleClick = async (e, id) => {
     const drink = await fetchCocktail(e.target.id);
-    dispatch(changeCurrentDrink(drink.data.drinks[0]))
-    // dispatch(toggleDrinksModal());
+    dispatch(changeCurrentDrink(drink.data.drinks[0]));
     setDrinkModalOpen(true);
   };
 
@@ -80,10 +77,10 @@ const Carrousel = props => {
 
   return (
     <div>
-      {drinkModalOpen  && (
+      {drinkModalOpen && (
         <>
           <Modal />
-            <DrinksModal  setState={setDrinkModalOpen} />
+          <DrinksModal setState={setDrinkModalOpen} />
           <Modal />
         </>
       )}
@@ -92,14 +89,14 @@ const Carrousel = props => {
         <Slider {...sliderSettings}>
           {props.list.map(drink => {
             return (
-              <div key = {drink.idDrink}>
+              <div key={drink.idDrink}>
                 <nav className='link' key={drink.idDrink}>
                   <div className='section__drinks-list__card'>
                     <img
                       src={drink.strDrinkThumb}
                       alt={drink.strDrink}
                       id={drink.idDrink}
-                      onClick={(e) => handleClick(e, drink.idDrink)}
+                      onClick={e => handleClick(e, drink.idDrink)}
                     />
                     <h2>{drink.strDrink}</h2>
                   </div>

@@ -16,7 +16,7 @@ export const cocktailsApi = createApi({
       query: () => 'latest.php',
     }),
     getSpiritsByType: builder.query({
-      query: (spirit) => `filter.php?i=${spirit}`,
+      query: spirit => `filter.php?i=${spirit}`,
     }),
     getCocktailInfo: builder.query({
       query: id => `lookup.php?i=${id}`,
@@ -26,12 +26,12 @@ export const cocktailsApi = createApi({
 
 // Fetching from multiples parameters
 export const fetchAllDrinks = ([...args], setState) => {
-return args.map(arg => {
-  return axios
-      .get(`https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=${arg}`)
+  return args.map(arg => {
+    return axios
+      .get(`https://www.thecocktaildb.com/api/json/v2/1/filter.php?i=${arg}`)
       .then(res => {
-        setState(prev => [...prev, ...res.data.drinks])
-        return res
+        setState(prev => [...prev, ...res.data.drinks]);
+        return res;
       })
       .catch(err => console.log(err));
   });
@@ -39,35 +39,33 @@ return args.map(arg => {
 
 export const searchDrinks = async (input, setState) => {
   const ingr = await axios
-    .get(`https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=${input}`)
+    .get(`https://www.thecocktaildb.com/api/json/v2/1/filter.php?i=${input}`)
     .then(res => {
       if (res.data.drinks !== 'None Found') {
-        return res.data.drinks
-      }
-      else return [];
+        return res.data.drinks;
+      } else return [];
     })
     .catch(err => console.log(err));
 
   const drinks = await axios
-  .get(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${input}`)
-  .then(res => {
-    if (res.data.drinks !== null) {
-      return res.data.drinks
-    }
-    else return [];
-  })
-  .catch(err => console.log(err));
+    .get(`https://www.thecocktaildb.com/api/json/v2/1/search.php?s=${input}`)
+    .then(res => {
+      if (res.data.drinks !== null) {
+        return res.data.drinks;
+      } else return [];
+    })
+    .catch(err => console.log(err));
 
   const results = [];
   ingr.length && results.push(...ingr);
   drinks.length && results.push(...drinks);
-  setState([...drinks, ...ingr])
-  return results
+  setState([...drinks, ...ingr]);
+  return results;
 };
 
-export const fetchCocktail = (input) => {
+export const fetchCocktail = input => {
   return axios
-    .get(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${input}`)
+    .get(`https://www.thecocktaildb.com/api/json/v2/1/lookup.php?i=${input}`)
     .then(res => res)
     .catch(err => console.log(err));
 };
